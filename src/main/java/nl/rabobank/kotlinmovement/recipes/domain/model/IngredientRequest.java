@@ -9,8 +9,6 @@ import lombok.NonNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class IngredientRequest {
-    private Long id;
-
     @NonNull
     private String name;
     @NonNull

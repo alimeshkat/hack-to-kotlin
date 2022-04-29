@@ -12,7 +12,6 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RecipeRequest {
-    private Long id;
     @NonNull
     private String recipeName;
     @NonNull
