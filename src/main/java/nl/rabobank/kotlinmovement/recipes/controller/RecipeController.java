@@ -38,6 +38,12 @@ public class RecipeController {
     public ResponseEntity<RecipeResponse> updateRecipe(@PathVariable() Long id, @RequestBody RecipeRequest recipeRequest){
         return ResponseEntity.ok(recipeService.updateOrCreateRecipe(id, recipeRequest));
     }
+    @DeleteMapping("recipes")
+    public ResponseEntity<Void> deleteAllRecipes() {
+        recipeService.deleteAllRecipe();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
     @DeleteMapping("recipes/{id}")
     public ResponseEntity<Void> deleteRecipes(@PathVariable() Long id) {
         recipeService.deleteRecipe(id);

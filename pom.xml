@@ -15,6 +15,8 @@
 	<description>Provides CRUD operations for the pizza recipes data.</description>
 	<properties>
 		<java.version>11</java.version>
+		<flyway.version>8.5.9</flyway.version>
+		<rest-assured.version>5.0.1</rest-assured.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -39,11 +41,17 @@
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
-			<version>8.5.8</version>
+			<version>${flyway.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>${rest-assured.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -66,7 +74,7 @@
 			<plugin>
 				<groupId>org.flywaydb</groupId>
 				<artifactId>flyway-maven-plugin</artifactId>
-				<version>8.5.8</version>
+				<version>${flyway.version}</version>
 			</plugin>
 		</plugins>
 	</build>
