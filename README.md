@@ -26,7 +26,7 @@ Execute ``java -jar target/recipes.jar`` from the root of the project. An embedd
 ``````curl
 
 //Get 
-curl http://localhost:8080/pizza-recipes
+curl http://localhost:8080/recipes
 TODO 
 //POST
 //PATCH
