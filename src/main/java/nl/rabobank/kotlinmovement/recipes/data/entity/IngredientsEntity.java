@@ -1,4 +1,4 @@
-package nl.rabobank.kotlinmovement.recipes.service.entity;
+package nl.rabobank.kotlinmovement.recipes.data.entity;
 
 
 import lombok.AllArgsConstructor;

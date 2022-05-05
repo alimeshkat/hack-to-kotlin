@@ -1,13 +1,13 @@
 package nl.rabobank.kotlinmovement.recipes.service;
 
 import lombok.AllArgsConstructor;
-import nl.rabobank.kotlinmovement.recipes.service.entity.IngredientsEntity;
-import nl.rabobank.kotlinmovement.recipes.service.entity.RecipesEntity;
-import nl.rabobank.kotlinmovement.recipes.domain.model.RecipeRequest;
-import nl.rabobank.kotlinmovement.recipes.domain.model.RecipeResponse;
+import nl.rabobank.kotlinmovement.recipes.data.entity.IngredientsEntity;
+import nl.rabobank.kotlinmovement.recipes.data.entity.RecipesEntity;
+import nl.rabobank.kotlinmovement.recipes.domain.RecipeRequest;
+import nl.rabobank.kotlinmovement.recipes.domain.RecipeResponse;
 import nl.rabobank.kotlinmovement.recipes.exeption.ResourceNotFoundException;
-import nl.rabobank.kotlinmovement.recipes.service.repository.IngredientsRepository;
-import nl.rabobank.kotlinmovement.recipes.service.repository.RecipesRepository;
+import nl.rabobank.kotlinmovement.recipes.data.repository.IngredientsRepository;
+import nl.rabobank.kotlinmovement.recipes.data.repository.RecipesRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

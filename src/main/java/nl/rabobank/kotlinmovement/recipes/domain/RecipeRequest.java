@@ -1,4 +1,4 @@
-package nl.rabobank.kotlinmovement.recipes.domain.model;
+package nl.rabobank.kotlinmovement.recipes.domain;
 
 
 import lombok.AllArgsConstructor;

@@ -1,9 +1,9 @@
 package nl.rabobank.kotlinmovement.recipes.service;
 
-import nl.rabobank.kotlinmovement.recipes.service.entity.IngredientsEntity;
-import nl.rabobank.kotlinmovement.recipes.service.entity.RecipesEntity;
-import nl.rabobank.kotlinmovement.recipes.domain.model.IngredientResponse;
-import nl.rabobank.kotlinmovement.recipes.domain.model.RecipeResponse;
+import nl.rabobank.kotlinmovement.recipes.data.entity.IngredientsEntity;
+import nl.rabobank.kotlinmovement.recipes.data.entity.RecipesEntity;
+import nl.rabobank.kotlinmovement.recipes.domain.IngredientResponse;
+import nl.rabobank.kotlinmovement.recipes.domain.RecipeResponse;
 
 import java.util.Set;
 import java.util.stream.Collectors;

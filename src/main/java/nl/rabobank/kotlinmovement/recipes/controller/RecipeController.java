@@ -1,8 +1,8 @@
 package nl.rabobank.kotlinmovement.recipes.controller;
 
 import lombok.AllArgsConstructor;
-import nl.rabobank.kotlinmovement.recipes.domain.model.RecipeRequest;
-import nl.rabobank.kotlinmovement.recipes.domain.model.RecipeResponse;
+import nl.rabobank.kotlinmovement.recipes.domain.RecipeRequest;
+import nl.rabobank.kotlinmovement.recipes.domain.RecipeResponse;
 import nl.rabobank.kotlinmovement.recipes.service.RecipesService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController

@@ -1,19 +1,20 @@
-package nl.rabobank.kotlinmovement.recipes.domain.model;
+package nl.rabobank.kotlinmovement.recipes.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
+
+import javax.validation.constraints.NotBlank;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class IngredientResponse {
-    private Long id;
-    @NonNull
+public class IngredientRequest {
+    @NotBlank
     private String name;
-    @NonNull
+    @NotBlank
     private String type;
-    @NonNull
+    @NotBlank
     private int weight;
 }
+
