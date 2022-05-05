@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -22,26 +23,24 @@ public class RecipeController {
     private final RecipesService recipeService;
 
     @PostMapping("recipes")
-    public ResponseEntity<RecipeResponse> createRecipes(@RequestBody RecipeRequest recipeRequest) {
+    public ResponseEntity<RecipeResponse> createRecipes(@Valid @RequestBody RecipeRequest recipeRequest) {
         System.out.println(recipeRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(recipeService.saveRecipe(recipeRequest));
     }
+
     @GetMapping(value = "recipes")
     public ResponseEntity<List<RecipeResponse>> getRecipes() {
         return ResponseEntity.ok(recipeService.getRecipes());
     }
+
     @GetMapping(value = "recipes/{id}")
     public ResponseEntity<RecipeResponse> getRecipe(@PathVariable() Long id) {
         return ResponseEntity.ok(recipeService.getRecipe(id));
     }
+
     @PutMapping(value = "recipes/{id}")
-    public ResponseEntity<RecipeResponse> updateRecipe(@PathVariable() Long id, @RequestBody RecipeRequest recipeRequest){
+    public ResponseEntity<RecipeResponse> updateRecipe(@PathVariable() Long id, @Valid @RequestBody RecipeRequest recipeRequest) {
         return ResponseEntity.ok(recipeService.updateOrCreateRecipe(id, recipeRequest));
-    }
-    @DeleteMapping("recipes")
-    public ResponseEntity<Void> deleteAllRecipes() {
-        recipeService.deleteAllRecipe();
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @DeleteMapping("recipes/{id}")

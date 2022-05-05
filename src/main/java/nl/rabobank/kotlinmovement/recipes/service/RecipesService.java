@@ -8,6 +8,7 @@ import nl.rabobank.kotlinmovement.recipes.domain.model.RecipeResponse;
 import nl.rabobank.kotlinmovement.recipes.exeption.ResourceNotFoundException;
 import nl.rabobank.kotlinmovement.recipes.service.repository.IngredientsRepository;
 import nl.rabobank.kotlinmovement.recipes.service.repository.RecipesRepository;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,14 +54,13 @@ public class RecipesService {
         final Set<IngredientsEntity> ingredients = saveIngredients(recipeRequest, recipes);
         return toRecipeResponse(recipes, ingredients);
     }
-
-    @Transactional
-    public void deleteAllRecipe() {
-        recipeRepository.deleteAll();
-    }
     @Transactional
     public void deleteRecipe(Long id) {
-        recipeRepository.deleteById(id);
+        try {
+            recipeRepository.deleteById(id);
+        }catch (EmptyResultDataAccessException e){
+            throw new ResourceNotFoundException();
+        }
     }
 
     private RecipesEntity updateOrCreateRecipes(Long id, RecipeRequest recipeRequest) {

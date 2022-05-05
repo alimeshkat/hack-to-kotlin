@@ -4,16 +4,19 @@ package nl.rabobank.kotlinmovement.recipes.domain.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class RecipeRequest {
-    @NonNull
+    @NotBlank
     private String recipeName;
-    @NonNull
+    @NotEmpty
+    @NotNull
     private Set<IngredientRequest> ingredients;
 }
