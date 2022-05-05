@@ -13,7 +13,7 @@ public class IngredientRequest {
     @NotBlank
     private String name;
     @NotBlank
-    private String type;
+    private IngredientType type;
     @NotBlank
     private int weight;
 }

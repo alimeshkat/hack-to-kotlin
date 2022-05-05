@@ -30,7 +30,7 @@ public class RecipesEntity {
 
     private String recipeName;
 
-    @OneToMany(mappedBy = "recipes", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval=true)
+    @OneToMany(mappedBy = "recipes", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
     private Set<IngredientsEntity> ingredients = Collections.emptySet();
 
     @Override

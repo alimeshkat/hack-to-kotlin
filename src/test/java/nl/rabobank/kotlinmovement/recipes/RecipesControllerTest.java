@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.rabobank.kotlinmovement.recipes.domain.IngredientRequest;
 import nl.rabobank.kotlinmovement.recipes.domain.IngredientResponse;
+import nl.rabobank.kotlinmovement.recipes.domain.IngredientType;
 import nl.rabobank.kotlinmovement.recipes.domain.RecipeRequest;
 import nl.rabobank.kotlinmovement.recipes.domain.RecipeResponse;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +27,6 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.fail;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -232,12 +232,12 @@ class RecipesControllerTest {
 
     private RecipeRequest peperoniPizzaRecipeRequest() {
         final Set<IngredientRequest> ingredients = Set.of(
-                new IngredientRequest("Flower", "Dry", 1000),
-                new IngredientRequest("Water", "Wet", 8000),
-                new IngredientRequest("Salt", "Dry", 20),
-                new IngredientRequest("Yeast", "Dry", 2),
-                new IngredientRequest("Peperoni", "Dry", 100),
-                new IngredientRequest("Tomato sauce", "Wet", 100)
+                new IngredientRequest("Flower", IngredientType.DRY, 1000),
+                new IngredientRequest("Water", IngredientType.WET, 8000),
+                new IngredientRequest("Salt", IngredientType.DRY, 20),
+                new IngredientRequest("Yeast", IngredientType.DRY, 2),
+                new IngredientRequest("Peperoni", IngredientType.DRY, 100),
+                new IngredientRequest("Tomato sauce", IngredientType.WET, 100)
 
         );
         final String newRecipeName = "Pizza Peperoni";
@@ -246,10 +246,10 @@ class RecipesControllerTest {
 
     private void seedDb() throws Exception {
         final Set<IngredientRequest> ingredients = Set.of(
-                new IngredientRequest("Flower", "Dry", 1000),
-                new IngredientRequest("Water", "Wet", 8000),
-                new IngredientRequest("Salt", "Dry", 20),
-                new IngredientRequest("Yeast", "Dry", 2)
+                new IngredientRequest("Flower", IngredientType.DRY, 1000),
+                new IngredientRequest("Water", IngredientType.WET, 8000),
+                new IngredientRequest("Salt", IngredientType.DRY, 20),
+                new IngredientRequest("Yeast", IngredientType.DRY, 2)
 
         );
         initRecipe = new RecipeRequest("Pizza", ingredients);

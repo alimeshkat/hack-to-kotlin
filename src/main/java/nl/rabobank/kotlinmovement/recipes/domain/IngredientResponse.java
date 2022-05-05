@@ -13,7 +13,7 @@ public class IngredientResponse {
     @NonNull
     private String name;
     @NonNull
-    private String type;
+    private IngredientType type;
     @NonNull
     private int weight;
 }

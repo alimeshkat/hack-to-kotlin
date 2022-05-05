@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,7 +19,7 @@ import javax.persistence.Table;
 @Data
 @Table(name = "ingredients")
 public class IngredientsEntity {
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(cascade = javax.persistence.CascadeType.ALL, optional = false)
     @JoinColumn(name="recipes_id", nullable=false)
     private RecipesEntity recipes;
 
