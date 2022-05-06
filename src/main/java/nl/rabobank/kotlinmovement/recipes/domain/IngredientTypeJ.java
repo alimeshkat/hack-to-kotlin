@@ -1,5 +1,5 @@
 package nl.rabobank.kotlinmovement.recipes.domain;
 
-public enum IngredientType {
+public enum IngredientTypeJ {
     WET, DRY
 }

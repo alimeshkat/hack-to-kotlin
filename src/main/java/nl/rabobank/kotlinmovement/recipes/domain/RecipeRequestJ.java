@@ -13,10 +13,10 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RecipeRequest {
+public class RecipeRequestJ {
     @NotBlank
     private String recipeName;
     @NotEmpty
     @NotNull
-    private Set<IngredientRequest> ingredients;
+    private Set<IngredientRequestJ> ingredients;
 }

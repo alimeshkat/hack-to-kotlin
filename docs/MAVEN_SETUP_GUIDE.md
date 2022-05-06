@@ -78,3 +78,4 @@ Here we have an example plugin configuration that you basically can copy/paste.
 </project>
 
 ````
+[Go back to the introduction](../ReadMe.md)

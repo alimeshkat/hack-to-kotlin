@@ -9,11 +9,11 @@ import javax.validation.constraints.NotBlank;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class IngredientRequest {
+public class IngredientRequestJ {
     @NotBlank
     private String name;
     @NotBlank
-    private IngredientType type;
+    private IngredientTypeJ type;
     @NotBlank
     private int weight;
 }

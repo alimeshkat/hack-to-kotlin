@@ -15,16 +15,14 @@ Recipe Api is powered by Spring Boot:
 - Spring Data is used to handle the database communication and connections
 - Spring boot validation for validating the beans.
 
+``Lombok`` is used for generating the constructors and the accessors in classes.
+
 As for the database, we will use an in-memory [H2](https://www.h2database.com/html/main.html) database.
 For creating the database tables, we will use [flyway](https://flywaydb.org/documentation/getstarted/how) migration tool.
 The migration schema can be found [here](../src/main/resources/db/migration/V1_0__recipes.sql)
-
-
-*UML*
-
-![img.png](png/uml.png)
 
 *Relationship model*
 
 ![relation_model.png](png/relation_model.png)
 
+[Go back to the introduction](../ReadMe.md)

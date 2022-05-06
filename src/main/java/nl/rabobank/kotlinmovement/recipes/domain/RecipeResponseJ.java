@@ -1,19 +1,17 @@
 package nl.rabobank.kotlinmovement.recipes.domain;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
+
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class IngredientResponse {
+public class RecipeResponseJ {
     private Long id;
-    @NonNull
-    private String name;
-    @NonNull
-    private IngredientType type;
-    @NonNull
-    private int weight;
+    private String recipeName;
+    private Set<IngredientResponseJ> ingredients;
 }

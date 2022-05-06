@@ -1,4 +1,4 @@
-package nl.rabobank.kotlinmovement.recipes.data.entity;
+package nl.rabobank.kotlinmovement.recipes.data;
 
 
 import lombok.AllArgsConstructor;
@@ -18,10 +18,10 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Data
 @Table(name = "ingredients")
-public class IngredientsEntity {
+public class IngredientsEntityJ {
     @ManyToOne(cascade = javax.persistence.CascadeType.ALL, optional = false)
     @JoinColumn(name="recipes_id", nullable=false)
-    private RecipesEntity recipes;
+    private RecipesEntityJ recipes;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -79,5 +79,4 @@ And the response you will get back:
   ]
 }
 ````
-
-
+[Go back to the introduction](../ReadMe.md)

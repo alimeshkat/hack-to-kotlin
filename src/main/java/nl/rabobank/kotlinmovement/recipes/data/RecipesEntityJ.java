@@ -1,4 +1,4 @@
-package nl.rabobank.kotlinmovement.recipes.data.entity;
+package nl.rabobank.kotlinmovement.recipes.data;
 
 
 import lombok.AllArgsConstructor;
@@ -23,7 +23,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "recipes")
-public class RecipesEntity {
+public class RecipesEntityJ {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,7 +31,7 @@ public class RecipesEntity {
     private String recipeName;
 
     @OneToMany(mappedBy = "recipes", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
-    private Set<IngredientsEntity> ingredients = Collections.emptySet();
+    private Set<IngredientsEntityJ> ingredients = Collections.emptySet();
 
     @Override
     public String toString() {
