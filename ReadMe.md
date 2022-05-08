@@ -10,6 +10,9 @@ Before you start, read the following documents to get yourself familiar with thi
 - [Overal setup and design](docs/SETUP_AND_DESIGN.md)
 - [Installation](docs/INSTALLATION_GUIDE.md)
 
-The next step is the first in the migration process. Here we describe how you can configure Kotlin Maven plugin:
-- [Maven setup guide](docs/MAVEN_SETUP_GUIDE.md)
+*Migration steps*
+
+The migration of the code can be done in small steps. 
+
+1) We should configure maven, so it will compile the kotlin resources and code. Follow the [Maven setup guide](docs/MAVEN_SETUP_GUIDE.md).
 
