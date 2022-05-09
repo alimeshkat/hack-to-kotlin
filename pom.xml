@@ -9,15 +9,14 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>nl.rabobank.kotlinmovement</groupId>
-	<artifactId>pizza-recipes</artifactId>
+	<artifactId>recipes</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>pizza-recipes</name>
-	<description>Provides CRUD operations for the pizza recipes data.</description>
+	<name>recipes</name>
+	<description>Provides CRUD operations for the recipes data.</description>
 	<properties>
 		<java.version>11</java.version>
-		<flyway.version>8.5.9</flyway.version>
+		<flyway.version>8.5.10</flyway.version>
 		<rest-assured.version>5.0.1</rest-assured.version>
-		<kotlin.version>1.5.30</kotlin.version>
 	</properties>
 	<dependencies>
 		<dependency>

@@ -11,7 +11,7 @@ Here we have an example plugin configuration that you basically can copy/paste.
 <project>
     
     <properties>
-        <kotlin.version>1.5.30</kotlin.version>
+        <kotlin.version>1.6.20</kotlin.version>
     </properties>
     <!--Add Kotlin standard library-->
     <dependencies>
@@ -78,4 +78,4 @@ Here we have an example plugin configuration that you basically can copy/paste.
 </project>
 
 ````
-[Go back to the introduction](../ReadMe.md)
+[Go back to the challenge](section1-project-setup/Challenge.md)
