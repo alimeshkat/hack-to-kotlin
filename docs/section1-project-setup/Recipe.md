@@ -1,17 +1,31 @@
 # Maven Setup Recipe
 
-This recipe will explain how to configure maven, so it would compile Java & Kotlin code and sources.
+With this recipe we will configure maven. To check if the setup is right, we have added
+a [test Kotlin class](../../src/main/kotlin/nl/rabobank/kotlinmovement/recipes/KotlinSetupTestDTO.kt) to the kotlin
+source.  
+If the Maven Kotlin configuration has been done correctly, you should be able to find the compiled class in the projects
+target directory.
 
-Ingredients:
+To complete this simple recipe, you just need a couple of things.
+
+## Ingredients
 
 - kotlin-stdlib library
 - kotlin-maven-plugin
 
-1) Follow the steps described in the [maven setup guide](MAVEN_SETUP_GUIDE.md)
-2) run Maven package command to check if the Kotlin class ``KotlinSetupTestDTO`` has been compiled
+## Steps
+
+1) Read about the [maven setup](MAVEN_SETUP.md) and configure maven accordingly
+2) Build project:
+
 ```shell
    (cd ../.. && ./mvnw package)
    ```
-4) You should be able to find [KotlinSetupTestDTO](../../target/classes/nl/rabobank/kotlinmovement/recipes/KotlinSetupTestDTO.class) in the build directory of the project
 
-[Go to next section](/TODO)
+4) You should be able to
+   find [KotlinSetupTestDTO](../../target/classes/nl/rabobank/kotlinmovement/recipes/KotlinSetupTestDTO.class) in the
+   build directory of the project
+
+5) If the Maven configuration was set up correctly, continue to the next section.
+
+[Go to next section](../section2-domain-models/Recipe.md)

@@ -1,9 +1,11 @@
 package nl.rabobank.kotlinmovement.recipes.controller;
 
 import lombok.AllArgsConstructor;
-import nl.rabobank.kotlinmovement.recipes.domain.RecipeRequestJ;
-import nl.rabobank.kotlinmovement.recipes.domain.RecipeResponseJ;
-import nl.rabobank.kotlinmovement.recipes.service.RecipesServiceJ;
+import lombok.extern.slf4j.Slf4j;
+import nl.rabobank.kotlinmovement.recipes.model.RecipeRequest;
+import nl.rabobank.kotlinmovement.recipes.model.RecipeResponse;
+import nl.rabobank.kotlinmovement.recipes.service.RecipesService;
+import org.slf4j.Logger;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,32 +22,38 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-public class RecipeControllerJ {
-    private final RecipesServiceJ recipeService;
+@Slf4j
+public class RecipeController {
+    private final RecipesService recipeService;
 
     @PostMapping("recipes")
-    public ResponseEntity<RecipeResponseJ> createRecipes(@Valid @RequestBody RecipeRequestJ recipeRequestJ) {
-        System.out.println(recipeRequestJ);
-        return ResponseEntity.status(HttpStatus.CREATED).body(recipeService.saveRecipe(recipeRequestJ));
+    public ResponseEntity<RecipeResponse> createRecipes(@Valid @RequestBody RecipeRequest recipeRequest) {
+        log.info("Create Recipes {}", recipeRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(recipeService.saveRecipe(recipeRequest));
+
     }
 
     @GetMapping(value = "recipes")
-    public ResponseEntity<List<RecipeResponseJ>> getRecipes(Pageable pageable) {
+    public ResponseEntity<List<RecipeResponse>> getRecipes(Pageable pageable) {
+        log.info("Get All Recipes");
         return ResponseEntity.ok(recipeService.getRecipes(pageable));
     }
 
     @GetMapping(value = "recipes/{id}")
-    public ResponseEntity<RecipeResponseJ> getRecipe(@PathVariable() Long id) {
+    public ResponseEntity<RecipeResponse> getRecipe(@PathVariable() Long id) {
+        log.info("Get Recipe with id: {}", id);
         return ResponseEntity.ok(recipeService.getRecipe(id));
     }
 
     @PutMapping(value = "recipes/{id}")
-    public ResponseEntity<RecipeResponseJ> updateRecipe(@PathVariable() Long id, @Valid @RequestBody RecipeRequestJ recipeRequestJ) {
-        return ResponseEntity.ok(recipeService.updateOrCreateRecipe(id, recipeRequestJ));
+    public ResponseEntity<RecipeResponse> updateRecipe(@PathVariable() Long id, @Valid @RequestBody RecipeRequest recipeRequest) {
+        log.info("Update Recipe with id: {}. Update: {}", id, recipeRequest);
+        return ResponseEntity.ok(recipeService.updateOrCreateRecipe(id, recipeRequest));
     }
 
     @DeleteMapping("recipes/{id}")
     public ResponseEntity<Void> deleteRecipes(@PathVariable() Long id) {
+        log.info("Delete Recipe {}", id);
         recipeService.deleteRecipe(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

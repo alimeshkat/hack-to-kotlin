@@ -18,10 +18,10 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Data
 @Table(name = "ingredients")
-public class IngredientsEntityJ {
+public class IngredientsEntity {
     @ManyToOne(cascade = javax.persistence.CascadeType.ALL, optional = false)
     @JoinColumn(name="recipes_id", nullable=false)
-    private RecipesEntityJ recipes;
+    private RecipesEntity recipes;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

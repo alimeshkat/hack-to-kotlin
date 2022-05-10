@@ -1,15 +1,14 @@
-## Maven setup guide
+# Maven setup guide
 
-Here we will step-by-step describe how to set up maven, so it can compile sources and modules.
-At this moment there is only support for Maven v3. Read more about Kotlin plugin [here](https://kotlinlang.org/docs/maven.html).
+This guide will describe step-by-step how to set up maven, so it will compile Kotlin next to the Java sources. 
 
-Here we have an example plugin configuration that you basically can copy/paste.
+## Dependencies
 
+First, we will add the Kotlin standaard library to our dependencies.  
 
 ````xml
-
 <project>
-    
+    ...
     <properties>
         <kotlin.version>1.6.20</kotlin.version>
     </properties>
@@ -21,7 +20,21 @@ Here we have an example plugin configuration that you basically can copy/paste.
             <version>${kotlin.version}</version>
         </dependency>
     </dependencies>
+    ...
+</project>
+````    
 
+## Plugin
+
+Next we will add the Kotlin maven plugin. We will add some additional configuration to the Kotlin Maven plugin for ``Spring`` & ``JPA``. 
+Because Spring annotated classes (``@Configuration`` or ``@Service``) should be non-final (open), and in Kotlin all classes are by default final.
+To ``open`` the Spring specific classes, we will add  ``spring`` plugin. 
+And, because ``JPA`` classes need a default constructor to be instantiated, we will add ``jpa`` plugin that generates no-arg constructors.
+Beneath here you can find a fully configured Kotlin maven plugin that will compile Java & Kotlin sources, and provide support for `Spring` & `JPA`. 
+
+````xml
+<project>
+    ...
     <build>
         <plugin>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -30,6 +43,7 @@ Here we have an example plugin configuration that you basically can copy/paste.
             <executions>
                 <execution>
                     <id>compile</id>
+                    <phase>process-sources</phase>
                     <goals>
                         <goal>compile</goal>
                     </goals>
@@ -75,7 +89,9 @@ Here we have an example plugin configuration that you basically can copy/paste.
             </dependencies>
         </plugin>
     </build>
+    ...
 </project>
 
 ````
-[Go back to the challenge](section1-project-setup/Challenge.md)
+
+[Go back to the recipe](Recipe.md)

@@ -23,7 +23,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "recipes")
-public class RecipesEntityJ {
+public class RecipesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,7 +31,7 @@ public class RecipesEntityJ {
     private String recipeName;
 
     @OneToMany(mappedBy = "recipes", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
-    private Set<IngredientsEntityJ> ingredients = Collections.emptySet();
+    private Set<IngredientsEntity> ingredients = Collections.emptySet();
 
     @Override
     public String toString() {

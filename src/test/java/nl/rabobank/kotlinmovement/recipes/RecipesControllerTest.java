@@ -2,11 +2,9 @@ package nl.rabobank.kotlinmovement.recipes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import nl.rabobank.kotlinmovement.recipes.domain.IngredientRequestJ;
-import nl.rabobank.kotlinmovement.recipes.domain.IngredientResponseJ;
-import nl.rabobank.kotlinmovement.recipes.domain.IngredientTypeJ;
-import nl.rabobank.kotlinmovement.recipes.domain.RecipeRequestJ;
-import nl.rabobank.kotlinmovement.recipes.domain.RecipeResponseJ;
+import nl.rabobank.kotlinmovement.recipes.model.IngredientRequest;
+import nl.rabobank.kotlinmovement.recipes.model.IngredientType;
+import nl.rabobank.kotlinmovement.recipes.model.RecipeRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,43 +39,42 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-
-class RecipesControllerJTest {
+class RecipesControllerTest {
     @Autowired
     private MockMvc mockMvc;
     static ObjectMapper objectMapper = new ObjectMapper();
-    private RecipeRequestJ initRecipe;
+    private RecipeRequest initRecipe;
 
 
     @Test
     @DisplayName("Should be able to get all recipes")
     void test1() throws Exception {
-        final RecipeResponseJ actualRecipeResponseJ = getAllRecipePaginatedResponses()[0];
-        assertThat(actualRecipeResponseJ.getId()).isNotNull();
-        assertThat(actualRecipeResponseJ.getRecipeName()).isEqualTo(initRecipe.getRecipeName());
-        doForEach(actualRecipeResponseJ.getIngredients(), (IngredientResponseJ ingredientResponseJ) -> {
-            final IngredientRequestJ expected = findIngredientRequestByName(initRecipe, ingredientResponseJ);
-            assertThat(ingredientResponseJ.getName()).isEqualTo(expected.getName());
-            assertThat(ingredientResponseJ.getType()).isEqualTo(expected.getType());
-            assertThat(ingredientResponseJ.getWeight()).isEqualTo(expected.getWeight());
+        final RecipeResponseTestDTO actualRecipeResponse = getAllRecipePaginatedResponses()[0];
+        assertThat(actualRecipeResponse.getId()).isNotNull();
+        assertThat(actualRecipeResponse.getRecipeName()).isEqualTo(initRecipe.getRecipeName());
+        doForEach(actualRecipeResponse.getIngredients(), (IngredientResponseTestDTO ingredientResponse) -> {
+            final IngredientRequest expected = findIngredientRequestByName(initRecipe, ingredientResponse);
+            assertThat(ingredientResponse.getName()).isEqualTo(expected.getName());
+            assertThat(ingredientResponse.getType()).isEqualTo(expected.getType());
+            assertThat(ingredientResponse.getWeight()).isEqualTo(expected.getWeight());
         });
-        assertThat(actualRecipeResponseJ.getRecipeName()).isEqualTo(initRecipe.getRecipeName());
+        assertThat(actualRecipeResponse.getRecipeName()).isEqualTo(initRecipe.getRecipeName());
     }
 
     @Test
     @DisplayName("Should be able to get a recipe")
     void test2() throws Exception {
-        final RecipeResponseJ first = getAllRecipePaginatedResponses()[0];
-        final RecipeResponseJ actualRecipeResponseJ = getRecipeResponses(first.getId());
-        assertThat(actualRecipeResponseJ.getId()).isNotNull();
-        assertThat(actualRecipeResponseJ.getRecipeName()).isEqualTo(initRecipe.getRecipeName());
-        doForEach(actualRecipeResponseJ.getIngredients(), (IngredientResponseJ ingredientResponseJ) -> {
-            final IngredientRequestJ expected = findIngredientRequestByName(initRecipe, ingredientResponseJ);
-            assertThat(ingredientResponseJ.getName()).isEqualTo(expected.getName());
-            assertThat(ingredientResponseJ.getType()).isEqualTo(expected.getType());
-            assertThat(ingredientResponseJ.getWeight()).isEqualTo(expected.getWeight());
+        final RecipeResponseTestDTO first = getAllRecipePaginatedResponses()[0];
+        final RecipeResponseTestDTO actualRecipeResponse = getRecipeResponses(first.getId());
+        assertThat(actualRecipeResponse.getId()).isNotNull();
+        assertThat(actualRecipeResponse.getRecipeName()).isEqualTo(initRecipe.getRecipeName());
+        doForEach(actualRecipeResponse.getIngredients(), (IngredientResponseTestDTO ingredientResponse) -> {
+            final IngredientRequest expected = findIngredientRequestByName(initRecipe, ingredientResponse);
+            assertThat(ingredientResponse.getName()).isEqualTo(expected.getName());
+            assertThat(ingredientResponse.getType()).isEqualTo(expected.getType());
+            assertThat(ingredientResponse.getWeight()).isEqualTo(expected.getWeight());
         });
-        assertThat(actualRecipeResponseJ.getRecipeName()).isEqualTo(initRecipe.getRecipeName());
+        assertThat(actualRecipeResponse.getRecipeName()).isEqualTo(initRecipe.getRecipeName());
     }
 
     @ParameterizedTest
@@ -89,7 +86,7 @@ class RecipesControllerJTest {
                String sortPropertyValue,
                String sortDirectionDesc) throws Exception {
         createRecipes(generateRecipeRequest(40));
-        final RecipeResponseJ[] allRecipePaginatedResponses = getAllRecipePaginatedResponses(page, pageSize, sortPropertyValue, sortDirectionDesc);
+        final RecipeResponseTestDTO[] allRecipePaginatedResponses = getAllRecipePaginatedResponses(page, pageSize, sortPropertyValue, sortDirectionDesc);
         assertThat(allRecipePaginatedResponses).hasSize(expectedPageSize);
     }
 
@@ -97,27 +94,27 @@ class RecipesControllerJTest {
     @Test
     @DisplayName("Should be able to delete a recipe ")
     void test4() throws Exception {
-        final RecipeResponseJ actualRecipeResponseJ = getAllRecipePaginatedResponses()[0];
-        deleteRecipe(actualRecipeResponseJ.getId());
-        final RecipeResponseJ[] actualRecipeResponseJLatest = getAllRecipePaginatedResponses();
-        assertThat(actualRecipeResponseJLatest).isEmpty();
+        final RecipeResponseTestDTO actualRecipeResponse = getAllRecipePaginatedResponses()[0];
+        deleteRecipe(actualRecipeResponse.getId());
+        final RecipeResponseTestDTO[] actualRecipeResponseLatest = getAllRecipePaginatedResponses();
+        assertThat(actualRecipeResponseLatest).isEmpty();
     }
 
     @Test
     @DisplayName("Should be able to update a recipe")
     void test5() throws Exception {
-        final RecipeResponseJ firstRecipe = getAllRecipePaginatedResponses()[0];
-        final RecipeRequestJ updateRequest = peperoniPizzaRecipeRequest();
+        final RecipeResponseTestDTO firstRecipe = getAllRecipePaginatedResponses()[0];
+        final RecipeRequest updateRequest = peperoniPizzaRecipeRequest();
         final Long actualRecipeResponseId = firstRecipe.getId();
-        final RecipeResponseJ updatedRecipeResponseJ = updateRecipe(actualRecipeResponseId, updateRequest);
+        final RecipeResponseTestDTO updatedRecipeResponse = updateRecipe(actualRecipeResponseId, updateRequest);
 
-        assertThat(updatedRecipeResponseJ.getId()).isEqualTo(firstRecipe.getId());
-        assertThat(updatedRecipeResponseJ.getRecipeName()).isEqualTo(updatedRecipeResponseJ.getRecipeName());
-        doForEach(updatedRecipeResponseJ.getIngredients(), (IngredientResponseJ ingredientResponseJ) -> {
-            final IngredientRequestJ expected = findIngredientRequestByName(updateRequest, ingredientResponseJ);
-            assertThat(ingredientResponseJ.getName()).isEqualTo(expected.getName());
-            assertThat(ingredientResponseJ.getType()).isEqualTo(expected.getType());
-            assertThat(ingredientResponseJ.getWeight()).isEqualTo(expected.getWeight());
+        assertThat(updatedRecipeResponse.getId()).isEqualTo(firstRecipe.getId());
+        assertThat(updatedRecipeResponse.getRecipeName()).isEqualTo(updatedRecipeResponse.getRecipeName());
+        doForEach(updatedRecipeResponse.getIngredients(), (IngredientResponseTestDTO ingredientResponse) -> {
+            final IngredientRequest expected = findIngredientRequestByName(updateRequest, ingredientResponse);
+            assertThat(ingredientResponse.getName()).isEqualTo(expected.getName());
+            assertThat(ingredientResponse.getType()).isEqualTo(expected.getType());
+            assertThat(ingredientResponse.getWeight()).isEqualTo(expected.getWeight());
         });
 
     }
@@ -125,16 +122,16 @@ class RecipesControllerJTest {
     @Test
     @DisplayName("Should be able create when resource id doesn't not exist")
     void test6() throws Exception {
-        final RecipeRequestJ updateRequest = peperoniPizzaRecipeRequest();
-        final RecipeResponseJ updatedRecipeResponseJ = updateRecipe(2L, updateRequest);
+        final RecipeRequest updateRequest = peperoniPizzaRecipeRequest();
+        final RecipeResponseTestDTO updatedRecipeResponse = updateRecipe(2L, updateRequest);
 
-        assertThat(updatedRecipeResponseJ.getId()).isEqualTo(2L);
-        assertThat(updatedRecipeResponseJ.getRecipeName()).isEqualTo(updatedRecipeResponseJ.getRecipeName());
-        doForEach(updatedRecipeResponseJ.getIngredients(), (IngredientResponseJ ingredientResponseJ) -> {
-            final IngredientRequestJ expected = findIngredientRequestByName(updateRequest, ingredientResponseJ);
-            assertThat(ingredientResponseJ.getName()).isEqualTo(expected.getName());
-            assertThat(ingredientResponseJ.getType()).isEqualTo(expected.getType());
-            assertThat(ingredientResponseJ.getWeight()).isEqualTo(expected.getWeight());
+        assertThat(updatedRecipeResponse.getId()).isEqualTo(2L);
+        assertThat(updatedRecipeResponse.getRecipeName()).isEqualTo(updatedRecipeResponse.getRecipeName());
+        doForEach(updatedRecipeResponse.getIngredients(), (IngredientResponseTestDTO ingredientResponse) -> {
+            final IngredientRequest expected = findIngredientRequestByName(updateRequest, ingredientResponse);
+            assertThat(ingredientResponse.getName()).isEqualTo(expected.getName());
+            assertThat(ingredientResponse.getType()).isEqualTo(expected.getType());
+            assertThat(ingredientResponse.getWeight()).isEqualTo(expected.getWeight());
         });
     }
 
@@ -165,14 +162,14 @@ class RecipesControllerJTest {
     }
 
     @BeforeEach
-    void setup() throws Exception {
+    void setup() {
         setInitialState();
     }
 
     private static Stream<Arguments> errorDataParams() throws JsonProcessingException {
-        final var emptyRequest = objectMapper.writeValueAsString(new RecipeRequestJ("", Set.of()));
-        final var nullRecipeNameRequest = objectMapper.writeValueAsString(new RecipeRequestJ(null, Set.of()));
-        final var nullIngredientsRequest = objectMapper.writeValueAsString(new RecipeRequestJ("test", null));
+        final var emptyRequest = objectMapper.writeValueAsString(new RecipeRequest("", Set.of()));
+        final var nullRecipeNameRequest = objectMapper.writeValueAsString(new RecipeRequest(null, Set.of()));
+        final var nullIngredientsRequest = objectMapper.writeValueAsString(new RecipeRequest("test", null));
         final var noContent = "{}";
         return Stream.of(
                 Arguments.of(noContent),
@@ -182,16 +179,16 @@ class RecipesControllerJTest {
         );
     }
 
-    private RecipeResponseJ updateRecipe(Long id, RecipeRequestJ recipeRequestJ) throws Exception {
+    private RecipeResponseTestDTO updateRecipe(Long id, RecipeRequest recipeRequest) throws Exception {
         final var contentAsString = this.mockMvc.perform(
                         put("/recipes/{id}", id)
-                                .content(objectMapper.writeValueAsString(recipeRequestJ))
+                                .content(objectMapper.writeValueAsString(recipeRequest))
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isOk())
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
-        return objectMapper.readValue(contentAsString, RecipeResponseJ.class);
+        return objectMapper.readValue(contentAsString, RecipeResponseTestDTO.class);
     }
 
     private void deleteRecipe(Long id) throws Exception {
@@ -202,14 +199,14 @@ class RecipesControllerJTest {
         items.forEach(asserts);
     }
 
-    private IngredientRequestJ findIngredientRequestByName(RecipeRequestJ recipeRequestJ, IngredientResponseJ ingredientResponseJ) {
-        return recipeRequestJ.getIngredients()
+    private IngredientRequest findIngredientRequestByName(RecipeRequest recipeRequest, IngredientResponseTestDTO ingredientResponse) {
+        return recipeRequest.getIngredients()
                 .stream()
-                .filter(it -> it.getName().equals(ingredientResponseJ.getName()))
+                .filter(it -> it.getName().equals(ingredientResponse.getName()))
                 .findFirst().orElseThrow(AssertionError::new);
     }
 
-    RecipeResponseJ[] getAllRecipePaginatedResponses(Integer page, Integer size, String sort, String sortDirectionDesc) throws Exception {
+    RecipeResponseTestDTO[] getAllRecipePaginatedResponses(Integer page, Integer size, String sort, String sortDirectionDesc) throws Exception {
         var request = get("/recipes");
         if (page != null) {
             request.param("page", String.valueOf(page));
@@ -228,26 +225,26 @@ class RecipesControllerJTest {
         return getRecipeResponses(request);
     }
 
-    private RecipeResponseJ[] getRecipeResponses(MockHttpServletRequestBuilder requestBuilder) throws Exception {
+    private RecipeResponseTestDTO[] getRecipeResponses(MockHttpServletRequestBuilder requestBuilder) throws Exception {
         var responseArrayString = this.mockMvc
                 .perform(requestBuilder)
                 .andDo(print())
                 .andExpect(status().isOk()).andReturn().getResponse()
                 .getContentAsString();
-        return objectMapper.readValue(responseArrayString, RecipeResponseJ[].class);
+        return objectMapper.readValue(responseArrayString, RecipeResponseTestDTO[].class);
     }
 
-    private RecipeResponseJ[] getAllRecipePaginatedResponses() throws Exception {
+    private RecipeResponseTestDTO[] getAllRecipePaginatedResponses() throws Exception {
         return getRecipeResponses(get("/recipes"));
     }
 
-    private RecipeResponseJ getRecipeResponses(Long id) throws Exception {
+    private RecipeResponseTestDTO getRecipeResponses(Long id) throws Exception {
         var responseArrayString = this.mockMvc
                 .perform(get("/recipes/{id}", id))
                 .andDo(print())
                 .andExpect(status().isOk()).andReturn().getResponse()
                 .getContentAsString();
-        return objectMapper.readValue(responseArrayString, RecipeResponseJ.class);
+        return objectMapper.readValue(responseArrayString, RecipeResponseTestDTO.class);
     }
 
     private void assertRecipeStatus(MockHttpServletRequestBuilder mockHttpServletRequestBuilder, ResultMatcher statusMatcher) throws Exception {
@@ -257,37 +254,37 @@ class RecipesControllerJTest {
                 .andExpect(statusMatcher);
     }
 
-    private RecipeRequestJ peperoniPizzaRecipeRequest() {
-        final Set<IngredientRequestJ> ingredients = Set.of(
-                new IngredientRequestJ("Flower", IngredientTypeJ.DRY, 1000),
-                new IngredientRequestJ("Water", IngredientTypeJ.WET, 8000),
-                new IngredientRequestJ("Salt", IngredientTypeJ.DRY, 20),
-                new IngredientRequestJ("Yeast", IngredientTypeJ.DRY, 2),
-                new IngredientRequestJ("Peperoni", IngredientTypeJ.DRY, 100),
-                new IngredientRequestJ("Tomato sauce", IngredientTypeJ.WET, 100)
+    private RecipeRequest peperoniPizzaRecipeRequest() {
+        final Set<IngredientRequest> ingredients = Set.of(
+                new IngredientRequest("Flower", IngredientType.DRY, 1000),
+                new IngredientRequest("Water", IngredientType.WET, 8000),
+                new IngredientRequest("Salt", IngredientType.DRY, 20),
+                new IngredientRequest("Yeast", IngredientType.DRY, 2),
+                new IngredientRequest("Peperoni", IngredientType.DRY, 100),
+                new IngredientRequest("Tomato sauce", IngredientType.WET, 100)
 
         );
         final String newRecipeName = "Pizza Peperoni";
-        return new RecipeRequestJ(newRecipeName, ingredients);
+        return new RecipeRequest(newRecipeName, ingredients);
     }
 
-    private void setInitialState() throws Exception {
-        final Set<IngredientRequestJ> ingredients = getDefaultIngredientRequests();
-        initRecipe = new RecipeRequestJ("Pizza", ingredients);
+    private void setInitialState() {
+        final Set<IngredientRequest> ingredients = getDefaultIngredientRequests();
+        initRecipe = new RecipeRequest("Pizza", ingredients);
         createRecipes(List.of(initRecipe));
     }
 
-    private Set<IngredientRequestJ> getDefaultIngredientRequests() {
+    private Set<IngredientRequest> getDefaultIngredientRequests() {
         return Set.of(
-                new IngredientRequestJ("Flower", IngredientTypeJ.DRY, 1000),
-                new IngredientRequestJ("Water", IngredientTypeJ.WET, 8000),
-                new IngredientRequestJ("Salt", IngredientTypeJ.DRY, 20),
-                new IngredientRequestJ("Yeast", IngredientTypeJ.DRY, 2)
+                new IngredientRequest("Flower", IngredientType.DRY, 1000),
+                new IngredientRequest("Water", IngredientType.WET, 8000),
+                new IngredientRequest("Salt", IngredientType.DRY, 20),
+                new IngredientRequest("Yeast", IngredientType.DRY, 2)
 
         );
     }
 
-    private void createRecipes(List<RecipeRequestJ> recipes) {
+    private void createRecipes(List<RecipeRequest> recipes) {
         recipes.forEach(it ->
                 {
                     try {
@@ -313,23 +310,22 @@ class RecipesControllerJTest {
         );
     }
 
-    private List<RecipeRequestJ> generateRecipeRequest(int i) {
-        final var recipeRequests = new ArrayList<RecipeRequestJ>(1);
+    private List<RecipeRequest> generateRecipeRequest(int i) {
+        final var recipeRequests = new ArrayList<RecipeRequest>(1);
         final String generatedString = generateRandomString();
         while (i > 0) {
             i--;
-            recipeRequests.add(new RecipeRequestJ(generatedString, getDefaultIngredientRequests()));
+            recipeRequests.add(new RecipeRequest(generatedString, getDefaultIngredientRequests()));
         }
         return recipeRequests;
     }
 
     private String generateRandomString() {
         final var random = new Random();
-        final var generatedString = random.ints(97, 122 + 1)
+        return random.ints(97, 122 + 1)
                 .limit(10)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
-        return generatedString;
     }
 
 
