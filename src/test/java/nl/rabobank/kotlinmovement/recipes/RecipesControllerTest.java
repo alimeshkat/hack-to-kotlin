@@ -3,8 +3,12 @@ package nl.rabobank.kotlinmovement.recipes;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.rabobank.kotlinmovement.recipes.model.IngredientRequest;
-import nl.rabobank.kotlinmovement.recipes.model.IngredientType;
-import nl.rabobank.kotlinmovement.recipes.model.RecipeRequest;
+import nl.rabobank.kotlinmovement.recipes.model.IngredientRequestTest;
+import nl.rabobank.kotlinmovement.recipes.model.IngredientResponseTest;
+import nl.rabobank.kotlinmovement.recipes.model.IngredientTypeTest;
+import nl.rabobank.kotlinmovement.recipes.model.RecipeRequestTest;
+import nl.rabobank.kotlinmovement.recipes.model.RecipeResponseTest;
+import nl.rabobank.kotlinmovement.recipes.model.RecipesErrorResponseTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,17 +47,17 @@ class RecipesControllerTest {
     @Autowired
     private MockMvc mockMvc;
     static ObjectMapper objectMapper = new ObjectMapper();
-    private RecipeRequest initRecipe;
+    private RecipeRequestTest initRecipe;
 
 
     @Test
     @DisplayName("Should be able to get all recipes")
     void test1() throws Exception {
-        final RecipeResponseTestDTO actualRecipeResponse = getAllRecipePaginatedResponses()[0];
+        final RecipeResponseTest actualRecipeResponse = getAllRecipePaginatedResponses()[0];
         assertThat(actualRecipeResponse.getId()).isNotNull();
         assertThat(actualRecipeResponse.getRecipeName()).isEqualTo(initRecipe.getRecipeName());
-        doForEach(actualRecipeResponse.getIngredients(), (IngredientResponseTestDTO ingredientResponse) -> {
-            final IngredientRequest expected = findIngredientRequestByName(initRecipe, ingredientResponse);
+        doForEach(actualRecipeResponse.getIngredients(), (IngredientResponseTest ingredientResponse) -> {
+            final IngredientRequestTest expected = findIngredientRequestByName(initRecipe, ingredientResponse);
             assertThat(ingredientResponse.getName()).isEqualTo(expected.getName());
             assertThat(ingredientResponse.getType()).isEqualTo(expected.getType());
             assertThat(ingredientResponse.getWeight()).isEqualTo(expected.getWeight());
@@ -64,12 +68,12 @@ class RecipesControllerTest {
     @Test
     @DisplayName("Should be able to get a recipe")
     void test2() throws Exception {
-        final RecipeResponseTestDTO first = getAllRecipePaginatedResponses()[0];
-        final RecipeResponseTestDTO actualRecipeResponse = getRecipeResponses(first.getId());
+        final RecipeResponseTest first = getAllRecipePaginatedResponses()[0];
+        final RecipeResponseTest actualRecipeResponse = getRecipeResponses(first.getId());
         assertThat(actualRecipeResponse.getId()).isNotNull();
         assertThat(actualRecipeResponse.getRecipeName()).isEqualTo(initRecipe.getRecipeName());
-        doForEach(actualRecipeResponse.getIngredients(), (IngredientResponseTestDTO ingredientResponse) -> {
-            final IngredientRequest expected = findIngredientRequestByName(initRecipe, ingredientResponse);
+        doForEach(actualRecipeResponse.getIngredients(), (IngredientResponseTest ingredientResponse) -> {
+            final IngredientRequestTest expected = findIngredientRequestByName(initRecipe, ingredientResponse);
             assertThat(ingredientResponse.getName()).isEqualTo(expected.getName());
             assertThat(ingredientResponse.getType()).isEqualTo(expected.getType());
             assertThat(ingredientResponse.getWeight()).isEqualTo(expected.getWeight());
@@ -86,7 +90,7 @@ class RecipesControllerTest {
                String sortPropertyValue,
                String sortDirectionDesc) throws Exception {
         createRecipes(generateRecipeRequest(40));
-        final RecipeResponseTestDTO[] allRecipePaginatedResponses = getAllRecipePaginatedResponses(page, pageSize, sortPropertyValue, sortDirectionDesc);
+        final RecipeResponseTest[] allRecipePaginatedResponses = getAllRecipePaginatedResponses(page, pageSize, sortPropertyValue, sortDirectionDesc);
         assertThat(allRecipePaginatedResponses).hasSize(expectedPageSize);
     }
 
@@ -94,24 +98,24 @@ class RecipesControllerTest {
     @Test
     @DisplayName("Should be able to delete a recipe ")
     void test4() throws Exception {
-        final RecipeResponseTestDTO actualRecipeResponse = getAllRecipePaginatedResponses()[0];
+        final RecipeResponseTest actualRecipeResponse = getAllRecipePaginatedResponses()[0];
         deleteRecipe(actualRecipeResponse.getId());
-        final RecipeResponseTestDTO[] actualRecipeResponseLatest = getAllRecipePaginatedResponses();
+        final RecipeResponseTest[] actualRecipeResponseLatest = getAllRecipePaginatedResponses();
         assertThat(actualRecipeResponseLatest).isEmpty();
     }
 
     @Test
     @DisplayName("Should be able to update a recipe")
     void test5() throws Exception {
-        final RecipeResponseTestDTO firstRecipe = getAllRecipePaginatedResponses()[0];
-        final RecipeRequest updateRequest = peperoniPizzaRecipeRequest();
+        final RecipeResponseTest firstRecipe = getAllRecipePaginatedResponses()[0];
+        final RecipeRequestTest updateRequest = peperoniPizzaRecipeRequest();
         final Long actualRecipeResponseId = firstRecipe.getId();
-        final RecipeResponseTestDTO updatedRecipeResponse = updateRecipe(actualRecipeResponseId, updateRequest);
+        final RecipeResponseTest updatedRecipeResponse = updateRecipe(actualRecipeResponseId, updateRequest);
 
         assertThat(updatedRecipeResponse.getId()).isEqualTo(firstRecipe.getId());
         assertThat(updatedRecipeResponse.getRecipeName()).isEqualTo(updatedRecipeResponse.getRecipeName());
-        doForEach(updatedRecipeResponse.getIngredients(), (IngredientResponseTestDTO ingredientResponse) -> {
-            final IngredientRequest expected = findIngredientRequestByName(updateRequest, ingredientResponse);
+        doForEach(updatedRecipeResponse.getIngredients(), (IngredientResponseTest ingredientResponse) -> {
+            final IngredientRequestTest expected = findIngredientRequestByName(updateRequest, ingredientResponse);
             assertThat(ingredientResponse.getName()).isEqualTo(expected.getName());
             assertThat(ingredientResponse.getType()).isEqualTo(expected.getType());
             assertThat(ingredientResponse.getWeight()).isEqualTo(expected.getWeight());
@@ -122,13 +126,13 @@ class RecipesControllerTest {
     @Test
     @DisplayName("Should be able create when resource id doesn't not exist")
     void test6() throws Exception {
-        final RecipeRequest updateRequest = peperoniPizzaRecipeRequest();
-        final RecipeResponseTestDTO updatedRecipeResponse = updateRecipe(2L, updateRequest);
+        final RecipeRequestTest updateRequest = peperoniPizzaRecipeRequest();
+        final RecipeResponseTest updatedRecipeResponse = updateRecipe(2L, updateRequest);
 
         assertThat(updatedRecipeResponse.getId()).isEqualTo(2L);
         assertThat(updatedRecipeResponse.getRecipeName()).isEqualTo(updatedRecipeResponse.getRecipeName());
-        doForEach(updatedRecipeResponse.getIngredients(), (IngredientResponseTestDTO ingredientResponse) -> {
-            final IngredientRequest expected = findIngredientRequestByName(updateRequest, ingredientResponse);
+        doForEach(updatedRecipeResponse.getIngredients(), (IngredientResponseTest ingredientResponse) -> {
+            final IngredientRequestTest expected = findIngredientRequestByName(updateRequest, ingredientResponse);
             assertThat(ingredientResponse.getName()).isEqualTo(expected.getName());
             assertThat(ingredientResponse.getType()).isEqualTo(expected.getType());
             assertThat(ingredientResponse.getWeight()).isEqualTo(expected.getWeight());
@@ -138,26 +142,30 @@ class RecipesControllerTest {
     @Test
     @DisplayName("Should return not found if resource does not exist")
     void test7() throws Exception {
-        assertRecipeStatus(get("/recipes/{id}", 2L), status().isNotFound());
-        assertRecipeStatus(delete("/recipes/{id}", 2L), status().isNotFound());
+        assertRecipeResponse(get("/recipes/{id}", 2L), status().isNotFound(),
+                objectMapper.writeValueAsString(new RecipesErrorResponseTest("Recipe 2 not found")));
+        assertRecipeResponse(delete("/recipes/{id}", 2L), status().isNotFound(),
+                objectMapper.writeValueAsString(new RecipesErrorResponseTest("Recipe 2 not found")));
     }
 
     @ParameterizedTest
     @MethodSource("errorDataParams")
     @DisplayName("Should not be able to create/update if request object is invalid")
-    void test8(String recipeRequest) throws Exception {
-        assertRecipeStatus(
+    void test8(String recipeRequest, String errorMessage) throws Exception {
+        assertRecipeResponse(
                 post("/recipes")
                         .content(recipeRequest)
                         .contentType(MediaType.APPLICATION_JSON), status()
-                        .is4xxClientError()
+                        .is4xxClientError(),
+                errorMessage
         );
 
-        assertRecipeStatus(
+        assertRecipeResponse(
                 put("/recipes/{id}", 1)
                         .content(recipeRequest)
                         .contentType(MediaType.APPLICATION_JSON), status()
-                        .is4xxClientError()
+                        .is4xxClientError(),
+                errorMessage
         );
     }
 
@@ -167,19 +175,36 @@ class RecipesControllerTest {
     }
 
     private static Stream<Arguments> errorDataParams() throws JsonProcessingException {
-        final var emptyRequest = objectMapper.writeValueAsString(new RecipeRequest("", Set.of()));
-        final var nullRecipeNameRequest = objectMapper.writeValueAsString(new RecipeRequest(null, Set.of()));
-        final var nullIngredientsRequest = objectMapper.writeValueAsString(new RecipeRequest("test", null));
         final var noContent = "{}";
+        final var emptyRequest = objectMapper.writeValueAsString(new RecipeRequestTest("", Set.of()));
+        final var emptyRequestIngredient = objectMapper.writeValueAsString(new RecipeRequestTest("pizza!", Set.of()));
+        final var nullRecipeNameRequest = objectMapper.writeValueAsString(new RecipeRequestTest(null, Set.of(new IngredientRequestTest("flower", IngredientTypeTest.DRY, 100))));
+        final var nullIngredientsRequest = objectMapper.writeValueAsString(new RecipeRequestTest("test", null));
+        final var ingredientMissingName = objectMapper.writeValueAsString(new RecipeRequestTest("test", Set.of(new IngredientRequestTest("", IngredientTypeTest.DRY, 100))));
+        final var ingredientMissingType = objectMapper.writeValueAsString(new RecipeRequestTest("test", Set.of(new IngredientRequestTest("yeast", null, 100))));
+        final var ingredientMissingWeight = objectMapper.writeValueAsString(new RecipeRequestTest("test", Set.of(new IngredientRequestTest("flower", IngredientTypeTest.DRY, null))));
+
+        final var errorMessageIncorrectRecipe = objectMapper.writeValueAsString(new RecipesErrorResponseTest("Incorrect fields:ingredients,recipeName."));
+        final var errorMessageIncorrectRecipeName = objectMapper.writeValueAsString(new RecipesErrorResponseTest("Incorrect fields:recipeName."));
+        final var errorMessageIncorrectIngredients = objectMapper.writeValueAsString(new RecipesErrorResponseTest("Incorrect fields:ingredients."));
+        final var errorMessageIncorrectIngredientName = objectMapper.writeValueAsString(new RecipesErrorResponseTest("Incorrect fields:ingredient.name."));
+        final var errorMessageIncorrectIngredientType = objectMapper.writeValueAsString(new RecipesErrorResponseTest("Incorrect fields:ingredient.type."));
+        final var errorMessageIncorrectWeight = objectMapper.writeValueAsString(new RecipesErrorResponseTest("Incorrect fields:ingredient.weight."));
+
+
         return Stream.of(
-                Arguments.of(noContent),
-                Arguments.of(emptyRequest),
-                Arguments.of(nullRecipeNameRequest),
-                Arguments.of(nullIngredientsRequest)
+                Arguments.of(noContent, errorMessageIncorrectRecipe),
+                Arguments.of(emptyRequest, errorMessageIncorrectRecipe),
+                Arguments.of(emptyRequestIngredient, errorMessageIncorrectIngredients),
+                Arguments.of(nullRecipeNameRequest, errorMessageIncorrectRecipeName),
+                Arguments.of(nullIngredientsRequest, errorMessageIncorrectIngredients),
+                Arguments.of(ingredientMissingName, errorMessageIncorrectIngredientName),
+                Arguments.of(ingredientMissingType, errorMessageIncorrectIngredientType),
+                Arguments.of(ingredientMissingWeight, errorMessageIncorrectWeight)
         );
     }
 
-    private RecipeResponseTestDTO updateRecipe(Long id, RecipeRequest recipeRequest) throws Exception {
+    private RecipeResponseTest updateRecipe(Long id, RecipeRequestTest recipeRequest) throws Exception {
         final var contentAsString = this.mockMvc.perform(
                         put("/recipes/{id}", id)
                                 .content(objectMapper.writeValueAsString(recipeRequest))
@@ -188,7 +213,7 @@ class RecipesControllerTest {
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
-        return objectMapper.readValue(contentAsString, RecipeResponseTestDTO.class);
+        return objectMapper.readValue(contentAsString, RecipeResponseTest.class);
     }
 
     private void deleteRecipe(Long id) throws Exception {
@@ -199,14 +224,14 @@ class RecipesControllerTest {
         items.forEach(asserts);
     }
 
-    private IngredientRequest findIngredientRequestByName(RecipeRequest recipeRequest, IngredientResponseTestDTO ingredientResponse) {
+    private IngredientRequestTest findIngredientRequestByName(RecipeRequestTest recipeRequest, IngredientResponseTest ingredientResponse) {
         return recipeRequest.getIngredients()
                 .stream()
                 .filter(it -> it.getName().equals(ingredientResponse.getName()))
                 .findFirst().orElseThrow(AssertionError::new);
     }
 
-    RecipeResponseTestDTO[] getAllRecipePaginatedResponses(Integer page, Integer size, String sort, String sortDirectionDesc) throws Exception {
+    RecipeResponseTest[] getAllRecipePaginatedResponses(Integer page, Integer size, String sort, String sortDirectionDesc) throws Exception {
         var request = get("/recipes");
         if (page != null) {
             request.param("page", String.valueOf(page));
@@ -225,66 +250,73 @@ class RecipesControllerTest {
         return getRecipeResponses(request);
     }
 
-    private RecipeResponseTestDTO[] getRecipeResponses(MockHttpServletRequestBuilder requestBuilder) throws Exception {
+    private RecipeResponseTest[] getRecipeResponses(MockHttpServletRequestBuilder requestBuilder) throws Exception {
         var responseArrayString = this.mockMvc
                 .perform(requestBuilder)
                 .andDo(print())
                 .andExpect(status().isOk()).andReturn().getResponse()
                 .getContentAsString();
-        return objectMapper.readValue(responseArrayString, RecipeResponseTestDTO[].class);
+        return objectMapper.readValue(responseArrayString, RecipeResponseTest[].class);
     }
 
-    private RecipeResponseTestDTO[] getAllRecipePaginatedResponses() throws Exception {
+    private RecipeResponseTest[] getAllRecipePaginatedResponses() throws Exception {
         return getRecipeResponses(get("/recipes"));
     }
 
-    private RecipeResponseTestDTO getRecipeResponses(Long id) throws Exception {
+    private RecipeResponseTest getRecipeResponses(Long id) throws Exception {
         var responseArrayString = this.mockMvc
                 .perform(get("/recipes/{id}", id))
                 .andDo(print())
-                .andExpect(status().isOk()).andReturn().getResponse()
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
                 .getContentAsString();
-        return objectMapper.readValue(responseArrayString, RecipeResponseTestDTO.class);
+        return objectMapper.readValue(responseArrayString, RecipeResponseTest.class);
     }
 
-    private void assertRecipeStatus(MockHttpServletRequestBuilder mockHttpServletRequestBuilder, ResultMatcher statusMatcher) throws Exception {
-        this.mockMvc
+    private void assertRecipeResponse(MockHttpServletRequestBuilder mockHttpServletRequestBuilder, ResultMatcher statusMatcher, String expectedBody) throws Exception {
+        var responseString = this.mockMvc
                 .perform(mockHttpServletRequestBuilder)
                 .andDo(print())
-                .andExpect(statusMatcher);
+                .andExpect(statusMatcher)
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        assertThat(responseString).isEqualTo(expectedBody);
+
     }
 
-    private RecipeRequest peperoniPizzaRecipeRequest() {
-        final Set<IngredientRequest> ingredients = Set.of(
-                new IngredientRequest("Flower", IngredientType.DRY, 1000),
-                new IngredientRequest("Water", IngredientType.WET, 8000),
-                new IngredientRequest("Salt", IngredientType.DRY, 20),
-                new IngredientRequest("Yeast", IngredientType.DRY, 2),
-                new IngredientRequest("Peperoni", IngredientType.DRY, 100),
-                new IngredientRequest("Tomato sauce", IngredientType.WET, 100)
+    private RecipeRequestTest peperoniPizzaRecipeRequest() {
+        final Set<IngredientRequestTest> ingredients = Set.of(
+                new IngredientRequestTest("Flower", IngredientTypeTest.DRY, 1000),
+                new IngredientRequestTest("Water", IngredientTypeTest.WET, 8000),
+                new IngredientRequestTest("Salt", IngredientTypeTest.DRY, 20),
+                new IngredientRequestTest("Yeast", IngredientTypeTest.DRY, 2),
+                new IngredientRequestTest("Peperoni", IngredientTypeTest.DRY, 100),
+                new IngredientRequestTest("Tomato sauce", IngredientTypeTest.WET, 100)
 
         );
         final String newRecipeName = "Pizza Peperoni";
-        return new RecipeRequest(newRecipeName, ingredients);
+        return new RecipeRequestTest(newRecipeName, ingredients);
     }
 
     private void setInitialState() {
-        final Set<IngredientRequest> ingredients = getDefaultIngredientRequests();
-        initRecipe = new RecipeRequest("Pizza", ingredients);
+        final Set<IngredientRequestTest> ingredients = getDefaultIngredientRequests();
+        initRecipe = new RecipeRequestTest("Pizza", ingredients);
         createRecipes(List.of(initRecipe));
     }
 
-    private Set<IngredientRequest> getDefaultIngredientRequests() {
+    private Set<IngredientRequestTest> getDefaultIngredientRequests() {
         return Set.of(
-                new IngredientRequest("Flower", IngredientType.DRY, 1000),
-                new IngredientRequest("Water", IngredientType.WET, 8000),
-                new IngredientRequest("Salt", IngredientType.DRY, 20),
-                new IngredientRequest("Yeast", IngredientType.DRY, 2)
-
+                new IngredientRequestTest("Flower", IngredientTypeTest.DRY, 1000),
+                new IngredientRequestTest("Water", IngredientTypeTest.WET, 8000),
+                new IngredientRequestTest("Salt", IngredientTypeTest.DRY, 20),
+                new IngredientRequestTest("Yeast", IngredientTypeTest.DRY, 2)
         );
     }
 
-    private void createRecipes(List<RecipeRequest> recipes) {
+    private void createRecipes(List<RecipeRequestTest> recipes) {
         recipes.forEach(it ->
                 {
                     try {
@@ -310,12 +342,12 @@ class RecipesControllerTest {
         );
     }
 
-    private List<RecipeRequest> generateRecipeRequest(int i) {
-        final var recipeRequests = new ArrayList<RecipeRequest>(1);
+    private List<RecipeRequestTest> generateRecipeRequest(int i) {
+        final var recipeRequests = new ArrayList<RecipeRequestTest>(1);
         final String generatedString = generateRandomString();
         while (i > 0) {
             i--;
-            recipeRequests.add(new RecipeRequest(generatedString, getDefaultIngredientRequests()));
+            recipeRequests.add(new RecipeRequestTest(generatedString, getDefaultIngredientRequests()));
         }
         return recipeRequests;
     }

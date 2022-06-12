@@ -29,10 +29,10 @@ public class RecipesService {
     private final IngredientsRepository ingredientsRepository;
 
     @Transactional
-    public RecipeResponse getRecipe(Long id) {
+    public RecipeResponse getRecipe(long id) {
         var recipe = recipeRepository.findById(id);
         return recipe.map(r -> toRecipeResponse(r, r.getIngredients()))
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Recipe %d not found", id)));
     }
 
     @Transactional
@@ -58,11 +58,11 @@ public class RecipesService {
     }
 
     @Transactional
-    public void deleteRecipe(Long id) {
+    public void deleteRecipe(long id) {
         try {
             recipeRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException(String.format("Recipe %d not found", id));
         }
     }
 

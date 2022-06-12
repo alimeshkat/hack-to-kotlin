@@ -29,6 +29,6 @@ public class IngredientsEntity {
 
     private String name;
     private String type;
-    private int weight;
+    private Integer weight;
 }
 
