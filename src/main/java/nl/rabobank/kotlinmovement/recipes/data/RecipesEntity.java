@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,12 +31,28 @@ public class RecipesEntity {
 
     private String recipeName;
 
-    @OneToMany(mappedBy = "recipes", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
+    @OneToMany(mappedBy = "recipes", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<IngredientsEntity> ingredients = Collections.emptySet();
 
     @Override
-    public String toString() {
-       return String.format("RecipesEntity(id=%d, recipeName=%s)", id, recipeName);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RecipesEntity that = (RecipesEntity) o;
+
+        if (getId() == null || that.getId() == null) return false;
+
+        return getId().equals(that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        if (getId() == null) {
+            return super.hashCode();
+        } else {
+            return getId().hashCode();
+        }
     }
 }
 

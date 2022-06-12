@@ -29,10 +29,10 @@ public class RecipesService {
     private final IngredientsRepository ingredientsRepository;
 
     @Transactional
-    public RecipeResponse getRecipe(Long id) {
+    public RecipeResponse getRecipe(long id) {
         var recipe = recipeRepository.findById(id);
         return recipe.map(r -> toRecipeResponse(r, r.getIngredients()))
-                .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Recipe %d not found", id)));
     }
 
     @Transactional
@@ -42,6 +42,7 @@ public class RecipesService {
                 .map(r -> toRecipeResponse(r, r.getIngredients()))
                 .collect(Collectors.toList());
     }
+
     @Transactional
     public RecipeResponse saveRecipe(RecipeRequest recipeRequest) {
         final RecipesEntity recipe = toRecipeEntity(recipeRequest);
@@ -58,20 +59,18 @@ public class RecipesService {
     }
 
     @Transactional
-    public void deleteRecipe(Long id) {
+    public void deleteRecipe(long id) {
         try {
             recipeRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException(String.format("Recipe %d not found", id));
         }
     }
 
     private RecipesEntity updateOrCreateRecipes(Long id, RecipeRequest recipeRequest) {
-        return recipeRepository.findById(id).map(it -> {
-            it.setRecipeName(recipeRequest.getRecipeName());
-            it.getIngredients().clear();
-            return it;
-        }).orElse(recipeRepository.save(toRecipeEntity(recipeRequest)));
+        return recipeRepository.findById(id)
+                .map(it -> new RecipesEntity(it.getId(), recipeRequest.getRecipeName(), null)).
+                orElse(recipeRepository.save(toRecipeEntity(recipeRequest)));
     }
 
     private Set<IngredientsEntity> saveIngredients(RecipeRequest recipeRequest, RecipesEntity recipe) {

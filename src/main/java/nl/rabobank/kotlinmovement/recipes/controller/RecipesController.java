@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import nl.rabobank.kotlinmovement.recipes.model.RecipeRequest;
 import nl.rabobank.kotlinmovement.recipes.model.RecipeResponse;
 import nl.rabobank.kotlinmovement.recipes.service.RecipesService;
-import org.slf4j.Logger;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +22,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Slf4j
-public class RecipeController {
+public class RecipesController {
     private final RecipesService recipeService;
 
     @PostMapping("recipes")

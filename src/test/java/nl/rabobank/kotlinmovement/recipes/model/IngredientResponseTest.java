@@ -1,17 +1,15 @@
-package nl.rabobank.kotlinmovement.recipes;
+package nl.rabobank.kotlinmovement.recipes.model;
 
-import nl.rabobank.kotlinmovement.recipes.model.IngredientType;
-
-public class IngredientResponseTestDTO {
+public class IngredientResponseTest {
     private final Long id;
     private final String name;
-    private final IngredientType type;
+    private final IngredientTypeTest type;
     private final int weight;
 
-    public IngredientResponseTestDTO(){
+    public IngredientResponseTest(){
         this(null, null, null, 0);
     }
-    public IngredientResponseTestDTO(Long id, String name, IngredientType type, int weight) {
+    public IngredientResponseTest(Long id, String name, IngredientTypeTest type, int weight) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -26,7 +24,7 @@ public class IngredientResponseTestDTO {
         return name;
     }
 
-    public IngredientType getType() {
+    public IngredientTypeTest getType() {
         return type;
     }
 

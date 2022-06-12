@@ -28,4 +28,4 @@ To complete this simple recipe, you just need a couple of things.
 
 5) If the Maven configuration was set up correctly, continue to the next section.
 
-[Go to next section](../section2-domain-models/Recipe.md)
+[Go to next section](../2-domain-models/Recipe.md)
