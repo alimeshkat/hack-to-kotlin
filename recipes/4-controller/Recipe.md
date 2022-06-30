@@ -25,9 +25,11 @@ exceptions and returns the proper error code and response.
 ## Convert ErrorMessageMapper
 
 The `ErrorMessageMapper` is used by the `RecipesControllerAdvice` to transforms the error messages from the exceptions
-thrown by the application to the field in the body of an error response.
-For example, if the client `POST` request contains multiple incorrect fields a `MethodArgumentNotValidException` is thrown by the application, because of the constraints put on certain request fields (e.g. `@NotNull`, `@NotEmtpy` etc.), .
-The `ErrorMessageMapper` maps all the error messages (constraint violations) to a single `String` with a pre-fix, and creates an `RecipeErrorResponse`.  
+thrown by the application to the body of an error response.
+For example, if the client `POST` request contains multiple incorrect fields a `MethodArgumentNotValidException` is
+thrown by the application, because of the constraints put on certain request fields (e.g. `@NotNull`, `@NotEmtpy` etc.).
+The `ErrorMessageMapper` will map all the error messages (constraint violations) to a single `String` (with a pre-fix),
+and creates an `RecipeErrorResponse`.  
 Which gets serialised to `JSON` and returned to the client.
 
 1) Convert the `ErrorMessageMapper` Java files to Kotlin. Because this class contains only `static` methods, IntelliJ
@@ -36,8 +38,11 @@ Which gets serialised to `JSON` and returned to the client.
     1) Use Kotlin's Collection `extension` functions instead of Java Streams
     2) Assign default values to the optional parameters
     3) Use `sortedBy()` to sort the messages
-    4) Replace `StringBuilder` implementation
-       by [`foldIndexed()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/fold-indexed.html)
+    4) Replace the mutable `StringBuilder`
+       by more lean and
+       safe [`joinToString()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/join-to-string.html)
+       implementation. 
+   
 4) When ready, run all tests:
 
 ```shell
@@ -46,4 +51,4 @@ Which gets serialised to `JSON` and returned to the client.
 
 8) If all tests have passed, continue to the next recipe.
 
-[Go to next section](../4-data/Recipe.md)
+[Go to next section](../5-service/Recipe.md)
