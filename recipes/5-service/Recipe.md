@@ -42,8 +42,9 @@ There is 1 service class, 1 object mapper class and 1 exception class that
       Notice how Kotlin will generate getters and setters on these variables. It is also possible to add spring beans without annotating them with `@Autowired` here.
 
 6) Remove unused imports.
-7) When using a stream with .map, you can reference the value as `it` (from the word iterator). There is no need to keep this assignment in the code so we can refactor this:
+7) When using a stream with .map, you can reference the value as `it` (from the word iterator). There is no need to keep this assignment in the code so we can refactor this part.
 
+   Old:
    ```
    private fun updateOrCreateRecipes(id: Long, recipeRequest: RecipeRequest): RecipesEntity {
       return recipeRepository.findById(id)
@@ -52,7 +53,7 @@ There is 1 service class, 1 object mapper class and 1 exception class that
    }
    ```
 
-   to this
+   New:
    ```
    private fun updateOrCreateRecipes(id: Long, recipeRequest: RecipeRequest): RecipesEntity {
       return recipeRepository.findById(id)
