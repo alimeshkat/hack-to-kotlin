@@ -10,7 +10,7 @@ different ways:
 
 ## Clean-up Tips
 
-Converting of Java files to Kotlin is easy, but the generated code is not always the best code! It's important to review and refactor the generated right after the conversion.
+Converting of Java files to Kotlin is easy, but the generated code is not always the best code! It's important to review and refactor the generated code right after the conversion.
 To help you out with cleaning up the generated code, so it will be more idiomatic Kotlin, you can make use of the following tips:
 
 - All fields are made nullable by the converter. Dealing with nullable types is
@@ -19,6 +19,8 @@ To help you out with cleaning up the generated code, so it will be more idiomati
 - When you see bang-bang (`!!`) used by the converter, get rid of it!!
   First check, should the reference be of a nullable type? If so, call the member on the nullable reference with the safe call (
   `?.`) and use the elvis operator (`?:`) to handle the `null` scenario.
-- Favor read only properties (`val`)
+- Favor read only properties (`val`).
+- Favor immutable objects over mutable objects. This means we should avoid 
+  setters when possible and use contructors to create objects (and set all values).
 
 [Go back to the recipe](Recipe.md)

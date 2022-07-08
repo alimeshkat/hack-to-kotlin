@@ -7,7 +7,7 @@ kotlin. To keep the Java files concise, we have used `Lombok` library annotation
 
 1) Convert the classes in `model` package to Kotlin (Read the document about [converting Java file to Kotlin](CONVERT_JAVA_FILE_TO_KOTLIN.md).
 2) Clean-up Lombok annotations e.g. `@Data`
-3) Converted recipe models to `Data Classes`
+3) Convert recipe models to `Data Classes` (ok but how?)
 4) Make sure the properties are:
    1) `nullable` (e.g. name:String?)
    2) declared in the primary constructor 
