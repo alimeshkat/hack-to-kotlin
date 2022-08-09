@@ -33,9 +33,9 @@ public class RecipesController {
     }
 
     @GetMapping(value = "recipes")
-    public ResponseEntity<List<RecipeResponse>> getRecipes(Pageable pageable) {
+    public ResponseEntity<Iterable<RecipeResponse>> getRecipes() {
         log.info("Get All Recipes");
-        return ResponseEntity.ok(recipeService.getRecipes(pageable));
+        return ResponseEntity.ok(recipeService.getRecipes());
     }
 
     @GetMapping(value = "recipes/{id}")

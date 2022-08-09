@@ -1,6 +1,6 @@
 package nl.rabobank.kotlinmovement.recipes.data;
 
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RecipesRepository extends PagingAndSortingRepository<RecipesEntity, Long> {
+public interface RecipesRepository extends JpaRepository<RecipesEntity, Long> {
 }

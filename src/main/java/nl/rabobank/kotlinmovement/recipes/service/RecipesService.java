@@ -8,13 +8,12 @@ import nl.rabobank.kotlinmovement.recipes.data.RecipesRepository;
 import nl.rabobank.kotlinmovement.recipes.model.RecipeRequest;
 import nl.rabobank.kotlinmovement.recipes.model.RecipeResponse;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.Spliterator;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -36,9 +35,9 @@ public class RecipesService {
     }
 
     @Transactional
-    public List<RecipeResponse> getRecipes(Pageable pageable) {
-        final Spliterator<RecipesEntity> recipes = recipeRepository.findAll(pageable).spliterator();
-        return StreamSupport.stream(recipes, false)
+    public List<RecipeResponse> getRecipes() {
+        return recipeRepository.findAll()
+                .stream()
                 .map(r -> toRecipeResponse(r, r.getIngredients()))
                 .collect(Collectors.toList());
     }
@@ -75,11 +74,7 @@ public class RecipesService {
 
     private Set<IngredientsEntity> saveIngredients(RecipeRequest recipeRequest, RecipesEntity recipe) {
         final Set<IngredientsEntity> ingredients = toIngredientsEntity(recipeRequest, recipe);
-        return StreamSupport.stream(
-                ingredientsRepository
-                        .saveAll(ingredients)
-                        .spliterator(), false
-        ).collect(Collectors.toSet());
+        return new HashSet<>(ingredientsRepository.saveAll(ingredients));
     }
 
 }
