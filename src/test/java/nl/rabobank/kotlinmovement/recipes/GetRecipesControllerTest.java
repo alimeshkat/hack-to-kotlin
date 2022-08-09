@@ -1,18 +1,12 @@
 package nl.rabobank.kotlinmovement.recipes;
 
-import nl.rabobank.kotlinmovement.recipes.model.IngredientRequestTest;
-import nl.rabobank.kotlinmovement.recipes.model.IngredientTypeTest;
-import nl.rabobank.kotlinmovement.recipes.model.RecipeRequestTest;
 import nl.rabobank.kotlinmovement.recipes.model.RecipeResponseTest;
 import nl.rabobank.kotlinmovement.recipes.model.RecipesErrorResponseTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.MediaType;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
 
 import static nl.rabobank.kotlinmovement.recipes.RecipeAssertUtil.assertRecipeResponse;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -22,8 +16,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class GetRecipesControllerTest extends MockMvcTest {
-    private RecipeRequestTest initRecipeRequest;
+class GetRecipesControllerTest extends RecipeMockMvcTest {
+
 
     @Test
     @DisplayName("Should be able to get all recipes")
@@ -41,45 +35,12 @@ class GetRecipesControllerTest extends MockMvcTest {
     @Test
     @DisplayName("Should return not found if resource does not exist")
     void test4() throws Exception {
-        final RecipesErrorResponseTest actual = mockMvcPerformRequest(get("/recipes/{id}", 2L), RecipesErrorResponseTest.class, status().isNotFound());
+        final RecipesErrorResponseTest actual = notFoundCall(get("/recipes/{id}", 2L));
         assertThat(actual).isEqualTo(new RecipesErrorResponseTest("Recipe 2 not found"));
     }
 
     @BeforeEach
-    void setup() {
-        setInitialState();
+    void setup() throws Exception {
+         setInitialState();
     }
-
-    private void setInitialState() {
-        final Set<IngredientRequestTest> ingredients = getDefaultIngredientRequests();
-        initRecipeRequest = new RecipeRequestTest("Pizza", ingredients);
-        createRecipes(List.of(initRecipeRequest));
-    }
-
-    private Set<IngredientRequestTest> getDefaultIngredientRequests() {
-        return Set.of(
-                new IngredientRequestTest("Flower", IngredientTypeTest.DRY, 1000),
-                new IngredientRequestTest("Water", IngredientTypeTest.WET, 8000),
-                new IngredientRequestTest("Salt", IngredientTypeTest.DRY, 20),
-                new IngredientRequestTest("Yeast", IngredientTypeTest.DRY, 2)
-        );
-    }
-
-    private void createRecipes(List<RecipeRequestTest> recipes) {
-        recipes.forEach(it ->
-                {
-                    try {
-                        mockMvcPerformRequest(
-                                post("/recipes")
-                                        .content(objectMapper.writeValueAsString(it))
-                                        .contentType(MediaType.APPLICATION_JSON)
-                                , status().isCreated());
-                    } catch (Exception e) {
-                        fail(e.getMessage());
-                    }
-                }
-        );
-
-    }
-
 }

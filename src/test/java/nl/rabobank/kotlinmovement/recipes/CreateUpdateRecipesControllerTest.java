@@ -11,28 +11,22 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.util.Set;
 import java.util.stream.Stream;
 
 import static nl.rabobank.kotlinmovement.recipes.RecipeAssertUtil.assertRecipeResponse;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class CreateUpdateRecipesControllerTest extends MockMvcTest {
+class CreateUpdateRecipesControllerTest extends RecipeMockMvcTest {
 
     @Test
     @DisplayName("Should be able to update a recipe")
     void test1() throws Exception {
-        final RecipeResponseTest firstRecipe = mockMvcPerformRequest(get("/recipes"), RecipeResponseTest[].class, status().isOk())[0];
         final RecipeRequestTest updateRequest = peperoniPizzaRecipeRequest();
-        final Long actualRecipeResponseId = firstRecipe.getId();
-        final RecipeResponseTest updatedRecipeResponse = updateRecipe(actualRecipeResponseId, updateRequest);
+        final RecipeResponseTest updatedRecipeResponse = updateRecipe(1L, updateRequest);
         assertRecipeResponse(updateRequest, updatedRecipeResponse);
     }
 
@@ -49,8 +43,9 @@ class CreateUpdateRecipesControllerTest extends MockMvcTest {
     @MethodSource("errorDataParams")
     @DisplayName("Should not be able to create/update if request object is invalid")
     void test3(RecipeRequestTest recipeRequest, RecipesErrorResponseTest errorResponse) throws Exception {
-        final RecipesErrorResponseTest invalidCreateRecipe = invalidRecipeCall(post("/recipes"), recipeRequest);
-        final RecipesErrorResponseTest invalidUpdateRecipe = invalidRecipeCall(put("/recipes/{id}", 1), recipeRequest);
+        final String content = objectMapper.writeValueAsString(recipeRequest);
+        final RecipesErrorResponseTest invalidCreateRecipe = badRequestCall(post("/recipes").content(content));
+        final RecipesErrorResponseTest invalidUpdateRecipe = badRequestCall(put("/recipes/{id}", 1).content(content));
         assertThat(invalidCreateRecipe).isEqualTo(errorResponse);
         assertThat(invalidUpdateRecipe).isEqualTo(errorResponse);
     }
@@ -85,57 +80,6 @@ class CreateUpdateRecipesControllerTest extends MockMvcTest {
     @BeforeEach
     void setup() throws Exception {
         setInitialState();
-    }
-
-    private RecipesErrorResponseTest invalidRecipeCall(MockHttpServletRequestBuilder put, RecipeRequestTest recipeRequest) throws Exception {
-        final MockHttpServletRequestBuilder requestBuilder =
-                put.content(objectMapper.writeValueAsString(recipeRequest)).contentType(MediaType.APPLICATION_JSON);
-        return mockMvcPerformRequest(requestBuilder, RecipesErrorResponseTest.class, status().is4xxClientError());
-    }
-
-    private RecipeResponseTest updateRecipe(Long id, RecipeRequestTest recipeRequest) throws Exception {
-        final MockHttpServletRequestBuilder requestBuilder =
-                put("/recipes/{id}", id)
-                        .content(objectMapper.writeValueAsString(recipeRequest))
-                        .contentType(MediaType.APPLICATION_JSON);
-        return mockMvcPerformRequest(requestBuilder, RecipeResponseTest.class, status().isOk());
-    }
-
-    private RecipeRequestTest peperoniPizzaRecipeRequest() {
-        final Set<IngredientRequestTest> ingredients = Set.of(
-                new IngredientRequestTest("Flower", IngredientTypeTest.DRY, 1000),
-                new IngredientRequestTest("Water", IngredientTypeTest.WET, 8000),
-                new IngredientRequestTest("Salt", IngredientTypeTest.DRY, 20),
-                new IngredientRequestTest("Yeast", IngredientTypeTest.DRY, 2),
-                new IngredientRequestTest("Peperoni", IngredientTypeTest.DRY, 100),
-                new IngredientRequestTest("Tomato sauce", IngredientTypeTest.WET, 100)
-
-        );
-        final String newRecipeName = "Pizza Peperoni";
-        return new RecipeRequestTest(newRecipeName, ingredients);
-    }
-
-    private void setInitialState() throws Exception {
-        final Set<IngredientRequestTest> ingredients = getDefaultIngredientRequests();
-        RecipeRequestTest initRecipe = new RecipeRequestTest("Pizza", ingredients);
-        createRecipe(initRecipe);
-    }
-
-    private Set<IngredientRequestTest> getDefaultIngredientRequests() {
-        return Set.of(
-                new IngredientRequestTest("Flower", IngredientTypeTest.DRY, 1000),
-                new IngredientRequestTest("Water", IngredientTypeTest.WET, 8000),
-                new IngredientRequestTest("Salt", IngredientTypeTest.DRY, 20),
-                new IngredientRequestTest("Yeast", IngredientTypeTest.DRY, 2)
-        );
-    }
-
-    private void createRecipe(RecipeRequestTest recipe) throws Exception {
-        final MockHttpServletRequestBuilder requestBuilder =
-                post("/recipes")
-                        .content(objectMapper.writeValueAsString(recipe))
-                        .contentType(MediaType.APPLICATION_JSON);
-        mockMvcPerformRequest(requestBuilder, RecipeResponseTest.class, status().isCreated());
     }
 
 }
