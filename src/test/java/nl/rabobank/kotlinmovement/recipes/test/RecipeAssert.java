@@ -1,9 +1,9 @@
-package nl.rabobank.kotlinmovement.recipes;
+package nl.rabobank.kotlinmovement.recipes.test;
 
-import nl.rabobank.kotlinmovement.recipes.model.IngredientRequestTest;
-import nl.rabobank.kotlinmovement.recipes.model.IngredientResponseTest;
-import nl.rabobank.kotlinmovement.recipes.model.RecipeRequestTest;
-import nl.rabobank.kotlinmovement.recipes.model.RecipeResponseTest;
+import nl.rabobank.kotlinmovement.recipes.test.model.IngredientRequestTest;
+import nl.rabobank.kotlinmovement.recipes.test.model.IngredientResponseTest;
+import nl.rabobank.kotlinmovement.recipes.test.model.RecipeRequestTest;
+import nl.rabobank.kotlinmovement.recipes.test.model.RecipeResponseTest;
 import org.opentest4j.AssertionFailedError;
 
 import java.util.AbstractMap;
@@ -12,9 +12,9 @@ import java.util.function.Consumer;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class RecipeAssertUtil {
+public class RecipeAssert {
 
-    static void assertRecipeResponse(RecipeRequestTest recipeRequest, RecipeResponseTest recipeResponse) {
+    public static void assertRecipeResponse(RecipeRequestTest recipeRequest, RecipeResponseTest recipeResponse) {
         assertThat(recipeResponse.getId()).isNotNull();
         assertThat(recipeResponse.getRecipeName()).isEqualTo(recipeRequest.getRecipeName());
         assertIngredients(recipeRequest, recipeResponse);
@@ -41,9 +41,7 @@ public class RecipeAssertUtil {
                 ingredientResponse.stream()
                         .filter(iResp -> iResp.getName().equals(iReq.getName()))
                         .findFirst()
-                        .orElseThrow(
-                                () -> new AssertionFailedError("Expected " + iReq.getName())
-                        );
+                        .orElseThrow(() -> new AssertionFailedError("Expected " + iReq.getName()));
         return new AbstractMap.SimpleEntry<>(iReq, ingredientResponseTest);
     }
 }

@@ -1,4 +1,4 @@
-package nl.rabobank.kotlinmovement.recipes.model;
+package nl.rabobank.kotlinmovement.recipes.test.model;
 
 import java.util.Set;
 

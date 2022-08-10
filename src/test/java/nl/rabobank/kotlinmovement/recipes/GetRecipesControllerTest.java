@@ -1,20 +1,17 @@
 package nl.rabobank.kotlinmovement.recipes;
 
-import nl.rabobank.kotlinmovement.recipes.model.RecipeResponseTest;
-import nl.rabobank.kotlinmovement.recipes.model.RecipesErrorResponseTest;
+import nl.rabobank.kotlinmovement.recipes.test.RecipeMockMvcTest;
+import nl.rabobank.kotlinmovement.recipes.test.model.RecipeResponseTest;
+import nl.rabobank.kotlinmovement.recipes.test.model.RecipesErrorResponseTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-import static nl.rabobank.kotlinmovement.recipes.RecipeAssertUtil.assertRecipeResponse;
+import static nl.rabobank.kotlinmovement.recipes.test.RecipeAssert.assertRecipeResponse;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.fail;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class GetRecipesControllerTest extends RecipeMockMvcTest {
 
@@ -28,7 +25,7 @@ class GetRecipesControllerTest extends RecipeMockMvcTest {
     @Test
     @DisplayName("Should be able to get a recipe")
     void test2() throws Exception {
-        final RecipeResponseTest recipeResponse = mockMvcPerformRequest(get("/recipes/{id}", 1L), RecipeResponseTest.class, status().isOk());
+        final RecipeResponseTest recipeResponse = getRecipe(1L);
         assertRecipeResponse(initRecipeRequest, recipeResponse);
     }
 
@@ -41,6 +38,6 @@ class GetRecipesControllerTest extends RecipeMockMvcTest {
 
     @BeforeEach
     void setup() throws Exception {
-         setInitialState();
+        setInitialState();
     }
 }
