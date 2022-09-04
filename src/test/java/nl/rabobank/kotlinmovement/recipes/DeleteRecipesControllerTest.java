@@ -1,8 +1,8 @@
 package nl.rabobank.kotlinmovement.recipes;
 
-import nl.rabobank.kotlinmovement.recipes.test.RecipeMockMvcTest;
-import nl.rabobank.kotlinmovement.recipes.test.model.RecipeResponseTest;
-import nl.rabobank.kotlinmovement.recipes.test.model.RecipesErrorResponseTest;
+import nl.rabobank.kotlinmovement.recipes.test.util.RecipeMockMvcTest;
+import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipeResponseTest;
+import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipesErrorResponseTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

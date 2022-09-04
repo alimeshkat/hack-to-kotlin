@@ -1,4 +1,4 @@
-package nl.rabobank.kotlinmovement.recipes.test.model;
+package nl.rabobank.kotlinmovement.recipes.test.util.model;
 
 public class IngredientResponseTest {
     private final Long id;

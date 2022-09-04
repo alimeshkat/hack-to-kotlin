@@ -1,9 +1,9 @@
-package nl.rabobank.kotlinmovement.recipes.test;
+package nl.rabobank.kotlinmovement.recipes.test.util;
 
-import nl.rabobank.kotlinmovement.recipes.test.model.IngredientRequestTest;
-import nl.rabobank.kotlinmovement.recipes.test.model.IngredientTypeTest;
-import nl.rabobank.kotlinmovement.recipes.test.model.RecipeRequestTest;
-import nl.rabobank.kotlinmovement.recipes.test.model.RecipesErrorResponseTest;
+import nl.rabobank.kotlinmovement.recipes.test.util.model.IngredientRequestTest;
+import nl.rabobank.kotlinmovement.recipes.test.util.model.IngredientTypeTest;
+import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipeRequestTest;
+import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipesErrorResponseTest;
 
 import java.util.Set;
 
@@ -21,27 +21,19 @@ public class RecipeTestData {
     public static final RecipesErrorResponseTest errorMessageIncorrectIngredientName = new RecipesErrorResponseTest("Incorrect fields:ingredient.name.");
     public static final RecipesErrorResponseTest errorMessageIncorrectIngredientType = new RecipesErrorResponseTest("Incorrect fields:ingredient.type.");
     public static final RecipesErrorResponseTest errorMessageIncorrectWeight = new RecipesErrorResponseTest("Incorrect fields:ingredient.weight.");
+    public static RecipeRequestTest peperoniPizzaRecipeRequest = new RecipeRequestTest("Pizza Peperoni", Set.of(
+            new IngredientRequestTest("Flower", IngredientTypeTest.DRY, 1000),
+            new IngredientRequestTest("Water", IngredientTypeTest.WET, 8000),
+            new IngredientRequestTest("Salt", IngredientTypeTest.DRY, 20),
+            new IngredientRequestTest("Yeast", IngredientTypeTest.DRY, 2),
+            new IngredientRequestTest("Peperoni", IngredientTypeTest.DRY, 100),
+            new IngredientRequestTest("Tomato sauce", IngredientTypeTest.WET, 100)
+    ));
+    public static Set<IngredientRequestTest> getDefaultIngredientRequests = Set.of(
+            new IngredientRequestTest("Flower", IngredientTypeTest.DRY, 1000),
+            new IngredientRequestTest("Water", IngredientTypeTest.WET, 8000),
+            new IngredientRequestTest("Salt", IngredientTypeTest.DRY, 20),
+            new IngredientRequestTest("Yeast", IngredientTypeTest.DRY, 2)
+    );
 
-    public static RecipeRequestTest peperoniPizzaRecipeRequest() {
-        final Set<IngredientRequestTest> ingredients = Set.of(
-                new IngredientRequestTest("Flower", IngredientTypeTest.DRY, 1000),
-                new IngredientRequestTest("Water", IngredientTypeTest.WET, 8000),
-                new IngredientRequestTest("Salt", IngredientTypeTest.DRY, 20),
-                new IngredientRequestTest("Yeast", IngredientTypeTest.DRY, 2),
-                new IngredientRequestTest("Peperoni", IngredientTypeTest.DRY, 100),
-                new IngredientRequestTest("Tomato sauce", IngredientTypeTest.WET, 100)
-
-        );
-        final String newRecipeName = "Pizza Peperoni";
-        return new RecipeRequestTest(newRecipeName, ingredients);
-    }
-
-    public static Set<IngredientRequestTest> getDefaultIngredientRequests() {
-        return Set.of(
-                new IngredientRequestTest("Flower", IngredientTypeTest.DRY, 1000),
-                new IngredientRequestTest("Water", IngredientTypeTest.WET, 8000),
-                new IngredientRequestTest("Salt", IngredientTypeTest.DRY, 20),
-                new IngredientRequestTest("Yeast", IngredientTypeTest.DRY, 2)
-        );
-    }
 }

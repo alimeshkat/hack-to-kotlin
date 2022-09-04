@@ -1,9 +1,9 @@
-package nl.rabobank.kotlinmovement.recipes.test;
+package nl.rabobank.kotlinmovement.recipes.test.util;
 
-import nl.rabobank.kotlinmovement.recipes.test.model.IngredientRequestTest;
-import nl.rabobank.kotlinmovement.recipes.test.model.IngredientResponseTest;
-import nl.rabobank.kotlinmovement.recipes.test.model.RecipeRequestTest;
-import nl.rabobank.kotlinmovement.recipes.test.model.RecipeResponseTest;
+import nl.rabobank.kotlinmovement.recipes.test.util.model.IngredientRequestTest;
+import nl.rabobank.kotlinmovement.recipes.test.util.model.IngredientResponseTest;
+import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipeRequestTest;
+import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipeResponseTest;
 import org.opentest4j.AssertionFailedError;
 
 import java.util.AbstractMap;

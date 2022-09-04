@@ -1,10 +1,10 @@
-package nl.rabobank.kotlinmovement.recipes.test;
+package nl.rabobank.kotlinmovement.recipes.test.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import nl.rabobank.kotlinmovement.recipes.test.model.IngredientRequestTest;
-import nl.rabobank.kotlinmovement.recipes.test.model.RecipeRequestTest;
-import nl.rabobank.kotlinmovement.recipes.test.model.RecipeResponseTest;
-import nl.rabobank.kotlinmovement.recipes.test.model.RecipesErrorResponseTest;
+import nl.rabobank.kotlinmovement.recipes.test.util.model.IngredientRequestTest;
+import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipeRequestTest;
+import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipeResponseTest;
+import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipesErrorResponseTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 
 import java.util.Set;
 
-import static nl.rabobank.kotlinmovement.recipes.test.RecipeTestData.getDefaultIngredientRequests;
+import static nl.rabobank.kotlinmovement.recipes.test.util.RecipeTestData.getDefaultIngredientRequests;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -34,7 +34,7 @@ public class RecipeMockMvcTest {
     protected RecipeRequestTest initRecipeRequest;
 
     protected void setInitialState() throws Exception {
-        final Set<IngredientRequestTest> ingredients = getDefaultIngredientRequests();
+        final Set<IngredientRequestTest> ingredients = getDefaultIngredientRequests;
         RecipeRequestTest initRecipe = new RecipeRequestTest("Pizza", ingredients);
         initRecipeRequest = initRecipe;
         createRecipe(initRecipe);
