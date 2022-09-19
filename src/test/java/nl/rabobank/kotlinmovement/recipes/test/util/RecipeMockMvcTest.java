@@ -40,27 +40,6 @@ public class RecipeMockMvcTest {
         createRecipe(initRecipe);
     }
 
-    protected <T> T mockMvcPerformRequest(MockHttpServletRequestBuilder requestBuilder, Class<T> responseType, ResultMatcher status) throws Exception {
-        var responseArrayString = mockMvc
-                .perform(requestBuilder)
-                .andDo(print())
-                .andExpect(status)
-                .andReturn()
-                .getResponse()
-                .getContentAsString();
-        return objectMapper.readValue(responseArrayString, responseType);
-    }
-
-    protected void mockMvcPerformRequest(MockHttpServletRequestBuilder requestBuilder, ResultMatcher status) throws Exception {
-        mockMvc
-                .perform(requestBuilder)
-                .andDo(print())
-                .andExpect(status)
-                .andReturn()
-                .getResponse()
-                .getContentAsString();
-    }
-
     protected RecipeResponseTest getRecipe(long id) throws Exception {
         return mockMvcPerformRequest(get("/recipes/{id}", id), RecipeResponseTest.class, status().isOk());
     }
@@ -90,12 +69,33 @@ public class RecipeMockMvcTest {
         return mockMvcPerformRequest(requestBuilder, RecipesErrorResponseTest.class, status().isNotFound());
     }
 
+    protected void mockMvcPerformRequest(MockHttpServletRequestBuilder requestBuilder, ResultMatcher status) throws Exception {
+        mockMvc
+                .perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status)
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+    }
+
     private void createRecipe(RecipeRequestTest recipe) throws Exception {
         mockMvcPerformRequest(
                 post("/recipes")
                         .content(objectMapper.writeValueAsString(recipe))
                         .contentType(MediaType.APPLICATION_JSON)
                 , RecipeResponseTest.class, status().isCreated());
+    }
+
+    private <T> T mockMvcPerformRequest(MockHttpServletRequestBuilder requestBuilder, Class<T> responseType, ResultMatcher status) throws Exception {
+        var responseArrayString = mockMvc
+                .perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status)
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        return objectMapper.readValue(responseArrayString, responseType);
     }
 
 }
