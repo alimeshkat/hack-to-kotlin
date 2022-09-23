@@ -9,15 +9,17 @@ The goal of this workshop is not to learn Spring Boot modules or Maven, but how 
 We will start with converting simple POJO's, and move up to somewhat more complicated
 parts of the project containing the business logic.
 Converting the `Recipe API` happens in parts,
-each part has a `recipe` that will provide you with the necessary information about how to convert that particular part of the project.
+each part has a `recipe` that will provide you with the necessary information about how to convert that particular part
+of the project.
 Follow the recipes in the following order, and convert this project to Kotlin!
 
 1) [project setup](recipes/1-project-setup/Recipe.md)
 2) [domain](recipes/2-domain-models/Recipe.md)
 3) [data](recipes/3-data/Recipe.md)
-4) [controller](recipes/4-controller/Recipe.md)
-5) [service](recipes/5-service/Recipe.md)
-6) [test](recipes/6-test/Recipe.md)
+4) [application](recipes/4-application/Recipe.md)
+5) [controller](recipes/5-controller/Recipe.md)
+6) [service](recipes/6-service/Recipe.md)
+7) [test](recipes/7-test/Recipe.md)
 
 ## Recipe API
 
@@ -34,7 +36,7 @@ And, for validating the incoming request bean validation is uses (JSR380).
 As for the database, an in-memory [H2](https://www.h2database.com/html/main.html) database will run.
 For creating the database tables, [flyway](https://flywaydb.org/documentation/getstarted/how) migration
 tool is run during the startup.
-The migration schema can be found [here](src/main/resources/db/migration/V1_0__recipes.sql)
+The migration schema can be found [here](app/src/main/resources/db/migration/V1_0__recipes.sql)
 
 Recipe API has the following endpoints:
 
@@ -54,10 +56,11 @@ Please have the following software installed:
 - Maven v3
 - IntelliJ
 
-To test if everything is working execute ``mvn verify`` from the root of the project. 
+To test if everything is working execute ``mvn verify`` from the root of the project.
 This will build the jar and run all tests. You can start the application by running the following command:
 
 ```shell
 ./mvnw spring-boot:run
 ```
+
 An embedded Tomcat server will start on port ``8080``.

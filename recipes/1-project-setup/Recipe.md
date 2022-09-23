@@ -1,7 +1,7 @@
 # Maven Setup Recipe
 
 With this recipe we will configure maven. To check if the setup is right, we have added
-a [test Kotlin class](../../src/main/kotlin/nl/rabobank/kotlinmovement/recipes/KotlinSetupTestDTO.kt) to the kotlin
+a [test Kotlin class](../../app/src/main/kotlin/nl/rabobank/kotlinmovement/recipes/KotlinSetupTestDTO.kt) to the kotlin
 source.  
 If the Maven Kotlin configuration has been done correctly, you should be able to find the compiled class in the projects
 target directory.
@@ -23,9 +23,9 @@ To complete this simple recipe, you just need a couple of things.
    ```
 
 4) You should be able to
-   find [KotlinSetupTestDTO](../../target/classes/nl/rabobank/kotlinmovement/recipes/KotlinSetupTestDTO.class) in the
+   find [KotlinSetupTestDTO](../../recipe-java/target/classes/nl/rabobank/kotlinmovement/recipes/KotlinSetupTestDTO.class) in the
    build directory of the project
 
-5) If the Maven configuration was set up correctly, continue to the next section.
+6) If the Maven configuration was set up correctly, continue to the next section.
 
 [Go to next section](../2-domain-models/Recipe.md)
