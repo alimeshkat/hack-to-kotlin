@@ -10,9 +10,7 @@ Kotlin code.
 
 1) Convert the `data` package to Kotlin
 2) Refactor the `Entity` classes the following way:
-    1) Don't use `data` classes for JPA `entities`, because `entities` are not just regulair DTO's. `Entities` need to
-       adhere to certain requirement to function properly. Read more about
-       it [here](https://www.jpa-buddy.com/blog/best-practices-and-common-pitfalls/)
+    1) Don't use `data` classes for JPA `entities`, because `entities` are not just regulair DTO's.
     2) Add the `entity` properties to the default constructor
     3) Make all properties immutable (`val`)
     4) Make `id` and `ingridients` nullable
@@ -25,9 +23,17 @@ Kotlin code.
    ```
 
 5) If all tests have passed, continue to the next recipe.
+---
+![light-bulb](../sources/png/light-bulb-xs.png)
+
+The JPA `Entities` need to
+adhere to certain requirement to function properly. Read about the pitfalls of using JPA (Hibernate) with Kotlin [here](https://www.jpa-buddy.com/blog/best-practices-and-common-pitfalls/).
+
+---
+
+<span style="color:green">**_Tip_:**</span> **check if you haven't missed any warnings showen by IntelliJ ;)**
+
+![warning](../sources/png/warning.png)
 
 
-<span style="color:green">**_Tip_:**</span> **check if you didn't miss any warnings from IntelliJ ;)**
-
-![warning](warning.png)  
 [Go to next section](../4-application/Recipe.md)

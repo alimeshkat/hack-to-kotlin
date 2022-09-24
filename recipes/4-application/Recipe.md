@@ -21,9 +21,10 @@ annotated class (functions are first class citizens). So, let's get into it.
 ```shell
    (cd ../.. && ./mvnw clean verify)
    ```
-
-**Digress:** `runApplication()` is an [inline function](https://kotlinlang.org/docs/inline-functions.html) which means the function block and it's arguments can be inlined where it's called (call-site).
-This can be useful when working with higher-order-functions for performance reasons, and or functions with type parameter (generic types).
-
+--- 
+![light-bulb](../sources/png/light-bulb-xs.png)  
+The `runApplication()` is an [inline function](https://kotlinlang.org/docs/inline-functions.html) which means the function block and it's arguments can be inlined where it's called (call-site).
+This can be useful when working with higher-order-functions for performance reasons, and or functions with type parameter (generic types) to circumvent type arasur.
+---
 
 [Go to next section](../5-controller/Recipe.md)

@@ -25,7 +25,7 @@ class RecipesEntity(
     val id: Long? = null,
     val recipeName: String,
     @OneToMany(mappedBy = "recipes", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
-    val ingredients: Set<IngredientsEntity> = emptySet()
+    val ingredients: Set<IngredientsEntity>? = emptySet()
 ) {
 
     override fun equals(other: Any?): Boolean {
