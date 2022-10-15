@@ -56,7 +56,7 @@ Which gets serialised to `JSON` and returned to the client.
 
 --- 
 ![light-bulb](../sources/png/light-bulb-xs.png)  
-Maybe you have noted that the `ErrorMessageMapper` is converted to an `object` instead of a class.
+Maybe you noticed that the `ErrorMessageMapper` is converted to an `object` instead of a class.
 That is because in the `Java` class consist only out of `static` methods, and IntelliJ converts it into a singleton
 i.e.`object`.
 ---

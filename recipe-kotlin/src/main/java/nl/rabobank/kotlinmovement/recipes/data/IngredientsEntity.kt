@@ -31,11 +31,13 @@ class IngredientsEntity(
     val weight: Int,
 ) {
 
-    override fun equals(o: Any?): Boolean {
-        if (this === o) return true
-        if (o == null || javaClass != o.javaClass) return false
-        val that = o as IngredientsEntity
-        return if (id == null || that.id == null) false else id == that.id
+    override fun equals(other: Any?): Boolean {
+        return when {
+            other !is IngredientsEntity -> false
+            this === other -> true
+            id == null || other.id == null -> false
+            else -> id == other.id
+        }
     }
 
     override fun hashCode(): Int {

@@ -1,79 +1,66 @@
-package nl.rabobank.kotlinmovement.recipes.service;
+package nl.rabobank.kotlinmovement.recipes.service
 
-import lombok.AllArgsConstructor;
-import nl.rabobank.kotlinmovement.recipes.data.IngredientsEntity;
-import nl.rabobank.kotlinmovement.recipes.data.IngredientsRepository;
-import nl.rabobank.kotlinmovement.recipes.data.RecipesEntity;
-import nl.rabobank.kotlinmovement.recipes.data.RecipesRepository;
-import nl.rabobank.kotlinmovement.recipes.model.RecipeRequest;
-import nl.rabobank.kotlinmovement.recipes.model.RecipeResponse;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import static nl.rabobank.kotlinmovement.recipes.service.RecipesMapper.toIngredientsEntity;
-import static nl.rabobank.kotlinmovement.recipes.service.RecipesMapper.toRecipeEntity;
-import static nl.rabobank.kotlinmovement.recipes.service.RecipesMapper.toRecipeResponse;
+import nl.rabobank.kotlinmovement.recipes.data.IngredientsEntity
+import nl.rabobank.kotlinmovement.recipes.data.IngredientsRepository
+import nl.rabobank.kotlinmovement.recipes.data.RecipesEntity
+import nl.rabobank.kotlinmovement.recipes.data.RecipesRepository
+import nl.rabobank.kotlinmovement.recipes.model.RecipeRequest
+import nl.rabobank.kotlinmovement.recipes.model.RecipeResponse
+import org.springframework.dao.EmptyResultDataAccessException
+import org.springframework.data.repository.findByIdOrNull
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
-@AllArgsConstructor
-public class RecipesService {
-    private final RecipesRepository recipeRepository;
-    private final IngredientsRepository ingredientsRepository;
+class RecipesService(
+    val recipeRepository: RecipesRepository,
+    val ingredientsRepository: IngredientsRepository
+) {
+
+    @get:Transactional
+    val recipes: List<RecipeResponse>
+        get() = recipeRepository.findAll()
+            .mapNotNull { r: RecipesEntity -> r.ingredients?.let { RecipesMapper.toRecipeResponse(r, r.ingredients) } }
 
     @Transactional
-    public RecipeResponse getRecipe(long id) {
-        var recipe = recipeRepository.findById(id);
-        return recipe.map(r -> toRecipeResponse(r, r.getIngredients()))
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Recipe %d not found", id)));
+    fun getRecipe(id: Long): RecipeResponse? = recipeRepository.findByIdOrNull(id)
+        ?.let { recipesEntity ->
+            checkNotNull(recipesEntity.ingredients)
+            RecipesMapper.toRecipeResponse(recipesEntity, recipesEntity.ingredients)
+        }
+        ?: throw ResourceNotFoundException("Recipe $id not found")
+
+    @Transactional
+    fun saveRecipe(recipeRequest: RecipeRequest): RecipeResponse? {
+        val recipe = RecipesMapper.toRecipeEntity(recipeRequest)
+        val recipes = recipeRepository.save(recipe)
+        val ingredients = saveIngredients(recipeRequest, recipes)
+        return RecipesMapper.toRecipeResponse(recipes, ingredients)
     }
 
     @Transactional
-    public List<RecipeResponse> getRecipes() {
-        return recipeRepository.findAll()
-                .stream()
-                .map(r -> toRecipeResponse(r, r.getIngredients()))
-                .collect(Collectors.toList());
+    fun updateOrCreateRecipe(id: Long, recipeRequest: RecipeRequest): RecipeResponse? {
+        val recipes = updateOrCreateRecipes(id, recipeRequest)
+        val ingredients = saveIngredients(recipeRequest, recipes)
+        return RecipesMapper.toRecipeResponse(recipes, ingredients)
     }
 
     @Transactional
-    public RecipeResponse saveRecipe(RecipeRequest recipeRequest) {
-        final RecipesEntity recipe = toRecipeEntity(recipeRequest);
-        var recipes = recipeRepository.save(recipe);
-        var ingredients = saveIngredients(recipeRequest, recipes);
-        return toRecipeResponse(recipes, ingredients);
-    }
-
-    @Transactional
-    public RecipeResponse updateOrCreateRecipe(Long id, RecipeRequest recipeRequest) {
-        RecipesEntity recipes = updateOrCreateRecipes(id, recipeRequest);
-        final Set<IngredientsEntity> ingredients = saveIngredients(recipeRequest, recipes);
-        return toRecipeResponse(recipes, ingredients);
-    }
-
-    @Transactional
-    public void deleteRecipe(long id) {
+    fun deleteRecipe(id: Long) {
         try {
-            recipeRepository.deleteById(id);
-        } catch (EmptyResultDataAccessException e) {
-            throw new ResourceNotFoundException(String.format("Recipe %d not found", id));
+            recipeRepository.deleteById(id)
+        } catch (e: EmptyResultDataAccessException) {
+            throw ResourceNotFoundException("Recipe $id not found")
         }
     }
 
-    private RecipesEntity updateOrCreateRecipes(Long id, RecipeRequest recipeRequest) {
-        return recipeRepository.findById(id)
-                .map(it -> new RecipesEntity(it.getId(), recipeRequest.getRecipeName(), null)).
-                orElse(recipeRepository.save(toRecipeEntity(recipeRequest)));
+    private fun updateOrCreateRecipes(id: Long, recipeRequest: RecipeRequest): RecipesEntity {
+        return recipeRepository.findByIdOrNull(id)?.let {
+            requireNotNull(recipeRequest.recipeName) {}
+            RecipesEntity(it.id, recipeRequest.recipeName, null)
+        } ?: recipeRepository.save(RecipesMapper.toRecipeEntity(recipeRequest))
     }
 
-    private Set<IngredientsEntity> saveIngredients(RecipeRequest recipeRequest, RecipesEntity recipe) {
-        final Set<IngredientsEntity> ingredients = toIngredientsEntity(recipeRequest, recipe);
-        return new HashSet<>(ingredientsRepository.saveAll(ingredients));
-    }
-
+    private fun saveIngredients(recipeRequest: RecipeRequest, recipe: RecipesEntity): Set<IngredientsEntity> =
+        ingredientsRepository.saveAll(RecipesMapper.toIngredientsEntity(recipeRequest, recipe)).toSet()
 }

@@ -37,6 +37,9 @@ Another cool thing about the `Data` class is, you can `destruct` it. Let's see h
 class Box(val length: Int, val width: Int, val depth: Int)
 val (length, width, depth) = Box(10, 10, 10) //destructed
 
+listOf<Box>(Box(10, 10, 11), Box(11, 11, 12)).forEach { length, width, depth -> //destructed in a lambda
+    println("l=$length w=$width, d=$depth")
+}
 ```
 
 *Note*: The compiler uses the order of the properties in the constructor to assign the values to the destructed

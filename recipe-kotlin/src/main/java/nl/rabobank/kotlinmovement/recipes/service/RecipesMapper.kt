@@ -1,34 +1,45 @@
-package nl.rabobank.kotlinmovement.recipes.service;
+package nl.rabobank.kotlinmovement.recipes.service
 
-import nl.rabobank.kotlinmovement.recipes.data.IngredientsEntity;
-import nl.rabobank.kotlinmovement.recipes.data.RecipesEntity;
-import nl.rabobank.kotlinmovement.recipes.model.IngredientResponse;
-import nl.rabobank.kotlinmovement.recipes.model.IngredientType;
-import nl.rabobank.kotlinmovement.recipes.model.RecipeRequest;
-import nl.rabobank.kotlinmovement.recipes.model.RecipeResponse;
+import nl.rabobank.kotlinmovement.recipes.data.IngredientsEntity
+import nl.rabobank.kotlinmovement.recipes.data.RecipesEntity
+import nl.rabobank.kotlinmovement.recipes.model.IngredientRequest
+import nl.rabobank.kotlinmovement.recipes.model.IngredientResponse
+import nl.rabobank.kotlinmovement.recipes.model.IngredientType
+import nl.rabobank.kotlinmovement.recipes.model.RecipeRequest
+import nl.rabobank.kotlinmovement.recipes.model.RecipeResponse
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import static java.util.Collections.emptySet;
-
-public final class RecipesMapper {
-    public static RecipesEntity toRecipeEntity(RecipeRequest recipeRequest) {
-        return new RecipesEntity(null, recipeRequest.getRecipeName(), emptySet());
+object RecipesMapper {
+    fun toRecipeEntity(recipeRequest: RecipeRequest): RecipesEntity {
+        return RecipesEntity(null, checkNotNull(recipeRequest.recipeName), emptySet())
     }
 
-    public static Set<IngredientsEntity> toIngredientsEntity(RecipeRequest recipeRequest, RecipesEntity recipe) {
-        return recipeRequest.getIngredients()
-                .stream()
-                .map(it -> new IngredientsEntity(recipe, null, it.getName(), it.getType().name(), it.getWeight()))
-                .collect(Collectors.toSet());
+    fun toIngredientsEntity(recipeRequest: RecipeRequest, recipe: RecipesEntity?): Set<IngredientsEntity> {
+        return checkNotNull(recipeRequest.ingredients).map { (name, type, weight): IngredientRequest ->
+            IngredientsEntity(
+                recipe,
+                null,
+                checkNotNull(name),
+                checkNotNull(type).name,
+                checkNotNull(weight)
+            )
+        }.toSet()
     }
 
-    public static RecipeResponse toRecipeResponse(RecipesEntity recipes, Set<IngredientsEntity> ingredientsEntities) {
-        return new RecipeResponse(recipes.getId(), recipes.getRecipeName(),
-                ingredientsEntities.stream()
-                        .map(it -> new IngredientResponse(it.getId(), it.getName(), IngredientType.valueOf(it.getType()), it.getWeight()))
-                        .collect(Collectors.toSet()));
-    }
+    fun toRecipeResponse(
+        recipes: RecipesEntity,
+        ingredientsEntities: Set<IngredientsEntity>
+    ): RecipeResponse =
+        RecipeResponse(
+            checkNotNull(recipes.id),
+            recipes.recipeName,
+            ingredientsEntities.map { ingredient ->
+                IngredientResponse(
+                    ingredient.id,
+                    ingredient.name,
+                    IngredientType.valueOf(ingredient.type),
+                    ingredient.weight
+                )
+            }.toSet()
+        )
 
 }

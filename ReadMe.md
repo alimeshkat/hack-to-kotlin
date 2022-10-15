@@ -5,22 +5,34 @@ it with Spring Boot.
 This workshop is here to help you with that.
 
 While converting a good old Java Spring Boot Rest service to Kotlin, with Lombok, JPA and other populair libraries,
-you will learn what will be different in Kotlin. We will go beyond just converting the code and discuss best practices
-and pitfalls.
-We will start with converting simple POJO's, and move up to somewhat more complicated and interested parts of the
-application.
-Where pragmatic modern language that Kotlin can really shine!
+you will learn what will be different in Kotlin. But this workshop is more than just converting the Java code to Kotlin,
+we will discuss
 
-*Please keep in mind that the goal of this workshop is not to learn Spring Boot modules or Maven, but how to gradually
-migrate a Java Spring Boot project to Kotlin. And we are aware that not all Spring offers is covered! We want to give you a taste of what is
-possible and later expend on it based on requests from the community. See this as a work in progress and help us improve it.*
+- best practices of using Kotlin,
+- the utilities that you get out-of-the box when using Kotlin
+- pitfalls of converting Java code straight to Kotlin,
+- Kotlin's interoperability with Java
+- and more!
+
+You will start with converting simple POJO's, and move up to somewhat more complicated and interested parts of the
+application.
+Where pragmatic, modern language that Kotlin can really shine!
+
+## What this workshop is not
+
+Please keep in mind that the goal of this workshop is not to explain Spring Boot modules or Maven, but to expand on
+certain aspects that come in play when gradually
+migrating a Java Spring Boot project to Kotlin. And we are aware that not all Spring offers is covered! We want to give
+you a taste of what is
+possible and later extend it based on requests from the community. 
+This workshop is not perfect! But with your help we can improve it.
 
 ---
 
 ## Project setup
 
-The project you are going to work on is called `Recipe API`.
-Recipe Api is using Spring Boot and the following modules:
+The project you are going to work on is called `Recipe API` and resides in the [recipe-java](recipe-kotlin) module.
+`Recipe Api` is using the following modules from Spring:
 
 - Spring Web is used to create the rest endpoints
 - Spring Data is used to handle the database communication and connections
@@ -83,7 +95,7 @@ Follow the recipes in the right order, and you will convert this project to Kotl
 6) [service](recipes/6-service/Recipe.md)
 7) [test](recipes/7-test/Recipe.md)
 
-In some recipes we have added a section that provides you with additional information about a specific topic.
+In some recipes we have added a section with supplement information about a specific topic.
 These section you can recognize by the bulb icon ![](recipes/sources/png/light-bulb-xs.png).
 ---
 

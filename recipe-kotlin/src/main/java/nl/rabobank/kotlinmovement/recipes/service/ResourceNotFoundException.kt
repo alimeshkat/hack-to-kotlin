@@ -1,8 +1,3 @@
-package nl.rabobank.kotlinmovement.recipes.service;
+package nl.rabobank.kotlinmovement.recipes.service
 
-public class ResourceNotFoundException extends RuntimeException {
-    public ResourceNotFoundException(String message){
-        super(message);
-    }
-
-}
+class ResourceNotFoundException(message: String? = null) : RuntimeException(message)

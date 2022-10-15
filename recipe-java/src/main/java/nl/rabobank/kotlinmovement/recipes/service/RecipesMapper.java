@@ -7,6 +7,7 @@ import nl.rabobank.kotlinmovement.recipes.model.IngredientType;
 import nl.rabobank.kotlinmovement.recipes.model.RecipeRequest;
 import nl.rabobank.kotlinmovement.recipes.model.RecipeResponse;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 

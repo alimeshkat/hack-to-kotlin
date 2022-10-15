@@ -26,20 +26,4 @@ class RecipesEntity(
     val recipeName: String,
     @OneToMany(mappedBy = "recipes", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
     val ingredients: Set<IngredientsEntity>? = emptySet()
-) {
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other == null || javaClass != other.javaClass) return false
-        val that = other as RecipesEntity
-        return if (id == null || that.id == null) false else id == that.id
-    }
-
-    override fun hashCode(): Int {
-        return if (id == null) {
-            super.hashCode()
-        } else {
-            id.hashCode()
-        }
-    }
-}
+)
