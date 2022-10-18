@@ -1,47 +1,48 @@
-package nl.rabobank.kotlinmovement.recipes.test.util;
+package nl.rabobank.kotlinmovement.recipes.test.util
 
-import nl.rabobank.kotlinmovement.recipes.test.util.model.IngredientRequestTest;
-import nl.rabobank.kotlinmovement.recipes.test.util.model.IngredientResponseTest;
-import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipeRequestTest;
-import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipeResponseTest;
-import org.opentest4j.AssertionFailedError;
+import nl.rabobank.kotlinmovement.recipes.test.util.model.IngredientRequestTest
+import nl.rabobank.kotlinmovement.recipes.test.util.model.IngredientResponseTest
+import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipeRequestTest
+import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipeResponseTest
+import org.assertj.core.api.Assertions.assertThat
+import org.opentest4j.AssertionFailedError
 
-import java.util.AbstractMap;
-import java.util.Set;
-import java.util.function.Consumer;
+object RecipeAssert {
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
-public class RecipeAssert {
-
-    public static void assertRecipeResponse(RecipeRequestTest recipeRequest, RecipeResponseTest recipeResponse) {
-        assertThat(recipeResponse.getId()).isNotNull();
-        assertThat(recipeResponse.getRecipeName()).isEqualTo(recipeRequest.getRecipeName());
-        assertIngredients(recipeRequest, recipeResponse);
+    fun assertRecipeResponse(recipeRequest: RecipeRequestTest, recipeResponse: RecipeResponseTest) {
+        assertThat(recipeResponse.id).isNotNull
+        assertThat(recipeResponse.recipeName).isEqualTo(recipeRequest.recipeName)
+        assertIngredients(recipeRequest, recipeResponse)
     }
 
-    private static void assertIngredients(RecipeRequestTest updateRequest, RecipeResponseTest updatedRecipeResponse) {
-        matchIngredientAndAssert(updateRequest.getIngredients(), updatedRecipeResponse.getIngredients(), (AbstractMap.SimpleEntry<IngredientRequestTest, IngredientResponseTest> matchedIngredientEntry) -> {
-            assertThat(matchedIngredientEntry.getKey().getName()).isEqualTo(matchedIngredientEntry.getValue().getName());
-            assertThat(matchedIngredientEntry.getKey().getType()).isEqualTo(matchedIngredientEntry.getValue().getType());
-            assertThat(matchedIngredientEntry.getValue().getWeight()).isEqualTo(matchedIngredientEntry.getValue().getWeight());
-        });
-    }
-    private static void matchIngredientAndAssert(Set<IngredientRequestTest> recipeRequest,
-                                                 Set<IngredientResponseTest> ingredientResponse,
-                                                 Consumer<AbstractMap.SimpleEntry<IngredientRequestTest, IngredientResponseTest>> asserts) {
-        recipeRequest
-                .stream()
-                .map(iReq -> matchIngredients(ingredientResponse, iReq))
-                .forEach(asserts);
+    private fun assertIngredients(updateRequest: RecipeRequestTest, updatedRecipeResponse: RecipeResponseTest) {
+        matchIngredientAndAssert(
+            updateRequest.ingredients,
+            updatedRecipeResponse.ingredients
+        ) { (key, value): Pair<IngredientRequestTest, IngredientResponseTest> ->
+            assertThat(key.name).isEqualTo(value.name)
+            assertThat(key.type).isEqualTo(value.type)
+            assertThat(value.weight).isEqualTo(value.weight)
+        }
     }
 
-    private static AbstractMap.SimpleEntry<IngredientRequestTest, IngredientResponseTest> matchIngredients(Set<IngredientResponseTest> ingredientResponse, IngredientRequestTest iReq) {
-        final IngredientResponseTest ingredientResponseTest =
-                ingredientResponse.stream()
-                        .filter(iResp -> iResp.getName().equals(iReq.getName()))
-                        .findFirst()
-                        .orElseThrow(() -> new AssertionFailedError("Expected " + iReq.getName()));
-        return new AbstractMap.SimpleEntry<>(iReq, ingredientResponseTest);
+    private fun matchIngredientAndAssert(
+        ingredientRequests: Set<IngredientRequestTest>?,
+        ingredientResponse: Set<IngredientResponseTest>,
+        asserts: (Pair<IngredientRequestTest, IngredientResponseTest>) -> Unit
+    ) {
+        ingredientRequests
+            ?.map { iReq: IngredientRequestTest -> matchIngredients(ingredientResponse, iReq) }
+            ?.forEach(asserts) ?: AssertionFailedError("ingredientRequests should not be null")
+    }
+
+    private fun matchIngredients(
+        ingredientResponse: Set<IngredientResponseTest>,
+        iReq: IngredientRequestTest
+    ): Pair<IngredientRequestTest, IngredientResponseTest> {
+        val ingredientResponseTest = ingredientResponse
+            .firstOrNull { (_, name): IngredientResponseTest -> name == iReq.name }
+            ?: throw AssertionFailedError("Expected " + iReq.name)
+        return iReq to ingredientResponseTest
     }
 }

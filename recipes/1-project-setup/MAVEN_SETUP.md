@@ -4,7 +4,7 @@ This guide will describe step-by-step how to set up maven, so it will compile Ko
 
 ## Dependencies
 
-First, we will add the Kotlin standaard library to our dependencies.  
+Add the Kotlin standaard library dependencies to the pom.  
 
 ````xml
 <project>
@@ -29,13 +29,16 @@ First, we will add the Kotlin standaard library to our dependencies.
 </project>
 ````    
 
-## Plugin
+## Compiler plugins
 
-Next we will add the Kotlin maven plugin. We will add some additional configuration to the Kotlin Maven plugin for ``Spring`` & ``JPA``. 
-Because Spring annotated classes (``@Configuration`` or ``@Service``) should be non-final (open), and in Kotlin all classes are by default final.
-To ``open`` the Spring specific classes, we will add  ``spring`` plugin. 
-And, because ``JPA`` classes need a default constructor to be instantiated, we will add ``jpa`` plugin that generates no-arg constructors.
-Beneath here you can find a fully configured Kotlin maven plugin that will compile Java & Kotlin sources, and provide support for `Spring` & `JPA`. 
+Add the Kotlin maven plugin with ``Spring`` & ``JPA`` plugins configured. 
+The `Spring` plugin will make sure all spring annotated final classes are `open`.
+And, because ``JPA`` classes have to have default constructors, ``jpa`` plugin is added.
+
+Configure the Maven-compiler so that Kotlin-compiler is invoked before the Java-compiler.
+
+Beneath here you can find a fully configured Kotlin maven plugin that will compile Java & Kotlin sources, and provide support for `Spring` & `JPA`.
+
 
 ````xml
 <project>
@@ -93,10 +96,48 @@ Beneath here you can find a fully configured Kotlin maven plugin that will compi
                 </dependency>
             </dependencies>
         </plugin>
+        <!-- The maven compiler configured to invoke Kotlin compiler before the Java Compiler -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <executions>
+                <!-- Replacing default-compile as it is treated specially by maven -->
+                <execution>
+                    <id>default-compile</id>
+                    <phase>none</phase>
+                </execution>
+                <!-- Replacing default-testCompile as it is treated specially by maven -->
+                <execution>
+                    <id>default-testCompile</id>
+                    <phase>none</phase>
+                </execution>
+                <execution>
+                    <id>java-compile</id>
+                    <phase>compile</phase>
+                    <goals> <goal>compile</goal> </goals>
+                </execution>
+                <execution>
+                    <id>java-test-compile</id>
+                    <phase>test-compile</phase>
+                    <goals> <goal>testCompile</goal> </goals>
+                </execution>
+            </executions>
+        </plugin>
     </build>
     ...
 </project>
 
 ````
+
+To speed up the build enable the compiler plugin incremental compilation by adding this property:
+
+````xml
+<properties>
+    <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
+</properties>
+````
+
+reference: 
+[Compiler plugin docs](https://kotlinlang.org/docs/maven.html#jar-file)  
 
 [Go back to the recipe](Recipe.md)

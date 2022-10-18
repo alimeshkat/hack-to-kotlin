@@ -1,37 +1,43 @@
-package nl.rabobank.kotlinmovement.recipes;
+package nl.rabobank.kotlinmovement.recipes
 
-import nl.rabobank.kotlinmovement.recipes.test.util.RecipeMockMvcTest;
-import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipeResponseTest;
-import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipesErrorResponseTest;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import nl.rabobank.kotlinmovement.recipes.test.util.RecipeMockMvcTest
+import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipesErrorResponseTest
+import org.assertj.core.api.AssertionsForClassTypes
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-class DeleteRecipesControllerTest extends RecipeMockMvcTest {
-
+internal class DeleteRecipesControllerTest : RecipeMockMvcTest() {
     @Test
     @DisplayName("Should be able to delete a recipe ")
-    void test1() throws Exception {
-        mockMvcPerformRequest(delete("/recipes/{id}", 1L), status().isNoContent());
-        final RecipeResponseTest[] actualRecipeResponseLatest = getAllRecipes();
-        assertThat(actualRecipeResponseLatest).isEmpty();
+    @Throws(
+        Exception::class
+    )
+    fun test1() {
+        mockMvcPerformRequest(
+            MockMvcRequestBuilders.delete("/recipes/{id}", 1L),
+            MockMvcResultMatchers.status().isNoContent
+        )
+        val actualRecipeResponseLatest = allRecipes
+        AssertionsForClassTypes.assertThat(actualRecipeResponseLatest).isEmpty()
     }
 
     @Test
     @DisplayName("Should return not found if resource does not exist")
-    void test2() throws Exception {
-        final var expected = new RecipesErrorResponseTest("Recipe 2 not found");
-        final var actual = notFoundCall(delete("/recipes/{id}", 2L));
-        assertThat(actual).isEqualTo(expected);
+    @Throws(
+        Exception::class
+    )
+    fun test2() {
+        val expected = RecipesErrorResponseTest("Recipe 2 not found")
+        val actual = notFoundCall(MockMvcRequestBuilders.delete("/recipes/{id}", 2L))
+        AssertionsForClassTypes.assertThat(actual).isEqualTo(expected)
     }
 
     @BeforeEach
-    void setup() throws Exception {
-        setInitialState();
+    @Throws(Exception::class)
+    fun setup() {
+        setInitialState()
     }
-
 }

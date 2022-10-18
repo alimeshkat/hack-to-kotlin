@@ -1,30 +1,7 @@
-package nl.rabobank.kotlinmovement.recipes.test.util.model;
+package nl.rabobank.kotlinmovement.recipes.test.util.model
 
-public class IngredientRequestTest {
-
-    private final String name;
-    private final IngredientTypeTest type;
-    private final Integer weight;
-
-    public IngredientRequestTest() {
-        this(null,null,0);
-    }
-
-    public IngredientRequestTest(String name, IngredientTypeTest type, Integer weight) {
-        this.name = name;
-        this.type = type;
-        this.weight = weight;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public IngredientTypeTest getType() {
-        return type;
-    }
-
-    public Integer getWeight() {
-        return weight;
-    }
-}
+data class IngredientRequestTest(
+    val name: String? = null,
+    val type: IngredientTypeTest? = null,
+    val weight: Int? = null
+)

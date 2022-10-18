@@ -1,6 +1,7 @@
 package nl.rabobank.kotlinmovement.recipes;
 
 import nl.rabobank.kotlinmovement.recipes.test.util.RecipeMockMvcTest;
+import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipeRequestTest;
 import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipeResponseTest;
 import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipesErrorResponseTest;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,8 +15,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 class GetRecipesControllerTest extends RecipeMockMvcTest {
-
-
+    private RecipeRequestTest initRecipeRequest;
     @Test
     @DisplayName("Should be able to get all recipes")
     void test1() throws Exception {
@@ -38,6 +38,6 @@ class GetRecipesControllerTest extends RecipeMockMvcTest {
 
     @BeforeEach
     void setup() throws Exception {
-        setInitialState();
+        initRecipeRequest = setInitialState();
     }
 }

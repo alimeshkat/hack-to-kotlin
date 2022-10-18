@@ -5,24 +5,24 @@ it with Spring Boot.
 This workshop is here to help you with that.
 
 While converting a good old Java Spring Boot Rest service to Kotlin, with Lombok, JPA and other populair libraries,
-you will learn what will be different in Kotlin. But this workshop is more than just converting the Java code to Kotlin,
+you will learn how to go about a gradual migration from Java to Kotlin. But this workshop is more than just converting the Java code to Kotlin,
 we will discuss
 
 - best practices of using Kotlin,
 - the utilities that you get out-of-the box when using Kotlin
 - pitfalls of converting Java code straight to Kotlin,
 - Kotlin's interoperability with Java
+- some advanced Kotlin features
 - and more!
 
 You will start with converting simple POJO's, and move up to somewhat more complicated and interested parts of the
-application.
-Where pragmatic, modern language that Kotlin can really shine!
+application where pragmatic, modern language that Kotlin is can help you make this look simple!
 
 ## What this workshop is not
 
-Please keep in mind that the goal of this workshop is not to explain Spring Boot modules or Maven, but to expand on
+Please keep in mind that the goal of this workshop is not to explain Java, Spring Boot modules or Maven, but to expand on
 certain aspects that come in play when gradually
-migrating a Java Spring Boot project to Kotlin. And we are aware that not all Spring offers is covered! We want to give
+migrating a Java Spring Boot project to Kotlin. And be aware that this workshop does not cover what Spring offers! We want to give
 you a taste of what is
 possible and later extend it based on requests from the community. 
 This workshop is not perfect! But with your help we can improve it.
@@ -82,7 +82,7 @@ An embedded Tomcat server will start on port ``8080``.
 
 ---
 
-## Recipes
+## The Recipes
 
 To guid you with the migration we have created `recipes` that tells you step-by-step what have to be done.
 Follow the recipes in the right order, and you will convert this project to Kotlin in no time!
@@ -97,11 +97,16 @@ Follow the recipes in the right order, and you will convert this project to Kotl
 
 In some recipes we have added a section with supplement information about a specific topic.
 These section you can recognize by the bulb icon ![](recipes/sources/png/light-bulb-xs.png).
+
 ---
 
-## Answers
+## The Answers to the Recipes
 
 Last thing, we have created a second modules called [recipe-kotlin](recipe-kotlin) with the converted code.
 Feel free to compare your code with ours.
 
 **Good luck and have fun!**
+
+## Feedback
+
+Let us know what you think about this workshop by filling in this [form](https://forms.gle/NYLUQQYk4YKRGB5DA)

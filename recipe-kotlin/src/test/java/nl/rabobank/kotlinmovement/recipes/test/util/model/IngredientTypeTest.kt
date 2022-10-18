@@ -1,5 +1,5 @@
-package nl.rabobank.kotlinmovement.recipes.test.util.model;
+package nl.rabobank.kotlinmovement.recipes.test.util.model
 
-public enum IngredientTypeTest {
+enum class IngredientTypeTest {
     WET, DRY
 }

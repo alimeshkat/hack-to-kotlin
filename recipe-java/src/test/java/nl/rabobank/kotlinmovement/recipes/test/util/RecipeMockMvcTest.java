@@ -33,11 +33,12 @@ public class RecipeMockMvcTest {
 
     protected RecipeRequestTest initRecipeRequest;
 
-    protected void setInitialState() throws Exception {
+    protected RecipeRequestTest setInitialState() throws Exception {
         final Set<IngredientRequestTest> ingredients = getDefaultIngredientRequests;
         RecipeRequestTest initRecipe = new RecipeRequestTest("Pizza", ingredients);
         initRecipeRequest = initRecipe;
         createRecipe(initRecipe);
+        return initRecipe;
     }
 
     protected RecipeResponseTest getRecipe(long id) throws Exception {
