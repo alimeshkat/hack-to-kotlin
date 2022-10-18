@@ -15,7 +15,7 @@
     </parent>
     <groupId>nl.rabobank.kotlinmovement</groupId>
     <artifactId>recipes</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>recipes</name>
     <description>Provides CRUD operations for the recipes data.</description>
     <properties>
