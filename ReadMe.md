@@ -87,16 +87,17 @@ An embedded Tomcat server will start on port ``8080``.
 To guid you with the migration we have created `recipes` that tells you step-by-step what have to be done.
 Follow the recipes in the right order, and you will convert this project to Kotlin in no time!
 
-1) [project setup](recipes/1-project-setup/Recipe.md)
-2) [domain](recipes/2-domain-models/Recipe.md)
-3) [data](recipes/3-data/Recipe.md)
-4) [application](recipes/4-application/Recipe.md)
-5) [controller](recipes/5-controller/Recipe.md)
-6) [service](recipes/6-service/Recipe.md)
-7) [test](recipes/7-test/Recipe.md)
+1) [project setup](recipes/1-project-setup/Recipe.md)  
+2) [domain](recipes/2-domain-models/Recipe.md)  
+3) [data](recipes/3-data/Recipe.md)  
+4) [application](recipes/4-application/Recipe.md)  
+5) [controller](recipes/5-controller/Recipe.md)  
+6) [service](recipes/6-service/Recipe.md)  
+7) [test](recipes/7-test/Recipe.md)    
+8) [finish](recipes/Finish.md)
 
 In some recipes we have added a section with supplement information about a specific topic.
-These section you can recognize by the bulb icon ![](recipes/sources/png/light-bulb-xs.png).
+These section you can recognize by the bulb icon ![](recipes/sources/png/light-bulb-xs.png).  
 
 ---
 
