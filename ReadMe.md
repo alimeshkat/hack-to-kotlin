@@ -31,24 +31,14 @@ This workshop is not perfect! But with your help we can improve it.
 
 ---
 
-## Project setup
+## Recipe service
 
-The project you are going to work on is called `Recipe API` and resides in the [recipe-java](recipe-kotlin) module.
-`Recipe Api` is using the following modules from Spring:
+The project you are going to work on is called the `recipe-service`.
+It's a simple REST service that offers crud operations for recipes through its endpoints.
 
-- Spring Web is used to create the rest endpoints
-- Spring Data is used to handle the database communication and connections
-- Spring boot validation for validating the beans.
+### Api
 
-`Lombok` is used for generating the constructors and the accessors in classes.
-And, for validating the incoming request bean validation is uses (JSR380).
-
-As for the database, an in-memory [H2](https://www.h2database.com/html/main.html) database will run.
-For creating the database tables, [flyway](https://flywaydb.org/documentation/getstarted/how) migration
-tool is run during the startup.
-The migration schema can be found [here](recipe-java/src/main/resources/db/migration/V1_0__recipes.sql)
-
-Recipe API has the following endpoints:
+The `recipe-service` exposes the following endpoints:
 
 ````
 GET http://localhost:8080/recipes
@@ -57,6 +47,22 @@ POST http://localhost:8080/recipes
 PUT http://localhost:8080/recipes
 DELETE http://localhost:8080/recipes/{id}
 ````
+
+### libraries 
+
+And it uses the following modules from Spring:
+
+- Spring Web is used to create the rest endpoints
+- Spring Data is used to handle the database communication and connections
+- Spring boot validation for validating the beans.
+
+The `Lombok` library is used for generating the constructors and the accessors (getters & setters).
+And Java bean validation is used (JSR380) for validating the fields.
+
+As for the database, an in-memory [H2](https://www.h2database.com/html/main.html) database will run.
+For creating the database tables, [flyway](https://flywaydb.org/documentation/getstarted/how) migration
+tool is run during the startup.
+The migration schema can be found [here](recipe-java/src/main/resources/db/migration/V1_0__recipes.sql)
 
 ---
 
