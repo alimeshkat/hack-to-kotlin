@@ -6,9 +6,8 @@ We assume that you already have some basic knowledge about Kotlin, but you want 
 it with Spring Boot.
 This workshop is here to help you with that.
 
-While converting a good old Java Spring Boot Rest service to Kotlin, with Lombok, JPA and other populair libraries,
-you will learn how to go about a gradual migration from Java to Kotlin. But this workshop is more than just converting the Java code to Kotlin,
-we will discuss
+While converting a good old Java Spring Boot Rest service, with Lombok, JPA and other populair libraries,
+you will learn how to go about a gradual migrating from Java to Kotlin. This workshop is more than just converting the Java code to Kotlin, it's tries to touch on:
 
 - best practices of using Kotlin,
 - the utilities that you get out-of-the box when using Kotlin
