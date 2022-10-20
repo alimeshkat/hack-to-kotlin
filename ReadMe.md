@@ -1,3 +1,5 @@
+![](https://github.com/alimeshkat/hack-to-kotlin/actions/workflows/build.yml/badge.svg)
+
 ![](recipes/sources/png/HackToKotlinLogo.png)
 
 We assume that you already have some basic knowledge about Kotlin, but you want to go beyond that and learn how to use
