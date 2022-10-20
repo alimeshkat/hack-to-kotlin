@@ -6,22 +6,37 @@ We assume that you already have some basic knowledge about Kotlin, but you want 
 it with Spring Boot.
 This workshop is here to help you with that.
 
-While converting a good old Java Spring Boot Rest service, with Lombok, JPA and other populair libraries,
-you will learn how to go about a gradual migrating from Java to Kotlin. This workshop is more than just converting the Java code to Kotlin, it's tries to touch on:
+*Note*: This project is created as part of the hands-on part of the hack-to-kotlin workshop. You may use it outside of the context of the workshop.
 
-- best practices of using Kotlin,
-- the utilities that you get out-of-the box when using Kotlin
-- pitfalls of converting Java code straight to Kotlin,
+## About this workshop
+
+During this workshop you will be migrating a good old Java Spring Boot Rest service to Kotlin by following recipes.
+In the recipes we will touch upon:
+
+- the best practices of using Kotlin,
+- the Kotlin utilities you get out-of-the box
+- the pitfalls of converting Java code straight to Kotlin,
 - Kotlin's interoperability with Java
-- some advanced Kotlin features
+- neat Kotlin features
 - and more!
 
-You will start with converting simple POJO's, and move up to somewhat more complicated and interested parts of the
-application where pragmatic, modern language that Kotlin is can help you make this look simple!
+## The Recipes
+
+The recipes explain step-by-step what needs to be done to migrate the Java code.
+Follow the recipes in the right order, and you will be done converting the Java code to Kotlin in no time!
+
+1) [project setup](recipes/1-project-setup/Recipe.md)  
+2) [domain](recipes/2-domain-models/Recipe.md)  
+3) [data](recipes/3-data/Recipe.md)  
+4) [application](recipes/4-application/Recipe.md)  
+5) [controller](recipes/5-controller/Recipe.md)  
+6) [service](recipes/6-service/Recipe.md)  
+7) [test](recipes/7-test/Recipe.md)    
+8) [finish](recipes/Finish.md)
 
 ## What this workshop is not
 
-Please keep in mind that the goal of this workshop is not to explain Java, Spring Boot modules or Maven, but to expand on
+Please keep in mind that the goal of this workshop is not to explain Java, Spring Boot modules or any other tool or library, but to expand on
 certain aspects that come in play when gradually
 migrating a Java Spring Boot project to Kotlin. And be aware that this workshop does not cover what Spring offers! We want to give
 you a taste of what is
@@ -32,8 +47,8 @@ This workshop is not perfect! But with your help we can improve it.
 
 ## Recipe service
 
-The project you are going to work on is called the `recipe-service`.
-It's a simple REST service that offers crud operations for recipes through its endpoints.
+The Java Spring Boot project you are going to work on is called the `recipe-service`.
+It's a simple REST service that offers crud operation for recipes.
 
 ### Api
 
@@ -89,19 +104,7 @@ An embedded Tomcat server will start on port ``8080``.
 
 ---
 
-## The Recipes
 
-To guid you with the migration we have created `recipes` that tell you step-by-step what has to be done.
-Follow the recipes in the right order, and you will convert this project to Kotlin in no time!
-
-1) [project setup](recipes/1-project-setup/Recipe.md)  
-2) [domain](recipes/2-domain-models/Recipe.md)  
-3) [data](recipes/3-data/Recipe.md)  
-4) [application](recipes/4-application/Recipe.md)  
-5) [controller](recipes/5-controller/Recipe.md)  
-6) [service](recipes/6-service/Recipe.md)  
-7) [test](recipes/7-test/Recipe.md)    
-8) [finish](recipes/Finish.md)
 
 In some recipes we have added a section with supplement information about a specific topic.
 These section you can recognize by the bulb icon ![](recipes/sources/png/light-bulb-xs.png).  
