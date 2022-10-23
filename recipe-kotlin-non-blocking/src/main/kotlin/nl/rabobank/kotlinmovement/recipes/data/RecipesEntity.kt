@@ -1,8 +1,9 @@
 package nl.rabobank.kotlinmovement.recipes.data
 
+import org.springframework.data.annotation.Id
+import org.springframework.data.relational.core.mapping.Table
 import javax.persistence.*
 
-@Entity
 @Table(name = "recipes")
 class RecipesEntity(
     @Id

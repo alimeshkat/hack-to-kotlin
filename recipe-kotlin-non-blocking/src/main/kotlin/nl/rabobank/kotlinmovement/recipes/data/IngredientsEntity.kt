@@ -2,7 +2,6 @@ package nl.rabobank.kotlinmovement.recipes.data
 
 import javax.persistence.*
 
-@Entity
 @Table(name = "ingredients")
 class IngredientsEntity(
     @ManyToOne(cascade = [CascadeType.REMOVE], optional = false)

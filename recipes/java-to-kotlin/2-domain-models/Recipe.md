@@ -1,7 +1,7 @@
 # Domain Model Recipe
 
 In this recipe we will convert
-the [recipe models](../../recipe-java/src/main/java/nl/rabobank/kotlinmovement/recipes/model) to
+the [recipe models](../../../recipe-java/src/main/java/nl/rabobank/kotlinmovement/recipes/model) to
 kotlin. To keep the Java files concise, we have used `Lombok` library annotations to generate the `getters`
 , `contructor`, `equals` and `hashcode`.
 
@@ -28,7 +28,7 @@ kotlin. To keep the Java files concise, we have used `Lombok` library annotation
 5) If all tests have passed, continue to the next recipe.
 
 --- 
-![light-bulb](../sources/png/light-bulb-xs.png)  
+![light-bulb](../../sources/png/light-bulb-xs.png)  
 The [Data class](https://kotlinlang.org/docs/data-classes.html) in Kotlin is quit powerful. It generates a `copy`
 function which can be handy when working with immutable objects, next to the `equals()` & `hashCode()` functions.
 Another cool thing about the `Data` class is, you can `destruct` it. Let's see how that looks:

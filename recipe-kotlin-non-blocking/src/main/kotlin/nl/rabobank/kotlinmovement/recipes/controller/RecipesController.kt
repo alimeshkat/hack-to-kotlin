@@ -1,5 +1,6 @@
 package nl.rabobank.kotlinmovement.recipes.controller
 
+import kotlinx.coroutines.flow.Flow
 import nl.rabobank.kotlinmovement.recipes.model.RecipeRequest
 import nl.rabobank.kotlinmovement.recipes.model.RecipeResponse
 import nl.rabobank.kotlinmovement.recipes.service.RecipesService
@@ -14,7 +15,7 @@ import javax.validation.Valid
 class RecipesController(private val recipeService: RecipesService) {
 
     @PostMapping("recipes")
-    fun createRecipes(@Valid @RequestBody recipeRequest: RecipeRequest): ResponseEntity<RecipeResponse> {
+    suspend fun createRecipes(@Valid @RequestBody recipeRequest: RecipeRequest): ResponseEntity<RecipeResponse> {
         log.info("Create Recipes $recipeRequest")
         return ResponseEntity.status(HttpStatus.CREATED).body(
             recipeService.saveRecipe(recipeRequest)
@@ -22,20 +23,20 @@ class RecipesController(private val recipeService: RecipesService) {
     }
 
     @get:GetMapping(value = ["recipes"])
-    val recipes: ResponseEntity<Iterable<RecipeResponse>>
+    val recipes: ResponseEntity<Flow<RecipeResponse>>
         get() {
             log.info("Get All Recipes")
             return ResponseEntity.ok(recipeService.recipes)
         }
 
     @GetMapping(value = ["recipes/{id}"])
-    fun getRecipe(@PathVariable id: Long): ResponseEntity<RecipeResponse> {
+    suspend fun getRecipe(@PathVariable id: Long): ResponseEntity<RecipeResponse> {
         log.info("Get Recipe with $id")
         return ResponseEntity.ok(recipeService.getRecipe(id))
     }
 
     @PutMapping(value = ["recipes/{id}"])
-    fun updateRecipe(
+    suspend fun updateRecipe(
         @PathVariable id: Long,
         @Valid @RequestBody recipeRequest: RecipeRequest
     ): ResponseEntity<RecipeResponse> {
@@ -44,7 +45,7 @@ class RecipesController(private val recipeService: RecipesService) {
     }
 
     @DeleteMapping("recipes/{id}")
-    fun deleteRecipes(@PathVariable id: Long): ResponseEntity<Void> {
+    suspend fun deleteRecipes(@PathVariable id: Long): ResponseEntity<Void> {
         log.info("Delete Recipe $id")
         recipeService.deleteRecipe(id)
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build()
