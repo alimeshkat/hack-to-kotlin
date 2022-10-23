@@ -1,4 +1,4 @@
-![](https://github.com/alimeshkat/hack-to-kotlin/actions/workflows/build.yml/badge.svg)
+![](https://github.com/alimeshkat/hack-to-kotlin/actions/workflows/build.yml/badge.svg) [![Awesome Kotlin Badge](https://kotlin.link/awesome-kotlin.svg)](https://github.com/KotlinBy/awesome-kotlin)
 
 ![](recipes/sources/png/HackToKotlinLogo.png)
 
