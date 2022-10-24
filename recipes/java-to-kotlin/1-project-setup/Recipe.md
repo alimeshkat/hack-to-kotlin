@@ -23,7 +23,7 @@ To complete this simple recipe, you just need a couple of things.
    ```
 
 4) You should be able to
-   find [KotlinSetupTestDTO](../../recipe-java/target/classes/nl/rabobank/kotlinmovement/recipes/KotlinSetupTestDTO.class) in the
+   find [KotlinSetupTestDTO](../../../recipe-java/target/classes/nl/rabobank/kotlinmovement/recipes/KotlinSetupTestDTO.class) in the
    build directory of the project
 
 6) If the Maven configuration was set up correctly, continue to the next section.

@@ -1,7 +1,7 @@
 # Service Recipe
 
 In this recipe we will help you to convert the classes in
-the [service](../../recipe-java/src/main/java/nl/rabobank/kotlinmovement/recipes/service) package to
+the [service](../../../recipe-java/src/main/java/nl/rabobank/kotlinmovement/recipes/service) package to
 kotlin.
 
 ## Convert RecipeService
@@ -38,7 +38,7 @@ kotlin.
 9) If all tests have passed, continue to the next recipe.
 
 --- 
-![light-bulb](../sources/png/light-bulb-xs.png)  
+![light-bulb](../../sources/png/light-bulb-xs.png)  
 In some cases we expect that at certain point a nullable property should not be null.
 You can do a couple of things to assure the compiler that the value cannot be null.
 You can use the operators `!!`, `?:` or functions such as `requiredNotNull` or `checkNotNull`.

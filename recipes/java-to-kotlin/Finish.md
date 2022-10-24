@@ -16,5 +16,3 @@ We hope you have enjoyed it and along a way learned a couple of things about Kot
 Let us know what you liked and disliked by filling out this [form](https://forms.gle/weEuHvuGYYBHwVz2A).
 
 Cheers!
-
-Ali Meshkat

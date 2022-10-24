@@ -1,6 +1,6 @@
 package nl.rabobank.kotlinmovement.recipes;
 
-import nl.rabobank.kotlinmovement.recipes.test.util.RecipeMockMvcTest;
+import nl.rabobank.kotlinmovement.recipes.test.util.RecipeTest;
 import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipeRequestTest;
 import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipeResponseTest;
 import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipesErrorResponseTest;
@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.http.HttpMethod;
 
 import java.util.stream.Stream;
 
@@ -32,33 +33,33 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
-class CreateUpdateRecipesControllerTest extends RecipeMockMvcTest {
+class CreateUpdateRecipesControllerTest extends RecipeTest {
 
     @Test
     @DisplayName("Should be able to update a recipe")
     void test1() throws Exception {
         final RecipeRequestTest updateRequest = peperoniPizzaRecipeRequest;
-        final RecipeResponseTest updatedRecipeResponse = updateRecipe(1L, updateRequest);
-        assertRecipeResponse(updateRequest, updatedRecipeResponse);
+        final RecipeResponseTest response = updateRecipe(1L, updateRequest);
+        assertRecipeResponse(updateRequest, response);
     }
 
     @Test
     @DisplayName("Should be to able create new recipe when recipe id doesn't not exist")
     void test2() throws Exception {
         final RecipeRequestTest updateRequest = peperoniPizzaRecipeRequest;
-        final RecipeResponseTest updatedRecipeResponse = updateRecipe(2L, updateRequest);
-        assertRecipeResponse(updateRequest, updatedRecipeResponse);
+        final RecipeResponseTest response = updateRecipe(2L, updateRequest);
+        assertRecipeResponse(updateRequest, response);
     }
 
     @ParameterizedTest
     @MethodSource("errorDataParams")
-    @DisplayName("Should not be able to create/update if request object is invalid")
+    @DisplayName("Should not be able to create or update if request object is invalid")
     void test3(RecipeRequestTest recipeRequest, RecipesErrorResponseTest errorResponse) throws Exception {
-        final String content = objectMapper.writeValueAsString(recipeRequest);
-        final RecipesErrorResponseTest invalidCreateRecipe = badRequestCall(post("/recipes").content(content));
-        final RecipesErrorResponseTest invalidUpdateRecipe = badRequestCall(put("/recipes/{id}", 1).content(content));
-        assertThat(invalidCreateRecipe).isEqualTo(errorResponse);
-        assertThat(invalidUpdateRecipe).isEqualTo(errorResponse);
+        final String response = objectMapper.writeValueAsString(recipeRequest);
+        final RecipesErrorResponseTest invalidCreateResponse = badRequestCall(HttpMethod.POST, "/recipes", response);
+        final RecipesErrorResponseTest invalidUpdateResponse = badRequestCall(HttpMethod.PUT,"/recipes/1", response);
+        assertThat(invalidCreateResponse).isEqualTo(errorResponse);
+        assertThat(invalidUpdateResponse).isEqualTo(errorResponse);
     }
 
     private static Stream<Arguments> errorDataParams() {

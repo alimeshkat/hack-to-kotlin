@@ -1,6 +1,6 @@
 # Data Recipe
 
-The [data](../../recipe-java/src/main/java/nl/rabobank/kotlinmovement/recipes/data) package has two JPA `entities` and
+The [data](../../../recipe-java/src/main/java/nl/rabobank/kotlinmovement/recipes/data) package has two JPA `entities` and
 two `repositories`.
 As we have configured `JPA` in the `kotlin-maven-plugin`, only thing we have to do is convert the classes and make some
 small adjustments to the
@@ -24,7 +24,7 @@ Kotlin code.
 
 5) If all tests have passed, continue to the next recipe.
 ---
-![light-bulb](../sources/png/light-bulb-xs.png)
+![light-bulb](../../sources/png/light-bulb-xs.png)
 
 The JPA `Entities` need to
 adhere to certain requirement to function properly. Read about the pitfalls of using JPA (Hibernate) with Kotlin [here](https://www.jpa-buddy.com/blog/best-practices-and-common-pitfalls/).
@@ -33,7 +33,7 @@ adhere to certain requirement to function properly. Read about the pitfalls of u
 
 <span style="color:green">**_Tip_:**</span> **check if you haven't missed any warnings showen by IntelliJ ;)**
 
-![warning](../sources/png/warning.png)
+![warning](../../sources/png/warning.png)
 
 
 [Go to next section](../4-application/Recipe.md)
