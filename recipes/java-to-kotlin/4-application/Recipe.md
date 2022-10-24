@@ -8,7 +8,7 @@ annotated class (functions are first class citizens). So, let's get into it.
 ## Convert RecipesApplication
 
 1) Convert
-   the [RecipesApplication class](../../recipe-java/src/main/java/nl/rabobank/kotlinmovement/recipes/RecipesApplication.java)
+   the [RecipesApplication class](../../../recipe-java/src/main/java/nl/rabobank/kotlinmovement/recipes/RecipesApplication.java)
    .
 2) To make it more Kotlin like, let's move the `main` function to the outside of the class and place it on the same
    level as the `class`. The generated `@JvmStatic` can be removed now.
@@ -23,7 +23,7 @@ annotated class (functions are first class citizens). So, let's get into it.
    ```
 
 --- 
-![light-bulb](../sources/png/light-bulb-xs.png)  
+![light-bulb](../../sources/png/light-bulb-xs.png)  
 Note that the `runApplication()` doesn't need the application class type as an argument, it uses the type parameter of the function.
 In Java that's not possible because of the type erasure at runtime. But in Kotlin it is possible to use the type parameter in a function 
 when the function is an [inline function](https://kotlinlang.org/docs/inline-functions.html#reified-type-parameters).

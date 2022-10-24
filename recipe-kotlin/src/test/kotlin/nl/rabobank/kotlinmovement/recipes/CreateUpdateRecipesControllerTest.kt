@@ -1,7 +1,7 @@
 package nl.rabobank.kotlinmovement.recipes
 
 import nl.rabobank.kotlinmovement.recipes.test.util.RecipeAssert.assertRecipeResponse
-import nl.rabobank.kotlinmovement.recipes.test.util.RecipeMockMvcTest
+import nl.rabobank.kotlinmovement.recipes.test.util.RecipeTest
 import nl.rabobank.kotlinmovement.recipes.test.util.RecipeTestData.emptyRequest
 import nl.rabobank.kotlinmovement.recipes.test.util.RecipeTestData.emptyRequestIngredient
 import nl.rabobank.kotlinmovement.recipes.test.util.RecipeTestData.errorMessageIncorrectIngredientName
@@ -20,51 +20,48 @@ import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipeRequestTest
 import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipesErrorResponseTest
 import org.assertj.core.api.AssertionsForClassTypes
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import org.springframework.http.HttpMethod
 import java.util.stream.Stream
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-internal class CreateUpdateRecipesControllerTest : RecipeMockMvcTest() {
+internal class CreateUpdateRecipesControllerTest : RecipeTest() {
     @Test
-    @DisplayName("Should be able to update a recipe")
-    @Throws(
-        Exception::class
-    )
-    fun test1() {
+    @Throws(Exception::class)
+    fun `Should be able to update a recipe`() {
         val updateRequest: RecipeRequestTest = peperoniPizzaRecipeRequest
-        val updatedRecipeResponse = updateRecipe(1L, updateRequest)
-        assertRecipeResponse(updateRequest, updatedRecipeResponse)
+        val response = updateRecipe(1L, updateRequest)
+        assertRecipeResponse(updateRequest, response)
     }
 
     @Test
-    @DisplayName("Should be to able create new recipe when recipe id doesn't not exist")
     @Throws(
         Exception::class
     )
-    fun test2() {
+    fun `Should be to able create new recipe when recipe id doesn't not exist`() {
         val updateRequest: RecipeRequestTest = peperoniPizzaRecipeRequest
-        val updatedRecipeResponse = updateRecipe(2L, updateRequest)
-        assertRecipeResponse(updateRequest, updatedRecipeResponse)
+        val response = updateRecipe(2L, updateRequest)
+        assertRecipeResponse(updateRequest, response)
     }
 
     @ParameterizedTest
     @MethodSource("errorDataParams")
-    @DisplayName("Should not be able to create/update if request object is invalid")
     @Throws(
         Exception::class
     )
-    fun test3(recipeRequest: RecipeRequestTest?, errorResponse: RecipesErrorResponseTest?) {
-        val content = objectMapper.writeValueAsString(recipeRequest)
-        val invalidCreateRecipe = badRequestCall(MockMvcRequestBuilders.post("/recipes").content(content))
-        val invalidUpdateRecipe = badRequestCall(MockMvcRequestBuilders.put("/recipes/{id}", 1).content(content))
-        AssertionsForClassTypes.assertThat(invalidCreateRecipe).isEqualTo(errorResponse)
-        AssertionsForClassTypes.assertThat(invalidUpdateRecipe).isEqualTo(errorResponse)
+    fun `Should not be able to create or update if request object is invalid`(
+        recipeRequest: RecipeRequestTest?,
+        errorResponse: RecipesErrorResponseTest?
+    ) {
+        val body = objectMapper.writeValueAsString(recipeRequest)
+        val invalidCreateResponse = badRequestCall(HttpMethod.POST, "/recipes", body)
+        val invalidUpdateResponse = badRequestCall(HttpMethod.PUT, "/recipes/1", body)
+        AssertionsForClassTypes.assertThat(invalidCreateResponse).isEqualTo(errorResponse)
+        AssertionsForClassTypes.assertThat(invalidUpdateResponse).isEqualTo(errorResponse)
     }
 
     @BeforeEach
