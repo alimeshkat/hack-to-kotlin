@@ -6,7 +6,7 @@ We assume that you already have some basic knowledge about Kotlin, but you want 
 it with Spring Boot.
 This workshop is here to help you with that.
 
-*Note*: This project is created as part of the hands-on part of the hack-to-kotlin workshop. You may use it outside of the context of the workshop.
+*Note*: This project is created as part of the hands-on part of the hack-to-kotlin workshop. You may use it outside the context of the workshop.
 
 ## About this workshop
 
@@ -25,14 +25,14 @@ In the recipes we will touch upon:
 The recipes explain step-by-step what needs to be done to migrate the Java code.
 Follow the recipes in the right order, and you will be done converting the Java code to Kotlin in no time!
 
-1) [project setup](recipes/1-project-setup/Recipe.md)  
-2) [domain](recipes/2-domain-models/Recipe.md)  
-3) [data](recipes/3-data/Recipe.md)  
-4) [application](recipes/4-application/Recipe.md)  
-5) [controller](recipes/5-controller/Recipe.md)  
-6) [service](recipes/6-service/Recipe.md)  
-7) [test](recipes/7-test/Recipe.md)    
-8) [finish](recipes/Finish.md)
+1) [project setup](recipes/java-to-kotlin/1-project-setup/Recipe.md)  
+2) [domain](recipes/java-to-kotlin/2-domain-models/Recipe.md)  
+3) [data](recipes/java-to-kotlin/3-data/Recipe.md)  
+4) [application](recipes/java-to-kotlin/4-application/Recipe.md)  
+5) [controller](recipes/java-to-kotlin/5-controller/Recipe.md)  
+6) [service](recipes/java-to-kotlin/6-service/Recipe.md)  
+7) [test](recipes/java-to-kotlin/7-test/Recipe.md)    
+8) [finish](recipes/java-to-kotlin/Finish.md)
 
 ## What this workshop is not
 
