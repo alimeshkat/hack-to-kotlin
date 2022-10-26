@@ -2,40 +2,44 @@ package nl.rabobank.kotlinmovement.recipes.service
 
 import nl.rabobank.kotlinmovement.recipes.data.IngredientsEntity
 import nl.rabobank.kotlinmovement.recipes.data.RecipesEntity
-import nl.rabobank.kotlinmovement.recipes.model.*
+import nl.rabobank.kotlinmovement.recipes.model.IngredientRequest
+import nl.rabobank.kotlinmovement.recipes.model.IngredientResponse
+import nl.rabobank.kotlinmovement.recipes.model.IngredientType
+import nl.rabobank.kotlinmovement.recipes.model.RecipeRequest
+import nl.rabobank.kotlinmovement.recipes.model.RecipeResponse
 
 object RecipesMapper {
-    fun toRecipeEntity(recipeRequest: RecipeRequest): RecipesEntity {
-        return RecipesEntity(null, checkNotNull(recipeRequest.recipeName), emptySet())
+    fun toRecipeEntity(recipeRequest: RecipeRequest, id: Long? = null): RecipesEntity {
+        return RecipesEntity(id, checkNotNull(recipeRequest.recipeName))
     }
 
-    fun toIngredientsEntity(recipeRequest: RecipeRequest, recipe: RecipesEntity?): Set<IngredientsEntity> {
+    fun toIngredientsEntity(recipeRequest: RecipeRequest, recipeId: Long?): List<IngredientsEntity> {
         return checkNotNull(recipeRequest.ingredients).map { (name, type, weight): IngredientRequest ->
             IngredientsEntity(
-                recipe,
                 null,
                 checkNotNull(name),
                 checkNotNull(type).name,
-                checkNotNull(weight)
+                checkNotNull(weight),
+                checkNotNull(recipeId)
             )
-        }.toSet()
+        }
     }
 
     fun toRecipeResponse(
         recipes: RecipesEntity,
-        ingredientsEntities: Set<IngredientsEntity>
+        ingredientsEntities: List<IngredientsEntity>
     ): RecipeResponse =
         RecipeResponse(
-            checkNotNull(recipes.id),
+            checkNotNull(recipes.recipeId),
             recipes.recipeName,
             ingredientsEntities.map { ingredient ->
                 IngredientResponse(
-                    ingredient.id,
+                    checkNotNull(ingredient.ingredientId),
                     ingredient.name,
                     IngredientType.valueOf(ingredient.type),
                     ingredient.weight
                 )
-            }.toSet()
+            }
         )
 
 }

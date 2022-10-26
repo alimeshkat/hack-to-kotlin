@@ -6,15 +6,15 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.support.WebExchangeBindException
 
 @ControllerAdvice
 class RecipesControllerAdvice {
 
-    @ExceptionHandler(MethodArgumentNotValidException::class)
-    fun validationException(e: MethodArgumentNotValidException): ResponseEntity<RecipesErrorResponse> {
+    @ExceptionHandler(WebExchangeBindException::class)
+    fun validationException(e: WebExchangeBindException): ResponseEntity<RecipesErrorResponse> {
         log.error("error", e)
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
             ErrorMessageMapper.toErrorMessage(e, "Incorrect fields:", ".")

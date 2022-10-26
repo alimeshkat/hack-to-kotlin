@@ -1,68 +1,69 @@
 package nl.rabobank.kotlinmovement.recipes.service
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.mapNotNull
-import kotlinx.coroutines.flow.toSet
+import kotlinx.coroutines.flow.toList
 import nl.rabobank.kotlinmovement.recipes.data.IngredientsEntity
 import nl.rabobank.kotlinmovement.recipes.data.IngredientsRepository
-import nl.rabobank.kotlinmovement.recipes.data.RecipesEntity
+import nl.rabobank.kotlinmovement.recipes.data.RecipesAndIngredientsRepository
 import nl.rabobank.kotlinmovement.recipes.data.RecipesRepository
 import nl.rabobank.kotlinmovement.recipes.model.RecipeRequest
 import nl.rabobank.kotlinmovement.recipes.model.RecipeResponse
-import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class RecipesService(
     val recipeRepository: RecipesRepository,
-    val ingredientsRepository: IngredientsRepository
+    val ingredientsRepository: IngredientsRepository,
+    val recipesAndIngredientsRepository: RecipesAndIngredientsRepository
 ) {
-
-    @get:Transactional
-    val recipes: Flow<RecipeResponse>
-        get() = recipeRepository.findAll()
-            .mapNotNull { r: RecipesEntity -> r.ingredients?.let { RecipesMapper.toRecipeResponse(r, r.ingredients) } }
+    @Transactional
+    suspend fun getRecipes(): List<RecipeResponse> = recipesAndIngredientsRepository.findAllRecipesAndIngredients()
+        .map { (recipe, ingredients) ->
+            RecipesMapper.toRecipeResponse(recipe, ingredients)
+        }
 
     @Transactional
-    suspend fun getRecipe(id: Long): RecipeResponse? = recipeRepository.findById(id)
-        ?.let { recipesEntity ->
-            checkNotNull(recipesEntity.ingredients)
-            RecipesMapper.toRecipeResponse(recipesEntity, recipesEntity.ingredients)
-        }
-        ?: throw ResourceNotFoundException("Recipe $id not found")
+    suspend fun getRecipe(id: Long): RecipeResponse? =
+        recipesAndIngredientsRepository.findRecipesAndIngredientsById(id)?.let { (recipe, ingredients) ->
+            RecipesMapper.toRecipeResponse(recipe, ingredients)
+        } ?: throw ResourceNotFoundException("Recipe $id not found")
 
     @Transactional
     suspend fun saveRecipe(recipeRequest: RecipeRequest): RecipeResponse? {
         val recipe = RecipesMapper.toRecipeEntity(recipeRequest)
         val recipes = recipeRepository.save(recipe)
-        val ingredients = saveIngredients(recipeRequest, recipes)
+        val ingredients = saveIngredients(recipeRequest, recipes.recipeId)
         return RecipesMapper.toRecipeResponse(recipes, ingredients)
     }
 
     @Transactional
     suspend fun updateOrCreateRecipe(id: Long, recipeRequest: RecipeRequest): RecipeResponse? {
-        val recipes = updateOrCreateRecipes(id, recipeRequest)
-        val ingredients = saveIngredients(recipeRequest, recipes)
-        return RecipesMapper.toRecipeResponse(recipes, ingredients)
+        return recipeRepository.findById(id)?.let {
+            checkNotNull(recipeRequest.recipeName)
+            val ingredients = recreateIngredients(id, recipeRequest)
+            val recipes = recipeRepository.save(RecipesMapper.toRecipeEntity(recipeRequest, id))
+            RecipesMapper.toRecipeResponse(recipes, ingredients)
+        } ?: saveRecipe(recipeRequest)
     }
 
     @Transactional
     suspend fun deleteRecipe(id: Long) {
-        try {
+        recipeRepository.findById(id)?.let {
             recipeRepository.deleteById(id)
-        } catch (e: EmptyResultDataAccessException) {
-            throw ResourceNotFoundException("Recipe $id not found")
-        }
+        } ?: throw ResourceNotFoundException("Recipe $id not found")
+
     }
 
-    private suspend fun updateOrCreateRecipes(id: Long, recipeRequest: RecipeRequest): RecipesEntity {
-        return recipeRepository.findById(id)?.let {
-            requireNotNull(recipeRequest.recipeName) {}
-            RecipesEntity(it.id, recipeRequest.recipeName, null)
-        } ?: recipeRepository.save(RecipesMapper.toRecipeEntity(recipeRequest))
+    private suspend fun recreateIngredients(id: Long, recipeRequest: RecipeRequest): List<IngredientsEntity> {
+        ingredientsRepository.deleteByRecipeId(id)
+        return saveIngredients(recipeRequest, id)
     }
 
-    private suspend fun saveIngredients(recipeRequest: RecipeRequest, recipe: RecipesEntity): Set<IngredientsEntity> =
-        ingredientsRepository.saveAll(RecipesMapper.toIngredientsEntity(recipeRequest, recipe)).toSet()
+    private suspend fun saveIngredients(
+        recipeRequest: RecipeRequest,
+        recipeId: Long?
+    ): List<IngredientsEntity> {
+        return ingredientsRepository.saveAll(RecipesMapper.toIngredientsEntity(recipeRequest, recipeId)).toList()
+    }
+
 }

@@ -8,10 +8,10 @@ CREATE TABLE IF NOT EXISTS `recipes`
 CREATE TABLE IF NOT EXISTS `ingredients`
 (
     `id` INT GENERATED ALWAYS AS IDENTITY ,
-    `recipes_id` INT,
+    `recipe_id` INT,
     `name` varchar(255),
     `type` varchar(255),
     `weight` int,
     PRIMARY KEY (`id`),
-    CONSTRAINT `fk_recipes` FOREIGN KEY (`recipes_id`) REFERENCES recipes(`id`)
+    CONSTRAINT `fk_recipes` FOREIGN KEY (`recipe_id`) REFERENCES `recipes`(`id`)
 );

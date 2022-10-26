@@ -2,12 +2,12 @@ package nl.rabobank.kotlinmovement.recipes.controller
 
 import nl.rabobank.kotlinmovement.recipes.model.RecipesErrorResponse
 import org.springframework.validation.ObjectError
-import org.springframework.web.bind.MethodArgumentNotValidException
+import org.springframework.web.bind.support.WebExchangeBindException
 
 object ErrorMessageMapper {
     val DEFAULT_ERROR_MESSAGE = RecipesErrorResponse("Oops something went wrong")
     fun toErrorMessage(
-        methodArgumentNotValidException: MethodArgumentNotValidException,
+        methodArgumentNotValidException: WebExchangeBindException,
         messagePrefix: String?,
         messagePostfix: String?
     ): RecipesErrorResponse {

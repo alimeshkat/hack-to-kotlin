@@ -1,6 +1,5 @@
 package nl.rabobank.kotlinmovement.recipes.controller
 
-import kotlinx.coroutines.flow.Flow
 import nl.rabobank.kotlinmovement.recipes.model.RecipeRequest
 import nl.rabobank.kotlinmovement.recipes.model.RecipeResponse
 import nl.rabobank.kotlinmovement.recipes.service.RecipesService
@@ -8,7 +7,13 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
 
 @RestController
@@ -22,12 +27,11 @@ class RecipesController(private val recipeService: RecipesService) {
         )
     }
 
-    @get:GetMapping(value = ["recipes"])
-    val recipes: ResponseEntity<Flow<RecipeResponse>>
-        get() {
-            log.info("Get All Recipes")
-            return ResponseEntity.ok(recipeService.recipes)
-        }
+    @GetMapping(value = ["recipes"])
+    suspend fun recipes(): ResponseEntity<List<RecipeResponse>> {
+        log.info("Get All Recipes")
+        return ResponseEntity.ok(recipeService.getRecipes())
+    }
 
     @GetMapping(value = ["recipes/{id}"])
     suspend fun getRecipe(@PathVariable id: Long): ResponseEntity<RecipeResponse> {
@@ -51,7 +55,7 @@ class RecipesController(private val recipeService: RecipesService) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build()
     }
 
-    companion object  {
+    companion object {
         val log: Logger = LoggerFactory.getLogger(RecipesController::class.java)
     }
 }
