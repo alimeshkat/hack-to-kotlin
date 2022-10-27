@@ -1,7 +1,7 @@
 # Service Recipe
 
 In this recipe we will help you to convert the classes in
-the [service](../../../recipe-java/src/main/java/nl/rabobank/kotlinmovement/recipes/service) package to
+the [service](../../../java-to-kotlin/src/main/java/nl/rabobank/kotlinmovement/recipes/service) package to
 kotlin.
 
 ## Convert RecipeService

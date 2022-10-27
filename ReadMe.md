@@ -10,7 +10,7 @@ This workshop is here to help you with that.
 
 ## About this workshop
 
-During this workshop you will be migrating a good old Java Spring Boot Rest service to Kotlin by following recipes.
+During this workshop you will start with migrating a good old Java Spring Boot Rest service to Kotlin by following recipes.
 In the recipes we will touch upon:
 
 - the best practices of using Kotlin,
@@ -22,6 +22,7 @@ In the recipes we will touch upon:
 
 ## The Recipes
 
+### Java-To-Kotlin
 The recipes explain step-by-step what needs to be done to migrate the Java code.
 Follow the recipes in the right order, and you will be done converting the Java code to Kotlin in no time!
 
@@ -33,6 +34,8 @@ Follow the recipes in the right order, and you will be done converting the Java 
 6) [service](recipes/java-to-kotlin/6-service/Recipe.md)
 7) [test](recipes/java-to-kotlin/7-test/Recipe.md)
 8) [finish](recipes/java-to-kotlin/Finish.md)
+
+The complete migrated project you can find [here](java-to-kotlin-complete), feel free to compare your code with the of ours.
 
 ## What this workshop is not
 
@@ -64,19 +67,7 @@ DELETE http://localhost:8080/recipes/{id}
 
 ### libraries
 
-And it uses the following modules from Spring:
-
-- Spring Web is used to create the rest endpoints
-- Spring Data is used to handle the database communication and connections
-- Spring boot validation for validating the beans.
-
-The `Lombok` library is used for generating the constructors and the accessors (getters & setters).
-And Java bean validation is used (JSR380) for validating the fields.
-
-As for the database, an in-memory [H2](https://www.h2database.com/html/main.html) database will run.
-For creating the database tables, [flyway](https://flywaydb.org/documentation/getstarted/how) migration
-tool is run during the startup.
-The migration schema can be found [here](recipe-java/src/main/resources/db/migration/V1_0__recipes.sql)
+This project is based `spring-boot-starter-parent` 2.7.4.
 
 ---
 
@@ -110,11 +101,6 @@ In some recipes we have added a section with supplement information about a spec
 These section you can recognize by the bulb icon ![](recipes/sources/png/light-bulb-xs.png).
 
 ---
-
-## The Answers to the Recipes
-
-Last thing, we have created a second modules called [recipe-kotlin](recipe-kotlin) with the converted code.
-Feel free to compare your code with ours.
 
 **Good luck and have fun!**
 

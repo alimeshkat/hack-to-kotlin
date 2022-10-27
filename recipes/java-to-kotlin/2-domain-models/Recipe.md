@@ -1,7 +1,7 @@
 # Domain Model Recipe
 
 In this recipe we will convert
-the [recipe models](../../../recipe-java/src/main/java/nl/rabobank/kotlinmovement/recipes/model) to
+the [recipe models](../../../java-to-kotlin/src/main/java/nl/rabobank/kotlinmovement/recipes/model) to
 kotlin. To keep the Java files concise, we have used `Lombok` library annotations to generate the `getters`
 , `contructor`, `equals` and `hashcode`.
 

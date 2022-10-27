@@ -8,7 +8,7 @@ annotated class (functions are first class citizens). So, let's get into it.
 ## Convert RecipesApplication
 
 1) Convert
-   the [RecipesApplication class](../../../recipe-java/src/main/java/nl/rabobank/kotlinmovement/recipes/RecipesApplication.java)
+   the [RecipesApplication class](../../../java-to-kotlin/src/main/java/nl/rabobank/kotlinmovement/recipes/RecipesApplication.java)
    .
 2) To make it more Kotlin like, let's move the `main` function to the outside of the class and place it on the same
    level as the `class`. The generated `@JvmStatic` can be removed now.

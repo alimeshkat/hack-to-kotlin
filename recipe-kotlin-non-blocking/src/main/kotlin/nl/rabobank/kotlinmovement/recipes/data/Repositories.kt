@@ -26,8 +26,9 @@ class RecipesAndIngredientsRepositoryImp(private val template: R2dbcEntityTempla
     override suspend fun findAllRecipesAndIngredients(): Map<RecipesEntity, List<IngredientsEntity>> {
 
         return template.databaseClient.sql {
-            "SELECT * FROM ingredients " +
-                    "INNER JOIN recipes ON ingredients.recipe_id = recipes.recipe_id"
+            """SELECT * FROM ingredients 
+               |INNER JOIN recipes 
+               |ON ingredients.recipe_id = recipes.recipe_id""".trimMargin()
         }
             .map(::mapRowToRecipeToIngredient)
             .all()
@@ -38,9 +39,10 @@ class RecipesAndIngredientsRepositoryImp(private val template: R2dbcEntityTempla
 
     override suspend fun findRecipesAndIngredientsById(id: Long): Pair<RecipesEntity, List<IngredientsEntity>>? {
         return template.databaseClient.sql {
-            "SELECT * FROM ingredients " +
-                    "INNER JOIN recipes ON ingredients.recipe_id = recipes.recipe_id" +
-                    "WHERE recipes.recipe_id = :recipeId"
+            """SELECT * FROM ingredients 
+               |INNER JOIN recipes 
+               |ON ingredients.recipe_id = recipes.recipe_id
+               |WHERE recipes.recipe_id = :recipeId""".trimMargin()
         }
             .bind("recipeId", id)
             .map(::mapRowToRecipeToIngredient)

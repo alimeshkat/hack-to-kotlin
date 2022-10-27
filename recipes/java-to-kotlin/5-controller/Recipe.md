@@ -1,7 +1,7 @@
 # Controller Recipes
 
 In this recipe we will convert
-the classes in the [controller](../../../recipe-java/src/main/java/nl/rabobank/kotlinmovement/recipes/controller) package
+the classes in the [controller](../../../java-to-kotlin/src/main/java/nl/rabobank/kotlinmovement/recipes/controller) package
 to Kotlin.
 
 The `RecipesController` contains the REST methods of our `Recipes` API, and the `RecipesControllerAdvice` catches
