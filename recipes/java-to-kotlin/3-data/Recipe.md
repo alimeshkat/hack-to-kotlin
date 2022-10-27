@@ -1,6 +1,6 @@
 # Data Recipe
 
-The [data](../../../recipe-java/src/main/java/nl/rabobank/kotlinmovement/recipes/data) package has two JPA `entities` and
+The [data](../../../java-to-kotlin/src/main/java/nl/rabobank/kotlinmovement/recipes/data) package has two JPA `entities` and
 two `repositories`.
 As we have configured `JPA` in the `kotlin-maven-plugin`, only thing we have to do is convert the classes and make some
 small adjustments to the
