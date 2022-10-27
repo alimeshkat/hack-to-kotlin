@@ -2,7 +2,7 @@
 
 Now you have completed all previous recipes in this project, it is time to convert all the unit test code.
 The test classes are located in the root
-of [test resources](../../../recipe-java/src/test/java/nl/rabobank/kotlinmovement/recipes).
+of [test resources](../../../java-to-kotlin/src/test/java/nl/rabobank/kotlinmovement/recipes).
 
 As before, we will first convert the simplest classes and continue from there.
 
@@ -12,7 +12,7 @@ As before, we will first convert the simplest classes and continue from there.
 
 1) Checkout the [test setup](TestSetup.MD)
 2) Convert the domain models
-   under [test/util/model](../../../recipe-java/src/test/java/nl/rabobank/kotlinmovement/recipes/test/util/model).
+   under [test/util/model](../../../java-to-kotlin/src/test/java/nl/rabobank/kotlinmovement/recipes/test/util/model).
 3) Change the classes to `data classes`. Keep in mind that not all properties have to be nullable.
 4) The `@JvmOverloads` (generation of a default constructor) on the constructor is not necessary anymore after adding
    the `jackson-module-kotlin`
@@ -37,7 +37,7 @@ As before, we will first convert the simplest classes and continue from there.
 ## RecipeTest class
 
 1) convert
-   the [RecipeTest](../../../recipe-java/src/test/java/nl/rabobank/kotlinmovement/recipes/test/util/RecipeTest.java)
+   the [RecipeTest](../../../java-to-kotlin/src/test/java/nl/rabobank/kotlinmovement/recipes/test/util/RecipeTest.java)
    class
 2) The properties `mockMvc` is initialed when the test context is loaded, so we have to tell the compiler that this
    property is later initialised by making it a `lateinit var`
@@ -63,7 +63,7 @@ from `Java` code, `Intellij` has added the annotation `@JvmField` to it. This an
 
 ## Convert RecipeTestData
 
-1) Convert [RecipeTestData](../../../recipe-java/src/test/java/nl/rabobank/kotlinmovement/recipes/test/util/RecipeTestData.java)
+1) Convert [RecipeTestData](../../../java-to-kotlin/src/test/java/nl/rabobank/kotlinmovement/recipes/test/util/RecipeTestData.java)
 2) Replace `java.util.Set.of()` with `setOf()`
 3) Note that the annotations `@JvmField` can be removed once all the test code has been converted to `Kotlin`.
 4) When ready, run all tests:
@@ -87,7 +87,7 @@ e.g.`IngredientRequestTest(name = "yeast", weight = 100))`.
 
 ## Convert RecipeAssert
 
-1) Convert [RecipeAssert](../../../recipe-java/src/test/java/nl/rabobank/kotlinmovement/recipes/test/util/RecipeAssert.java)
+1) Convert [RecipeAssert](../../../java-to-kotlin/src/test/java/nl/rabobank/kotlinmovement/recipes/test/util/RecipeAssert.java)
 2) Replace the `Streams Api` with Kotlin Collection extension functions (e.g. map, filter, firstOrNull etc.)
 3) Like always, think about if a variable or argument should be nullable and make sure you handle the nullables
    appropriately. Make sure that an assertion fails in case of an unexpected `null` value
@@ -113,7 +113,7 @@ And like `data` classes you can destruct pairs (e.g. `val (k,v) = Pair("key","va
 ## Covert test classes
 
 1) Last but not least, convert the
-   [test classes](../../../recipe-java/src/test/java/nl/rabobank/kotlinmovement/recipes/CreateUpdateRecipesControllerTest.java)
+   [test classes](../../../java-to-kotlin/src/test/java/nl/rabobank/kotlinmovement/recipes/CreateUpdateRecipesControllerTest.java)
 2) The protected property `objectMapper` from RecipeMockMvcTest should be moved out of the companion object to the
    class. Using protected members which are not `@JvmStatic` in the superclass companion is unsupported yet
 3) In `GetRecipesControllerTest` the property `initRecipeRequest` should become a non-nullable `lateinit var` 
