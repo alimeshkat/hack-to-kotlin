@@ -1,0 +1,65 @@
+### Create Recipe
+
+POST localhost:8080/recipes
+Content-Type: application/json
+
+{
+  "recipeName": "Pizza",
+  "ingredients": [
+    {
+      "name": "flower",
+      "weight": 1000,
+      "type": "DRY"
+    },{
+      "name": "water",
+      "weight": 800,
+      "type": "WET"
+    },{
+      "name": "yeast",
+      "weight": 10,
+      "type": "DRY"
+    }
+  ]
+}
+
+### Update recipe
+
+PUT localhost:8080/recipes/1
+Content-Type: application/json
+
+{
+  "recipeName": "Pizza",
+  "ingredients": [
+    {
+      "name": "flower",
+      "weight": 1000,
+      "type": "DRY"
+    },{
+      "name": "water",
+      "weight": 800,
+      "type": "WET"
+    },{
+      "name": "yeast",
+      "weight": 10,
+      "type": "DRY"
+    },{
+      "name": "Olive oil",
+      "weight": 40,
+      "type": "WET"
+    }
+  ]
+}
+
+### Get all recipes
+
+GET localhost:8080/recipes
+Accept: application/json
+
+### Get a recipe
+
+GET localhost:8080/recipes/1
+Accept: application/json
+
+### Delete a recipe
+
+DELETE  localhost:8080/recipes/1
