@@ -7,7 +7,12 @@ on:
   push:
     branches: [ "master" ]
   pull_request:
-    branches: [ "master" ]
+    types:
+      - opened
+      - closed
+    branches: 
+      - 'master'
+    
 
 jobs:
   build:
