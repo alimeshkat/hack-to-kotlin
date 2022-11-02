@@ -55,10 +55,12 @@ Which gets serialised to `JSON` and returned to the client.
 8) If all tests have passed, continue to the next recipe.
 
 --- 
+
 ![light-bulb](../../sources/png/light-bulb-xs.png)  
 Maybe you noticed that the `ErrorMessageMapper` is converted to an `object` instead of a class.
 That is because in the `Java` class consist only out of `static` methods, and IntelliJ converts it into a singleton
 i.e.`object`.
+
 ---
 
 [Go to next section](../6-service/Recipe.md)
