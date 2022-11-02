@@ -23,10 +23,12 @@ annotated class (functions are first class citizens). So, let's get into it.
    ```
 
 --- 
+
 ![light-bulb](../../sources/png/light-bulb-xs.png)  
 Note that the `runApplication()` doesn't need the application class type as an argument, it uses the type parameter of the function.
 In Java that's not possible because of the type erasure at runtime. But in Kotlin it is possible to use the type parameter in a function 
 when the function is an [inline function](https://kotlinlang.org/docs/inline-functions.html#reified-type-parameters).
+
 ---
 
 [Go to next section](../5-controller/Recipe.md)
