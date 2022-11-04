@@ -1,8 +1,6 @@
 # Convert Java File To Kotlin
 
-Converting a Java class, a whole package of Java classes, or whole Java project can be done in one click. You can do
-that in
-different ways:
+Converting a Java class, a Java package or a java project can be done in one click. You can do that in different ways:
 
 - Right-click on a Java file/package/project -> `Convert Java File to Kotlin File`
 - Open a Java file and press `CTRL+ALT+Shift+K`
@@ -11,7 +9,7 @@ different ways:
 ## Clean-up Tips
 
 Converting of Java files to Kotlin is easy, but the generated code is not always the best code! It's important to review and refactor the generated code right after the conversion.
-To help you out with cleaning up the generated code, so it will be more idiomatic Kotlin, you can make use of the following tips:
+We have to make the code more idiomatic to Kotlin. To help you out with cleaning up the generated code you can make use of the following tips:
 
 - All fields are made nullable by the converter. Dealing with nullable types is
   easy, but it still makes the code more complex.

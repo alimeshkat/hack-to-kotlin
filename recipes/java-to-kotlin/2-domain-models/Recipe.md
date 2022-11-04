@@ -12,7 +12,7 @@ kotlin. To keep the Java files concise, we have used `Lombok` library annotation
 2) Clean-up Lombok annotations e.g. `@Data`
 3) Convert recipe models to `Data Classes` (ok but how?)
 4) Make sure the properties are:
-    1) `nullable` (e.g. name:String?) were it's needed, like the request object properties
+    1) `nullable` (e.g. name:String?) were it's needed, like the request object properties. Remove '= null' when possible.
     2) declared in the primary constructor
     3) **public** (without any modifier)
     4) and, immutable (`val`)
