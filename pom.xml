@@ -6,7 +6,7 @@
     <modules>
         <module>java-to-kotlin</module>
         <module>java-to-kotlin-complete</module>
-        <module>recipe-kotlin-non-blocking</module>
+        <module>non-blocking-complete</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
