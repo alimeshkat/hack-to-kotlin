@@ -4,7 +4,7 @@ This guide will describe step-by-step how to set up maven, so it will compile Ko
 
 ## Dependencies
 
-Add the Kotlin standaard library dependencies to the pom.  
+Add the Kotlin standaard library dependencies to the [pom](../../../java-to-kotlin/pom.xml).  
 
 ````xml
 <project>
