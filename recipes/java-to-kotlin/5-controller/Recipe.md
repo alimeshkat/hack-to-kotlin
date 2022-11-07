@@ -23,8 +23,8 @@ exceptions and returns the proper error code and response.
 8) When ready, run all tests:
 
 ```shell
-   (cd ../.. && ./mvnw clean verify)
-   ```
+   (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
+```
 
 ## Convert ErrorMessageMapper
 
@@ -49,8 +49,8 @@ Which gets serialised to `JSON` and returned to the client.
 4) When ready, run all tests:
 
 ```shell
-   (cd ../.. && ./mvnw clean verify)
-   ```
+   (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
+```
 
 8) If all tests have passed, continue to the next recipe.
 

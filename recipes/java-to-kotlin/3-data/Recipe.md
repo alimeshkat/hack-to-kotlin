@@ -19,8 +19,8 @@ Kotlin code.
 4) When ready, run all tests:
 
 ```shell
-   (cd ../.. && ./mvnw clean verify)
-   ```
+   (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
+```
 
 5) If all tests have passed, continue to the next recipe.
 ---

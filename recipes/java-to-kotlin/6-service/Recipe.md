@@ -15,15 +15,15 @@ kotlin.
 6) Clean-up Lombok annotations e.g. `@AllArgsConstructor`
 7) When ready, run all tests:
 ```shell
-   (cd ../.. && ./mvnw clean verify)
-   ```
+   (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
+```
 ---
 ## Convert ResourceNotFoundException
 1) Convert the `ResourceNotFoundException` class to Kotlin
 3) When ready, run all tests:
 ```shell
-   (cd ../.. && ./mvnw clean verify)
-   ```
+   (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
+```
 ---
 ## Convert RecipeMapper
 
@@ -33,8 +33,8 @@ kotlin.
 
 4) When ready, run all tests:
 ```shell
-   (cd ../.. && ./mvnw clean verify)
-   ```
+   (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
+```
 9) If all tests have passed, continue to the next recipe.
 
 --- 

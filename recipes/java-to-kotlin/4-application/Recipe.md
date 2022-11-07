@@ -19,8 +19,8 @@ annotated class (functions are first class citizens). So, let's get into it.
 5) When ready, run all tests:
 
 ```shell
-   (cd ../.. && ./mvnw clean verify)
-   ```
+   (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
+```
 
 --- 
 

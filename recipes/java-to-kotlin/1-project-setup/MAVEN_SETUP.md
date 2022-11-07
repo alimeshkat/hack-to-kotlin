@@ -10,7 +10,7 @@ Add the Kotlin standaard library dependencies to the [pom](../../../java-to-kotl
 <project>
     ...
     <properties>
-        <kotlin.version>1.6.20</kotlin.version>
+        <kotlin.version>1.7.20</kotlin.version>
     </properties>
     <!--Add Kotlin standard library-->
     <dependencies>
@@ -127,7 +127,7 @@ Beneath here you can find a fully configured Kotlin maven plugin that will compi
                     </execution>
                 </executions>
             </plugin>
-        <plugins>
+        </plugins>
     </build>
     ...
 </project>
@@ -149,6 +149,6 @@ Rebuild the project to reflect the changes.
    ```
 
 reference: 
-[Compiler plugin docs](https://kotlinlang.org/docs/maven.html#jar-file)  
+[Compiler plugin docs](https://kotlinlang.org/docs/maven.html)  
 
 [Go back to the recipe](Recipe.md)

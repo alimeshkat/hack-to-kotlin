@@ -37,6 +37,11 @@ Follow the recipes in the right order, and you will be done converting the Java 
 
 The complete migrated project you can find [here](java-to-kotlin-complete), feel free to compare your code with the of ours.
 
+### Nice-to-know
+
+In most of the recipes we have added a `nice-to-know` section, to provide you with some additional information about some topics.
+These section you can recognize by the bulb icon ![](recipes/sources/png/light-bulb-xs.png).
+
 ## What this workshop is not
 
 Please keep in mind that the goal of this workshop is not to explain Java, Spring Boot modules or any other tool or library, but to expand on
@@ -50,7 +55,7 @@ This workshop is not perfect! But with your help we can improve it.
 
 ## Recipe service
 
-The Java Spring Boot project you are going to work on is called the `recipe-service`.
+The Java Spring Boot project you are going to work on is called the `recipe-service`, it resides in the `java-to-kotlin` module.
 It's a simple REST service that offers crud operation for recipes.
 
 ### Api
@@ -82,7 +87,7 @@ Please have the following software installed:
 To test if everything is working execute
 
 ```shell 
-./mvnw verify
+./mvnw clean verify
 ```
 
 This will build the jar and run all tests. You can start the application by running the following command:
@@ -93,16 +98,9 @@ This will build the jar and run all tests. You can start the application by runn
 
 An embedded Tomcat server will start on port ``8080``.
 
----
-
-
-
-In some recipes we have added a section with supplement information about a specific topic.
-These section you can recognize by the bulb icon ![](recipes/sources/png/light-bulb-xs.png).  
-
----
-
 **Good luck and have fun!**
+
+---
 
 ## Feedback
 

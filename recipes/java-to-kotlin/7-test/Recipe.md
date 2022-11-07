@@ -29,8 +29,8 @@ As before, we will first convert the simplest classes and continue from there.
 7) Now, initialize the `objectMapper` at `RecipeMockMvcTest` class with `jacksonObjectMapper`
 
 ```shell
-   (cd ../.. && ./mvnw clean verify)
-   ```
+   (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
+```
 
 ---
 
@@ -56,8 +56,8 @@ from `Java` code, `Intellij` has added the annotation `@JvmField` to it. This an
 ---
 
 ```shell
-   (cd ../.. && ./mvnw clean verify)
-   ```
+   (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
+```
 
 ---
 
@@ -70,7 +70,7 @@ from `Java` code, `Intellij` has added the annotation `@JvmField` to it. This an
 
 ```shell
    (cd ../.. && ./mvnw clean verify)
-   ```
+```
 
 --- 
 ![light-bulb](../../sources/png/light-bulb-xs.png)  
@@ -102,7 +102,7 @@ e.g.`IngredientRequestTest(name = "yeast", weight = 100))`.
 
 ```shell
    (cd ../.. && ./mvnw clean verify)
-   ```
+```
 
 --- 
 ![light-bulb](../../sources/png/light-bulb-xs.png)  
@@ -124,7 +124,7 @@ And like `data` classes you can destruct pairs (e.g. `val (k,v) = Pair("key","va
 
 ```shell
    (cd ../.. && ./mvnw clean verify)
-   ```
+```
 ---
 ![light-bulb](../../sources/png/light-bulb-xs.png)
 The `@DisplayName` annotation to describe the tests in a readable is not needed in Kotlin.
