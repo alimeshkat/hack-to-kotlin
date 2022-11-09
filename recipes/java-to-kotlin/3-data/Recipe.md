@@ -16,7 +16,24 @@ Kotlin code.
     4) Make `id` and `ingridients` nullable
 3) There is not much to change in the `Repositories` class, just make the `generic-types` of the
    `JpaRepository` not nullable.
-4) When ready, run all tests:
+4) For example, after the conversion and refactoring the signature of `IngredientsEntity` class should look like this:
+
+````kotlin
+@Entity
+@Table(name = "ingredients")
+class IngredientsEntity(
+   @ManyToOne(optional = false)
+   @JoinColumn(name = "recipes_id", nullable = false)
+   val recipes: RecipesEntity? = null,
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   val id: Long? = null,
+   val name: String,
+   val type: String,
+   val weight: Int,
+){..}
+````
+5) When ready, run all tests:
 
 ```shell
    (cd ../../.. && ./mvnw package -pl :java-to-kotlin)

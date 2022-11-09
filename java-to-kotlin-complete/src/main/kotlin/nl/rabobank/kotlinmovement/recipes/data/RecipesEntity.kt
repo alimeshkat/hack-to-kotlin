@@ -1,9 +1,5 @@
 package nl.rabobank.kotlinmovement.recipes.data
 
-import lombok.AllArgsConstructor
-import lombok.Getter
-import lombok.NoArgsConstructor
-import lombok.Setter
 import javax.persistence.CascadeType
 import javax.persistence.Entity
 import javax.persistence.FetchType
@@ -14,10 +10,6 @@ import javax.persistence.OneToMany
 import javax.persistence.Table
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 @Table(name = "recipes")
 class RecipesEntity(
     @Id

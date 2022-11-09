@@ -1,6 +1,5 @@
 package nl.rabobank.kotlinmovement.recipes.controller
 
-import lombok.AllArgsConstructor
 import nl.rabobank.kotlinmovement.recipes.model.RecipeRequest
 import nl.rabobank.kotlinmovement.recipes.model.RecipeResponse
 import nl.rabobank.kotlinmovement.recipes.service.RecipesService
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
 
 @RestController
-@AllArgsConstructor
 class RecipesController(private val recipeService: RecipesService) {
 
     @PostMapping("recipes")
