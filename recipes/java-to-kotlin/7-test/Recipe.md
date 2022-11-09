@@ -1,4 +1,4 @@
-# Test util Recipe
+# Test
 
 Now you have completed all previous recipes in this project, it is time to convert all the unit test code.
 The test classes are located in the root
@@ -34,6 +34,8 @@ As before, we will first convert the simplest classes and continue from there.
 
 ---
 
+[*peek solution*](../../../java-to-kotlin-complete/src/test/kotlin/nl/rabobank/kotlinmovement/recipes/test/util/model)
+
 ## RecipeTest class
 
 1) convert
@@ -59,6 +61,8 @@ from `Java` code, `Intellij` has added the annotation `@JvmField` to it. This an
    (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
 ```
 
+[*peek solution*](../../../java-to-kotlin-complete/src/test/kotlin/nl/rabobank/kotlinmovement/recipes/test/util/model)
+
 ---
 
 ## Convert RecipeTestData
@@ -71,6 +75,8 @@ from `Java` code, `Intellij` has added the annotation `@JvmField` to it. This an
 ```shell
    (cd ../.. && ./mvnw clean verify)
 ```
+
+[*peek solution*](../../../java-to-kotlin-complete/src/test/kotlin/nl/rabobank/kotlinmovement/recipes/test/util/RecipeTestData.kt)
 
 --- 
 ![light-bulb](../../sources/png/light-bulb-xs.png)  
@@ -104,6 +110,9 @@ e.g.`IngredientRequestTest(name = "yeast", weight = 100))`.
    (cd ../.. && ./mvnw clean verify)
 ```
 
+[*peek solution*](../../../java-to-kotlin-complete/src/test/kotlin/nl/rabobank/kotlinmovement/recipes/test/util/RecipeAssert.kt)
+
+
 --- 
 ![light-bulb](../../sources/png/light-bulb-xs.png)  
 To create a `Pair` in Kotlin you can use the infix operator `to` e.g. `val pair = k to v `.
@@ -125,6 +134,9 @@ And like `data` classes you can destruct pairs (e.g. `val (k,v) = Pair("key","va
 ```shell
    (cd ../.. && ./mvnw clean verify)
 ```
+
+[*peek solution*](../../../java-to-kotlin-complete/src/test/kotlin/nl/rabobank/kotlinmovement/recipes)
+
 ---
 ![light-bulb](../../sources/png/light-bulb-xs.png)
 The `@DisplayName` annotation to describe the tests in a readable is not needed in Kotlin.

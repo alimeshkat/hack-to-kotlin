@@ -22,6 +22,9 @@ annotated class (functions are first class citizens). So, let's get into it.
    (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
 ```
 
+[*peek solutions*](../../../java-to-kotlin-complete/src/main/kotlin/nl/rabobank/kotlinmovement/recipes/RecipesApplication.kt)
+
+
 --- 
 
 ![light-bulb](../../sources/png/light-bulb-xs.png)  

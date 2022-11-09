@@ -29,8 +29,12 @@ Add the Kotlin standaard library dependencies to the [pom](../../../java-to-kotl
 </project>
 ````
 
+---
+
 ![light-bulb](../../sources/png/light-bulb-xs.png)
  Kotlin is a transitive dependency of Spring Boot. This makes it possible to omit the version number. In the above example we do overwrite the kotlin transitive dependency version number from Spring.
+
+---
 
 ## Compiler plugins
 

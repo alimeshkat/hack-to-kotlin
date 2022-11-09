@@ -17,14 +17,22 @@ kotlin.
 ```shell
    (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
 ```
+
+[*peek solutions*](../../../java-to-kotlin-complete/src/main/kotlin/nl/rabobank/kotlinmovement/recipes/service/RecipesService.kt)
+
 ---
+
 ## Convert ResourceNotFoundException
 1) Convert the `ResourceNotFoundException` class to Kotlin
 3) When ready, run all tests:
 ```shell
    (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
 ```
+
+[*peek solutions*](../../../java-to-kotlin-complete/src/main/kotlin/nl/rabobank/kotlinmovement/recipes/service/ResourceNotFoundException.kt)
+
 ---
+
 ## Convert RecipeMapper
 
 1) Convert the `RecipesMapper` class to Kotlin.
@@ -54,5 +62,7 @@ You can use the operators `!!`, `?:` or functions such as `requiredNotNull` or `
   throws `IllegalStateException`.
 
 ---
+
+[*peek solutions*](../../../java-to-kotlin-complete/src/main/kotlin/nl/rabobank/kotlinmovement/recipes/service/RecipesMapper.kt)
 
 [Go to next section](../7-test/Recipe.md)

@@ -22,7 +22,8 @@ Kotlin code.
    (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
 ```
 
-5) If all tests have passed, continue to the next recipe.
+[*peek solutions*](../../../java-to-kotlin-complete/src/main/kotlin/nl/rabobank/kotlinmovement/recipes/data)
+
 ---
 ![light-bulb](../../sources/png/light-bulb-xs.png)
 

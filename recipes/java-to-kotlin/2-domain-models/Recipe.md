@@ -9,23 +9,32 @@ kotlin. To keep the Java files concise, we have used `Lombok` library annotation
 
 1) Convert the classes in `model` package to Kotlin (Read the document
    about [converting Java file to Kotlin](CONVERT_JAVA_FILE_TO_KOTLIN.md)).
-2) Clean-up Lombok annotations e.g. `@Data`
-3) Convert recipe models to `Data Classes` (ok but how?)
-4) Make sure the properties are:
+2) Make sure the properties are:
     1) `nullable` (e.g. name:String?) were it's needed, like the request object properties. Remove '= null' when possible.
     2) declared in the primary constructor
     3) **public** (without any modifier)
     4) and, immutable (`val`)
-5) The bean validation annotations should be:
-    1) on the backing field i.e. `@field:NotBlank()`
-    2) on the left side of the property declaration e.g. `@field:NotNull val name:String?`
-6) When ready, run all tests:
+3) The bean validation annotations should be:
+    1) on the backing field e.g. `@field:NotBlank()` and not
+    2) **on the left side of the property declaration** e.g. `@field:NotNull val name:String?` and not `val name: @field:NotNull String`!
+4) Convert recipe models to `data` Classes. 
+5) For example, the `RecipeRequest` class should look like this after the conversion and refactoring:
+    ```Kotlin
+     data class RecipeRequest(
+        @field:NotBlank(message = "recipeName")
+        val recipeName: String?,
+        @field:NotEmpty(message = "ingredients") @field:Valid
+        val ingredients: MutableSet<IngredientRequest>?
+    )
+    ``` 
+6) Clean-up Lombok annotations e.g. `@Data`
+7) When ready, run all tests:
 
 ```shell
    (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
  ```
 
-5) If all tests have passed, continue to the next recipe.
+[*peek solutions*](../../../java-to-kotlin-complete/src/main/kotlin/nl/rabobank/kotlinmovement/recipes/model)
 
 --- 
 ![light-bulb](../../sources/png/light-bulb-xs.png)  

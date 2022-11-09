@@ -26,6 +26,8 @@ exceptions and returns the proper error code and response.
    (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
 ```
 
+[*peek solutions*](../../../java-to-kotlin-complete/src/main/kotlin/nl/rabobank/kotlinmovement/recipes/controller)
+
 ## Convert ErrorMessageMapper
 
 The `ErrorMessageMapper` is used by the `RecipesControllerAdvice` to transforms the error messages from the exceptions
@@ -52,7 +54,7 @@ Which gets serialised to `JSON` and returned to the client.
    (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
 ```
 
-8) If all tests have passed, continue to the next recipe.
+[*peek solutions*](../../../java-to-kotlin-complete/src/main/kotlin/nl/rabobank/kotlinmovement/recipes/controller/ErrorMessageMapper.kt)
 
 --- 
 
