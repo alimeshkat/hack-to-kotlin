@@ -72,7 +72,7 @@ DELETE http://localhost:8080/recipes/{id}
 
 ### libraries 
 
-This project is based `spring-boot-starter-parent` 2.7.4.
+This project is based on `spring-boot-starter-parent` 2.7.4.
 
 ---
 
