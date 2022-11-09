@@ -31,4 +31,14 @@ public class IngredientResponseTest {
     public int getWeight() {
         return weight;
     }
+
+    @Override
+    public String toString() {
+        return "IngredientResponseTest{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                ", weight=" + weight +
+                '}';
+    }
 }

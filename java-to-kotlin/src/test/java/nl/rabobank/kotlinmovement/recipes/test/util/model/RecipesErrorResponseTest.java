@@ -28,4 +28,11 @@ public class RecipesErrorResponseTest {
     public int hashCode() {
         return getMessage() != null ? getMessage().hashCode() : 0;
     }
+
+    @Override
+    public String toString() {
+        return "RecipesErrorResponseTest{" +
+                "message='" + message + '\'' +
+                '}';
+    }
 }

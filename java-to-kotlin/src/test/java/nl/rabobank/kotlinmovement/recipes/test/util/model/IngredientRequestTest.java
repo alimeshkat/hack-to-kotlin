@@ -27,4 +27,13 @@ public class IngredientRequestTest {
     public Integer getWeight() {
         return weight;
     }
+
+    @Override
+    public String toString() {
+        return "IngredientRequestTest{" +
+                "name='" + name + '\'' +
+                ", type=" + type +
+                ", weight=" + weight +
+                '}';
+    }
 }
