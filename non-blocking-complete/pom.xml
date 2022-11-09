@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>recipe-kotlin-non-blocking</artifactId>
+    <artifactId>non-blocking-complete</artifactId>
 
     <properties>
         <kotlin.version>1.7.20</kotlin.version>

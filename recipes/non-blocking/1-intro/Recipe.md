@@ -43,13 +43,24 @@ of them without running out of memory.
 
 **Suspend & Continue**
 
-Kotlin provides on language level the basis for coroutine with the `suspend` modifier
+Kotlin provides on language level the basis for coroutine with the `suspend` modifier for functions
 and `kotlin.coroutines.Continuation` interface.
-A `suspend` function can be paused and resumed on multiple points thanks to the `Continuation` parameter that is
-transparently added to it. This is a simple suspending main function:
 
 ```Kotlin
-suspend fun main() {}
+interface Continuation<in T> {
+    val context: CoroutineContext
+    fun resumeWith(result: Result<T>)
+}
+```
+
+A suspend function can be paused and resumed on multiple points.
+An instance of `Continuation` is passes to suspend transparently.
+Let's take a look at a simple suspending main function:
+
+```Kotlin
+suspend fun main() {
+    //
+}
 ```
 
 Decompiled the above code to Java, and you see the Continuation parameter:
@@ -57,6 +68,26 @@ Decompiled the above code to Java, and you see the Continuation parameter:
 ```Java
 public static final main(@NotNull Continuation completion){}
 ```
+
+So lets use the Continuation to do stuff
+
+```Kotlin
+val executor = Executors.newSingleThreadScheduledExecutor()
+
+suspend fun main() {
+    println("hello")
+    suspendCoroutine<Unit> {
+        executor.schedule(
+            { it.resume(Unit) },
+            1000, TimeUnit.MILLISECONDS
+        )
+    }
+    println("continuation")
+}
+
+```
+
+## Builders
 
 A coroutine can be created with the coroutine builders available from
 the [`kotlinx-coroutines`](https://github.com/Kotlin/kotlinx.coroutines) library.
