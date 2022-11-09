@@ -32,7 +32,7 @@ adhere to certain requirement to function properly. Read about the pitfalls of u
 
 ---
 
-<span style="color:green">**_Tip_:**</span> **check if you haven't missed any warnings showen by IntelliJ ;)**
+<span style="color:green">**_Tip_:**</span> **check if you haven't missed any warnings shown by IntelliJ ;)**
 
 ![warning](../../sources/png/warning.png)
 
