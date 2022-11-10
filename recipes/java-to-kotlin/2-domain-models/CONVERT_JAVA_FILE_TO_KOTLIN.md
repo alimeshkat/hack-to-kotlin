@@ -17,8 +17,9 @@ We have to make the code more idiomatic to Kotlin. To help you out with cleaning
 - When you see bang-bang (`!!`) used by the converter, get rid of it!!
   First check, should the reference be of a nullable type? If so, call the member on the nullable reference with the safe call (
   `?.`) and use the elvis operator (`?:`) to handle the `null` scenario.
-- Favor read only properties (`val`).
-- Favor immutable objects over mutable objects. This means we should avoid 
-  setters when possible and use contructors to create objects (and set all values).
+- Favor immutable objects over mutable objects
+  - make properties and variables `val` or `const val` (in case of constants)  
+  - avoid setters when possible and use constructors to create objects.
+  - use List<T>, Set<T>, Map<T> instead of the immutable counterpart ImmutableList<T>, ImmutableSet<T>, ImmutableMap<T>
 
 [Go back to the recipe](Recipe.md)

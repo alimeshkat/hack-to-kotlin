@@ -2,23 +2,23 @@
 
 In this recipe we will convert
 the [recipe models](../../../java-to-kotlin/src/main/java/nl/rabobank/kotlinmovement/recipes/model) to
-kotlin. To keep the Java files concise, we have used `Lombok` library annotations to generate the `getters`
+kotlin. To keep the Java files concise, we have used `Lombok` library annotations to generate the `getters`, `setters`
 , `contructor`, `equals` and `hashcode`.
 
 ## Convert domain models
 
-1) Convert the classes in `model` package to Kotlin (Read the document
-   about [converting Java file to Kotlin](CONVERT_JAVA_FILE_TO_KOTLIN.md)).
-2) Make sure the properties are:
+1) Read the document about [converting Java file to Kotlin](CONVERT_JAVA_FILE_TO_KOTLIN.md)
+2) Convert the classes in `model` package to Kotlin.
+3) Make sure the properties are:
     1) `nullable` (e.g. name:String?) were it's needed, like the request object properties. Remove '= null' when possible.
     2) declared in the primary constructor
     3) **public** (without any modifier)
     4) and, immutable (`val`)
-3) The bean validation annotations should be:
+4) The bean validation annotations should be:
     1) on the backing field e.g. `@field:NotBlank()` and not
     2) **on the left side of the property declaration** e.g. `@field:NotNull val name:String?` and not `val name: @field:NotNull String`!
-4) Convert recipe models to `data` Classes. 
-5) For example, the `RecipeRequest` class should look like this after the conversion and refactoring:
+5) Convert recipe models to `data` Classes. 
+6) For example, the `RecipeRequest` class should look like this after the conversion and refactoring:
     ```Kotlin
      data class RecipeRequest(
         @field:NotBlank(message = "recipeName")
@@ -27,8 +27,8 @@ kotlin. To keep the Java files concise, we have used `Lombok` library annotation
         val ingredients: MutableSet<IngredientRequest>?
     )
     ``` 
-6) Clean-up Lombok annotations e.g. `@Data`
-7) When ready, run all tests:
+7) Clean-up Lombok annotations e.g. `@Data`
+8) When ready, run all tests:
 
 ```shell
    (cd ../../.. && ./mvnw package -pl :java-to-kotlin)

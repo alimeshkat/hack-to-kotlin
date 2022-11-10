@@ -138,7 +138,7 @@ Beneath here you can find a fully configured Kotlin maven plugin that will compi
 
 ````
 
-To speed up the build enable the compiler plugin incremental compilation by adding this property:
+This is *Optional*, but, to speed up the build, enable the compiler plugin incremental compilation by adding this property:
 
 ````xml
 <properties>
@@ -146,13 +146,7 @@ To speed up the build enable the compiler plugin incremental compilation by addi
 </properties>
 ````
 
-Rebuild the project to reflect the changes.
-
-```shell
-   (cd ../.. && ./mvnw package)
-   ```
-
-reference: 
+Reference: 
 [Compiler plugin docs](https://kotlinlang.org/docs/maven.html)  
 
 [Go back to the recipe](Recipe.md)
