@@ -93,7 +93,7 @@ To test if everything is working execute
 This will build the jar and run all tests. You can start the application by running the following command:
 
 ```shell
-./mvnw spring-boot:run
+./mvnw -pl :java-to-kotlin spring-boot:run
 ```
 
 An embedded Tomcat server will start on port ``8080``.
