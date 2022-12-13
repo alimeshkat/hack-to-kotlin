@@ -1,6 +1,7 @@
 package nl.rabobank.kotlinmovement.recipes.controller;
 
 import nl.rabobank.kotlinmovement.recipes.model.RecipesErrorResponse;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
@@ -10,6 +11,7 @@ import java.util.stream.Collectors;
 public class ErrorMessageMapper {
     public static final RecipesErrorResponse DEFAULT_ERROR_MESSAGE =  new RecipesErrorResponse("Oops something went wrong");
 
+    @NotNull
     public static RecipesErrorResponse toErrorMessage(MethodArgumentNotValidException methodArgumentNotValidException, String messagePrefix, String messagePostfix) {
         var messages = methodArgumentNotValidException.getBindingResult()
                 .getAllErrors()
@@ -24,6 +26,7 @@ public class ErrorMessageMapper {
         }
     }
 
+    @NotNull
     public static RecipesErrorResponse toErrorMessage(List<String> messages, String messagePrefix, String messagePostfix) {
         if (messages == null) {
             return DEFAULT_ERROR_MESSAGE;
@@ -38,6 +41,7 @@ public class ErrorMessageMapper {
         }
     }
 
+    @NotNull
     private static String getSingleErrorMessage(String messagePrefix, String messagePostfix, String orderedMessage) {
         var stringBuilder = new StringBuilder();
 
@@ -51,6 +55,7 @@ public class ErrorMessageMapper {
         return stringBuilder.toString();
     }
 
+    @NotNull
     private static String getMultiErrorMessage(String messagePrefix, String messagePostfix, List<String> orderedMessage) {
 
         var stringBuilder = new StringBuilder();
@@ -76,15 +81,18 @@ public class ErrorMessageMapper {
         return stringBuilder.toString();
     }
 
-    private static boolean lastElement(List<String> orderedMessage, int i) {
+    @NotNull
+    private static Boolean lastElement(List<String> orderedMessage, int i) {
         return orderedMessage.size() == i + 1;
     }
 
-    private static boolean firstElement(int i) {
+    @NotNull
+    private static Boolean firstElement(int i) {
         return i == 0;
     }
 
-    private static boolean hasOneElement(List<String> orderedMessage) {
+    @NotNull
+    private static Boolean hasOneElement(List<String> orderedMessage) {
         return orderedMessage.size() == 1;
     }
 

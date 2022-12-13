@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.rabobank.kotlinmovement.recipes.model.RecipeRequest;
 import nl.rabobank.kotlinmovement.recipes.model.RecipeResponse;
 import nl.rabobank.kotlinmovement.recipes.service.RecipesService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,6 +24,7 @@ import javax.validation.Valid;
 public class RecipesController {
     private final RecipesService recipeService;
 
+    @NotNull
     @PostMapping("recipes")
     public ResponseEntity<RecipeResponse> createRecipes(@Valid @RequestBody RecipeRequest recipeRequest) {
         log.info("Create Recipes {}", recipeRequest);
@@ -30,24 +32,25 @@ public class RecipesController {
 
     }
 
+    @NotNull
     @GetMapping(value = "recipes")
     public ResponseEntity<Iterable<RecipeResponse>> getRecipes() {
         log.info("Get All Recipes");
         return ResponseEntity.ok(recipeService.getRecipes());
     }
-
+    @NotNull
     @GetMapping(value = "recipes/{id}")
     public ResponseEntity<RecipeResponse> getRecipe(@PathVariable() Long id) {
         log.info("Get Recipe with id: {}", id);
         return ResponseEntity.ok(recipeService.getRecipe(id));
     }
-
+    @NotNull
     @PutMapping(value = "recipes/{id}")
     public ResponseEntity<RecipeResponse> updateRecipe(@PathVariable() Long id, @Valid @RequestBody RecipeRequest recipeRequest) {
         log.info("Update Recipe with id: {}. Update: {}", id, recipeRequest);
         return ResponseEntity.ok(recipeService.updateOrCreateRecipe(id, recipeRequest));
     }
-
+    @NotNull
     @DeleteMapping("recipes/{id}")
     public ResponseEntity<Void> deleteRecipes(@PathVariable() Long id) {
         log.info("Delete Recipe {}", id);

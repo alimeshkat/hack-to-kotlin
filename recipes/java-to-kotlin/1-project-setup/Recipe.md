@@ -13,12 +13,15 @@ But because it's important to understand a little what you have to add/configure
 2) Build project:
 
 ```shell
-   (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
+   (cd ../../.. && ./mvnw clean package -pl :java-to-kotlin)
 ```
 
 3) To check if the setup is correct, see if `KotlinSetupTestDTO` is compiled as well. 
    The class should be [here](../../../java-to-kotlin/target/classes/nl/rabobank/kotlinmovement/recipes/KotlinSetupTestDTO.class)
 
-[*peek solutions*](../../../java-to-kotlin-complete/pom.xml)
+[*peek solutions*](../../../java-to-kotlin-complete/pom.xml)  
+
+Note: *You cannot just replace this module's pom with the one from `java-to-kotlin-complete`. Be mindful of the differences. 
+For example: the Java module depends on Lombok, that has been removed from the kotlin module.*
 
 [Go to next section](../2-domain-models/Recipe.md)

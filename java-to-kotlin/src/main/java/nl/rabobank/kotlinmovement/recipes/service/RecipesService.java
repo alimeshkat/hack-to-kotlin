@@ -7,6 +7,7 @@ import nl.rabobank.kotlinmovement.recipes.data.RecipesEntity;
 import nl.rabobank.kotlinmovement.recipes.data.RecipesRepository;
 import nl.rabobank.kotlinmovement.recipes.model.RecipeRequest;
 import nl.rabobank.kotlinmovement.recipes.model.RecipeResponse;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +25,9 @@ import static nl.rabobank.kotlinmovement.recipes.service.RecipesMapper.toRecipeR
 @Service
 @AllArgsConstructor
 public class RecipesService {
+    @NotNull
     private final RecipesRepository recipeRepository;
+    @NotNull
     private final IngredientsRepository ingredientsRepository;
 
     @Transactional
@@ -34,6 +37,7 @@ public class RecipesService {
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("Recipe %d not found", id)));
     }
 
+    @NotNull
     @Transactional
     public List<RecipeResponse> getRecipes() {
         return recipeRepository.findAll()
@@ -42,6 +46,7 @@ public class RecipesService {
                 .collect(Collectors.toList());
     }
 
+    @NotNull
     @Transactional
     public RecipeResponse saveRecipe(RecipeRequest recipeRequest) {
         final RecipesEntity recipe = toRecipeEntity(recipeRequest);
@@ -50,6 +55,7 @@ public class RecipesService {
         return toRecipeResponse(recipes, ingredients);
     }
 
+    @NotNull
     @Transactional
     public RecipeResponse updateOrCreateRecipe(Long id, RecipeRequest recipeRequest) {
         return recipeRepository.findById(id)
@@ -70,6 +76,7 @@ public class RecipesService {
         }
     }
 
+    @NotNull
     private Set<IngredientsEntity> saveIngredients(RecipeRequest recipeRequest, RecipesEntity recipe) {
         final Set<IngredientsEntity> ingredients = toIngredientsEntity(recipeRequest, recipe);
         return new HashSet<>(ingredientsRepository.saveAll(ingredients));

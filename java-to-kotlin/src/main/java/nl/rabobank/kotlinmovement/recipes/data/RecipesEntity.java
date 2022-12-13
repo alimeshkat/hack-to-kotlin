@@ -4,6 +4,7 @@ package nl.rabobank.kotlinmovement.recipes.data;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
 import javax.persistence.CascadeType;
@@ -27,9 +28,8 @@ public class RecipesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @NonNull
     private String recipeName;
-
     @OneToMany(mappedBy = "recipes", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<IngredientsEntity> ingredients = Collections.emptySet();
 }

@@ -1,9 +1,9 @@
 # Domain Model Recipe
 
-In this recipe we will convert
+In this recipe we will help you convert
 the [recipe models](../../../java-to-kotlin/src/main/java/nl/rabobank/kotlinmovement/recipes/model) to
 kotlin. To keep the Java files concise, we have used `Lombok` library annotations to generate the `getters`, `setters`
-, `contructor`, `equals` and `hashcode`.
+, `contructor`, `equals` and `hashcode`. At the end you, when all `Java` has been converted, we can simply remove dependency on Lombok.
 
 ## Convert domain models
 
@@ -31,7 +31,7 @@ kotlin. To keep the Java files concise, we have used `Lombok` library annotation
 8) When ready, run all tests:
 
 ```shell
-   (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
+   (cd ../../.. && ./mvnw clean package -pl :java-to-kotlin)
  ```
 
 [*peek solutions*](../../../java-to-kotlin-complete/src/main/kotlin/nl/rabobank/kotlinmovement/recipes/model)
