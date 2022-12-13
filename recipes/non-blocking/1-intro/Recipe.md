@@ -2,8 +2,7 @@
 
 It turned out, the `Recipe` service has become populair. But unfortunately under the new
 tremendous load (10,000s req/sec), it's not performing that great and sometimes becomes unresponsive. We are now
-thinking about doing things differently by
-refactoring the code once again.
+thinking about doing things differently by refactoring the code once again. 
 
 ## Blocking
 
@@ -23,15 +22,16 @@ the `Spring WebFlux` module which is fully non-blocking.
 
 ### Spring WebFlux
 
-So in short why we want to use Spring WebFlux:
+In short why we want to use Spring WebFlux:
 
-- It implements the Reactive Streams which offers a standard for asynchronous stream processing with non-blocking back
-  pressure.
-- It runs on servers such as Netty, Undertow, and Servlet 3.1+ containers.
-- It supports Kotlin Coroutines!
+- It implements the `Reactive Streams` specification which offers a standard for asynchronous stream processing with non-blocking back
+  pressure
+- It runs on industry standard servers such as Netty, Undertow, and Servlet 3.1+ containers
+- It supports Kotlin Coroutines! More about this in the next paragraph
 
-### Coroutines
+### An introduction to Coroutines
 
+So, what is Kotlin coroutine?
 *"A coroutine is an instance of suspendable computation.
 It is conceptually similar to a thread,
 in the sense that it takes a block of code to run that works concurrently with the rest of the code.
@@ -39,12 +39,13 @@ However, a coroutine is not bound to any particular thread.
 It may suspend its execution in one thread and resume in another one."*
 
 Kotlin coroutine can be viewed as a light-weight thread (or a callback), you can create thousands
-of them without running out of memory.
+of them without running (quickly) out of memory.
 
 **Suspend & Continue**
 
-Kotlin provides on language level the basis for coroutine with the `suspend` modifier for functions
-and `kotlin.coroutines.Continuation` interface.
+Coroutine is integrated on the language level:
+- the `suspend` modifier can be added to a function, it makes it run in a coroutine. Suspend function may only run from within the scope of another Coroutine  
+- and `kotlin.coroutines.Continuation` interface.
 
 ```Kotlin
 interface Continuation<in T> {
