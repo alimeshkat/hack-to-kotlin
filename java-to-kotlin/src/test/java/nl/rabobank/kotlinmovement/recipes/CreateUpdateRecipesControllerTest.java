@@ -49,10 +49,10 @@ class CreateUpdateRecipesControllerTest extends RecipeTest {
         assertRecipeResponse(updateRequest, response);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "[{index}]: {2}")
     @MethodSource("errorDataParams")
     @DisplayName("Should not be able to create or update if request object is invalid")
-    void test3(RecipeRequestTest recipeRequest, RecipesErrorResponseTest errorResponse) throws Exception {
+    void test3(RecipeRequestTest recipeRequest, RecipesErrorResponseTest errorResponse, String testName) throws Exception {
         final String response = objectMapper.writeValueAsString(recipeRequest);
         final RecipesErrorResponseTest invalidCreateResponse = badRequestCall(HttpMethod.POST, "/recipes", response);
         final RecipesErrorResponseTest invalidUpdateResponse = badRequestCall(HttpMethod.PUT,"/recipes/1", response);
@@ -62,13 +62,13 @@ class CreateUpdateRecipesControllerTest extends RecipeTest {
 
     private static Stream<Arguments> errorDataParams() {
         return Stream.of(
-                Arguments.of(emptyRequest, errorMessageIncorrectRecipe),
-                Arguments.of(emptyRequestIngredient, errorMessageIncorrectIngredients),
-                Arguments.of(nullRecipeNameRequest, errorMessageIncorrectRecipeName),
-                Arguments.of(nullIngredientsRequest, errorMessageIncorrectIngredients),
-                Arguments.of(ingredientMissingName, errorMessageIncorrectIngredientName),
-                Arguments.of(ingredientMissingType, errorMessageIncorrectIngredientType),
-                Arguments.of(ingredientMissingWeight, errorMessageIncorrectWeight)
+                Arguments.of(emptyRequest, errorMessageIncorrectRecipe, "create/update with empty RecipeRequest" ),
+                Arguments.of(emptyRequestIngredient, errorMessageIncorrectIngredients, "create/update with empty RecipeRequest.ingredients"),
+                Arguments.of(nullRecipeNameRequest, errorMessageIncorrectRecipeName, "create/update with missing RecipeRequest.recipeName field"),
+                Arguments.of(nullIngredientsRequest, errorMessageIncorrectIngredients, "create/update with null for RecipeRequest.ingredients"),
+                Arguments.of(ingredientMissingName, errorMessageIncorrectIngredientName, "create/update with missing IngredientRequest.name field"),
+                Arguments.of(ingredientMissingType, errorMessageIncorrectIngredientType, "create/update with missing IngredientRequest.type field"),
+                Arguments.of(ingredientMissingWeight, errorMessageIncorrectWeight, "create/update with missing IngredientRequest.weight field")
         );
     }
 

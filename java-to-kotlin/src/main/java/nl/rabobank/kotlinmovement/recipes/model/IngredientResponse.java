@@ -4,7 +4,7 @@ import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 
 @Data
-public class IngredientResponse {
+public final class IngredientResponse {
     private final Long id;
     @NotNull
     private final String name;

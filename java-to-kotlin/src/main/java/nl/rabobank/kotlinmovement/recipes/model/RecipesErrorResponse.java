@@ -4,7 +4,7 @@ import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 
 @Data
-public class RecipesErrorResponse {
+public final class RecipesErrorResponse {
     @NotNull
     private final String message;
 }

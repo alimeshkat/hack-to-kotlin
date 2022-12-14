@@ -9,7 +9,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 @Data
-public class RecipeRequest {
+public final class RecipeRequest {
     @NotBlank( message = "recipeName")
     final String recipeName;
     @NotEmpty(message = "ingredients")

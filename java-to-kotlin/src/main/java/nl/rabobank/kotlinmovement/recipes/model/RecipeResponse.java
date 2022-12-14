@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Set;
 
 @Data
-public class RecipeResponse {
+public final class RecipeResponse {
     @NotNull
     private final Long id;
     @NotNull

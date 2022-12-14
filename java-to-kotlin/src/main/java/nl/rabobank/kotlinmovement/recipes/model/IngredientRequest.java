@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class IngredientRequest {
+public final class IngredientRequest {
     @NotBlank(message = "ingredient.name")
     private final String name;
     @NotNull(message = "ingredient.type")
