@@ -24,7 +24,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "recipes")
-public class RecipesEntity {
+public final class RecipesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

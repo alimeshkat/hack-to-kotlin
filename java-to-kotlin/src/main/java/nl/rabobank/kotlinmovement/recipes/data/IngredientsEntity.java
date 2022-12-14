@@ -21,7 +21,7 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Table(name = "ingredients")
-public class IngredientsEntity {
+public final class IngredientsEntity {
     @ManyToOne(optional = false)
     @JoinColumn(name = "recipes_id", nullable = false)
     private RecipesEntity recipes;
