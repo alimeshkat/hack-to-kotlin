@@ -16,9 +16,9 @@ dependency on Lombok.
     2) declared in the primary constructor
     3) **public** (without any modifier)
     4) and, immutable (`val`)
-4) The bean validation annotations should be:
-    1) on the field e.g. `@field:NotBlank() val name: String` and not **on the type**
-       e.g. `val name: @field:NotNull String`!. The Kotlin converter is not smart enough to understand that yet. 
+4) The bean validation annotations should be on the field e.g. `@field:NotBlank() val name: String` and not **on the
+   type**
+   e.g. `val name: @field:NotNull String`! The Kotlin converter is not smart enough to understand that yet.
 5) Convert recipe models to `data` Classes.
 6) For example, the `RecipeRequest` class should look like this after the conversion and refactoring:
     ```Kotlin
