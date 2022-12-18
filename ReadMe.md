@@ -64,3 +64,4 @@ Run `maven` verify command to test the installation:
 ## Feedback
 
 Let us know what you think about this workshop by filling in this [form](https://forms.gle/NYLUQQYk4YKRGB5DA).
+

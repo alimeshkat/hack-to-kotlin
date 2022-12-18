@@ -9,16 +9,16 @@ exceptions and returns the proper error code and response.
 
 ## Convert RecipesController & RecipesControllerAdvice
 
-1) Convert the `RecipeController` Java files to Kotlin
+1) Convert the `RecipesController` Java files to Kotlin
 2) As the log property was created based on Lombok annotation `@Slf4`, we will have to replace it.
    Add a `companion object` to the class, and
-   declare `val log: Logger = LoggerFactory.getLogger(RecipeController::class.java)` to it
+   declare `val log: Logger = LoggerFactory.getLogger(RecipesController::class.java)` to it
 3) Declare the private `recipeService` property as a non-nullable argument to the primary constructor. This way you can
    call the members on it without a safe call (?.) or a bang-bang (!!)
 4) Correct any misplaced annotations
 5) *Note*: `IntelliJ` converts a Java method without an argument to a property and places the HTTP method annotation on
    it's `get` function. You can always change it to a normal function.
-6) Now, convert the error controller `RecipeControllerAdvice` to Kotlin
+6) Now, convert the error controller `RecipesControllerAdvice` to Kotlin
 7) Use the `listOf()` instead of Java's `List.of()`
 8) When ready, run all tests:
 
