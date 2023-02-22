@@ -40,35 +40,95 @@ It may suspend its execution in one thread and resume in another one."*
 
 Kotlin coroutine can be viewed as a light-weight thread (or a callback), you can create thousands of them without heavily impacting the resources.
 
-### Coroutine mechanics
+### suspend
 
-**Suspend & Continuation**
+Kotlin has integrated Coroutines on the language level with the `suspend` modifier. By adding the `suspend` modifier to any function you can make it non-blocking! 
+Let's have a look at a simple program that prints `Hello` `Coroutine` with a delay of 1 second, and refactor it, so we don't have to use ugly `Thread.sleep()`. 
 
-Mark a function with `suspend` modifier, and it will be run in a coroutine.
 ```Kotlin
-suspend fun main(){
-  delay(1000) // Pause for 1 seconds, and then resume
+fun main(){
+    println("Hello")
+    Thread.sleep(1000)
+    println("Coroutine")
+
 }
 ```
-*Note that a suspend function can run only from within the scope of another Coroutine.*
 
-Even though the code in the main method is executed in a coroutine, it doesn't mean it is non-blocking: the delay 
-function call pauzes the program for a second and blocks the main thread.
-We will show later how coroutines can be used to run code non-blocking, but for now it suffices to say that by default coroutines are blocking.
+Simply said, marking a function with `suspend` modifier, will run the code in that function in a coroutine.
+Let's do that with the entry point of our simple program, the main method.
+Now we can call other suspend functions from it, as suspend functions can only be called from other suspend functions.
+Let's do so by replacing the `Thread.sleep()` with the suspend function `delay()` which pauses the current coroutine for some time.
 
-#### Continuation
-A `suspend` function can be paused and resumed on multiple points, this is handled by `Continuation`. How Continuation is added we can see by looking at the decompiled Java code.
-There you will see that an instance of Continuation is passes to suspend transparently.
+```Kotlin
+suspend fun main(){
+    println("Hello")
+    delay(1000)
+    println("Coroutine")
+
+}
+```
+
+Now we are done! Even though the code in the main method is executed in a coroutine, it doesn't mean it is non-blocking: the delay 
+function call pauzes the program for one-second and blocks the main thread. 
+To do things in parallel with coroutines, we need to use constructs like coroutine builders such as `launch` and `async/await` and `dispatchers`, we will cover that later on. 
+For now, we want to explain how coroutines work internally to take away the magic.
+So, for example how we like to answer the following question:
+How come that we only have to add a `suspend` modifier to a function, and inside that function we can suspend (as we used delay() before) and resume at any point?
+To answer the question above, we will have to understand what `Continuation Passing Style` means in Kotlin. 
+
+### Continuation & Continuation Passing Style
+
+`Continuation Passing Style` (CPS) is an expensive term to describe callbacks.
+Let's explain it by comparing it with regular or direct style of passing action value to its continuation.
+
+Our simple program does the following things:
+1) Gets contact details from the userService, assign the result to contactDetail variable
+2) Uses the e-mail address from the contactDetail object to create and send the mail
+3) At the end, we process the result of the sendMail service.
+
+When writing it down in direct style, for example the first action is the `getContactDetail` call - that's what we need the result from, but we have to wait on it.
+The sending the mail and processing the result of it is considered the continuation - what comes after the action.
+
+```Kotlin
+fun sendMailToUser(user: User, message: String) {
+  val contactDetail = getContactDetail(user)
+  val result = sendMail(contactDetail.email, message)
+  processMailResult(result)
+}
+```
+
+In the Continues Passing Style with regular callbacks the continuation is passed as a parameter to the action:
+
+```Kotlin
+fun sendMailToUser(user: User, message: String) {
+  getContactDetail(user) { contactDetail ->
+    sendMail(contactDetail.email, message) { result ->
+      processMailResult(result)
+    }
+  }
+}
+```
+
+And finally the CPS with coroutines. It's interesting to see that it incorporates both styles we have seen above  
+but written in direct style, which is easier to read and understand. But how does it work?
+
+```Kotlin
+suspend fun sendMailToUser(id: User, message: String) {
+  val contactDetail = getContactDetail(id) //suspend function
+  val result = sendMail(contactDetail.email, message) //suspend function
+  processMailResult(result)
+}
+```
+
+At the compile time the suspend function signature is changed, so it accepts an instance of a `Continuation`, which is basically a generic callback.
+Decompiling the `sendMailToUser` function code from before, and you will see it's being added. 
 
 ```Java
-public static final Object main(@NotNull Continuation $completion) {
+public static final Object sendMailToUser(User id, String message, Continuation var2) {
         ...
 }
 ```
-
-The Continuation interface consist out of
-- a context, which holds the coroutine-local information and takes important part in `Continuation interception`.
-- the function `resumeWith()` which is called with a result of the last suspension point and resumes the coroutine execution.
+So let's briefly look at the `Continuation` interface, and later on we will discuss how the continuation is used.
 
 ```Kotlin
 interface Continuation<in T> {
@@ -77,38 +137,60 @@ interface Continuation<in T> {
 }
 ```
 
-#### Continuation Passing Style 
+The Continuation interface consist out of
+- a context, which holds the coroutine-local information
+- the function `resumeWith()` which is called with a result of the last suspension point and resumes the coroutine execution.
 
-As mentioned earlier, the suspended function get a `Continuation` as a parameter, and, next to that, the return type will be changed to `Any?`.
-`Any?` because a suspended function can either return directly as a normal function, or, return `COROUTINE_SUSPENDED` when it's suspended.
-The transformation of suspended function is called continues passing style (CPS). 
-The CPS is the magic behind coroutines, it will turn your suspendable function with multiple suspension (points where suspended functions are called) points behind the scenes into a state machine.
+So now we know what how a suspend function is transformed to support CPS, lets take a look at the implementation.
 
-#### Continuation in action
-Let's take a look at a simple example where we see the continuation in action.
+##### State machine 
+
+The CPS transformation at compile time doesn't generate callbacks, but a more efficient state machine.
+Let us look at our `sendMailToUser` function and try to describe the state machine generated for it in sudo code.
+
+1) a statemachine (sm) is created to keep the current execution state
+2) a switch case is created for each action and its following continuation represented by a label. In `case0` the
+   getContactDetail is called, and because we are dealing with a suspended function the parameters that are getting
+   passed to the next continuation (message) will get stored in sm together with the new label. The sm is
+   passed to the `getContactDetail` so when the suspended function is done, it would call resumeWith (3) function on the sm to continue
+3) The resumeWith implementation will just call the sendMailToUser with the same sm
+4) Now the label value is set to 1, `case1` gets executed. As the state of the previous action was stored, it can be used to call
+   `sendMailToUser`. Again the label gets updated and when `sendMailToUser` is
+   finished the result wil get stored in the sm for the next continuation to use. This will continue till every case has been run through
 
 ```Kotlin
-val executor: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
 
-suspend fun main() {
-  val message =  suspendCoroutine<String> { continuation -> //1
-    executor.schedule( //2 
-      {
-        continuation.resumeWith(Result.success("Hello")) // 3
-      },
-      1000, TimeUnit.MILLISECONDS
-    )
+import kotlin.coroutines.Continuation
+
+suspend fun sendMailToUser(user: User, message: String, cont: Continuation) {
+  //1
+  val sm = cont as ThisSM ?: object : ThisSM {
+      //3
+      fun resumeWith(...){
+         sendMailToUser(null, null, this)
+      }
   }
-  println(message) //4
-  println("Continuation")
+  switch(sm.label){
+     //2
+     case 0: 
+        sm.message = message
+        sm.label = 1
+        getContactDetail(user, sm)
+     //4
+     case 1:
+        val message = sm.message
+        val contactDetails = sm.result as ContactDetail
+        sm.label = 2
+        sendMailToUser(contactDetails.email, message, sm)
+     ...
+  }
 }
 ```
 
-1) First we obtained the current continuation with the function `suspendCoroutine`. 
-2) Within suspendCoroutine a thread is scheduled to call `resumeWith` after 1000 milliseconds. Meanwhile, the continuation state is `COROUTINE_SUSPENDED`. 
-3) After the delay, `resumeWith` is called and coroutine continues with the result `Hello`.
-4) Then the message `Hello` and `Continuation` gets printed.
-
+To recap: A coroutine is turned is created from suspend functions and is different from a regular callback.
+With the `Continuation Passing Style` transformation a suspended function is turned in to a statemachine which stores
+the state at suspension points and restores the state when it resumes. 
+It is more efficient than a callback, because it reuses the same object.You can write direct style code which is much easier to reason with.
 
 ## Coroutine API (WIP)
 
