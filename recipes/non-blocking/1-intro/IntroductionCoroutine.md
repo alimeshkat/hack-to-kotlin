@@ -1,6 +1,6 @@
 # TL;DR
 
-With Kotlin coroutines you can write non-blocking code. Coroutines is part of the Kotlin standard library,
+With Kotlin coroutines you can write non-blocking code. Coroutines is part of the Kotlin standard library, so it can be used out-of-the-box!
 By marking a function with the `suspend` modifier the compiler understands that the function can contain one or more
 suspension points (i.e. calls to other suspend functions), and so, it will not return right-a-way but suspends the
 coroutine until the result is there.
