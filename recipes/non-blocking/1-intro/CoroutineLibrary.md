@@ -1,7 +1,10 @@
 # Coroutine API
 
-In the previous section we explained the basics of Coroutines on the language level, but now we will cover the most essential parts of high
-level Coroutines library [`kotlinx-coroutines`](https://github.com/Kotlin/kotlinx.coroutines).
+In the previous section we explained the basics of Coroutines on the language level, in this
+section we will focus on the library that utilizes the Kotlin's language features `suspend` and `Continuation` to offer a rich and
+safe set of utilities to write coroutines. This library is called [`kotlinx-coroutines`](https://github.com/Kotlin/kotlinx.coroutines) and is not part of the standard library.
+
+We will first learn all about coroutine creation with the `Coroutine builders`
 
 **Coroutine builder**
 
