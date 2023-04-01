@@ -13,23 +13,32 @@ review and refactor the generated code right after the conversion.
 We have to make the code more idiomatic to Kotlin. To help you out with cleaning up the generated code you can make use
 of the following tips:
 
-- All properties, return types and arguments from Java are made nullable by the converter. Dealing with nullable types
-  is
-  easy, but it still makes the code more complex. That's why we have used the
-  annotation `org.jetbrains.annotations.NotNull` to give
-  hints to the converter about what should be non-nullable in Kotlin.
-- Even then, the converter can have issues with converting members that are generated with Lombok. But you can
-  de-lombok the classes first with help of the Lombok plugin in IntelliJ, clean up the class and then convert the class
-  to Kotlin. De-lomboking can be achieved by installing the Lombok plugin first and
-  after that `right-click on a Java file` -> `refactor` -> `Delombok` -> `All Lombok annotations`
-- When you see bang-bang (`!!`) used by the converter, get rid of it!!
-  First check, should the reference be of a nullable type? If so, call the member on the nullable reference with the
-  safe call (
-  `?.`) and use the elvis operator (`?:`) to handle the `null` scenario
-- Favor immutable objects over mutable objects
-    - make properties and variables `val` or `const val` (in case of constants)
-    - avoid setters when possible and use constructors to create objects.
-    - use List<T>, Set<T>, Map<T> instead of the immutable counterpart ImmutableList<T>, ImmutableSet<T>,
-      ImmutableMap<T>.
+### Nullable types
+
+All properties, return types and arguments from Java are made nullable by the converter.
+Dealing with nullable types is easy, but it still makes the code more complex. That's why we have used the
+annotation `org.jetbrains.annotations.NotNull` to give
+hints to the converter about what should be non-nullable in Kotlin.
+
+### Lombok
+
+The converter can have issues with converting members that are generated with Lombok. But you can
+de-lombok the classes first with help of the Lombok plugin in IntelliJ, clean up the class and then convert the class
+to Kotlin. De-lomboking can be achieved by installing the Lombok plugin first and
+after that `right-click on a Java file` -> `refactor` -> `Delombok` -> `All Lombok annotations`
+
+### Bang-bang (`!!`) and safe call (`?.`)
+
+When you see bang-bang (`!!`) used by the converter, get rid of it!!
+First check, should the reference be of a nullable type? If so, call the member on the nullable reference with the
+safe call (
+`?.`) and use the elvis operator (`?:`) to handle the `null` scenario
+
+### Immutability over mutability
+
+Favor immutable objects over mutable objects.
+Make properties and variables `val` or `const val` (in case of constants).
+Avoid setters when possible and use constructors to create objects.
+Use List<T>, Set<T>, Map<T> instead of the immutable counterpart ImmutableList<T>, ImmutableSet<T>, ImmutableMap<T>.
 
 [Go back to the recipe](Recipe.md)

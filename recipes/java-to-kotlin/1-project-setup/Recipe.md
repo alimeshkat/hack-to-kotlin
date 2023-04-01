@@ -8,7 +8,7 @@ But because it's important to understand a little what you have to add/configure
 
 ## Configure maven
 
-1) Read the [maven setup](MAVEN_SETUP.md) guide and configure the maven module [java-to-kotlin](../../../java-to-kotlin/pom.xml)
+1) Read the [maven setup guide](MAVEN_SETUP_GUIDE.md) and configure the maven module [java-to-kotlin](../../../java-to-kotlin/pom.xml)
    accordingly
 2) Build project:
 
