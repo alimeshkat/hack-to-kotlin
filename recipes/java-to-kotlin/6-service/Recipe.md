@@ -7,13 +7,14 @@ kotlin.
 ## Convert RecipeService
 
 1) Convert the `RecipesService` class to Kotlin.
-2) Remove `String.format()` and use the variable directly in the string like so: `Recipe $id not found.`
-3) Replace Java `Stream` API by Kotlin Collection extensions
-4) Replace `findById()` by the Kotlin extension `findByIdOrNull()` and handle the null case as required
-5) place the `recipeRepository` en `ingredientsRepository` on the default constructor and make them non-nullable
+2) Declare the `recipeRepository` and `ingredientsRepository` as non-nullable properties in the primary constructor 
+3) Remove `String.format()` and use the variable directly in the string like so: `Recipe $id not found.`
+4) Replace Java `Stream` API by Kotlin Collection extensions
+5) Replace `findById()` by the Kotlin extension `findByIdOrNull()` and handle the null case as required. (hint: use the `?:` operator)
+6) place the `recipeRepository` en `ingredientsRepository` on the default constructor and make them non-nullable
    properties
-6) Clean-up Lombok annotations e.g. `@AllArgsConstructor`
-7) When ready, run all tests:
+7) Clean-up Lombok annotations e.g. `@AllArgsConstructor`
+8) When ready, run all tests:
 ```shell
    (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
 ```
@@ -23,13 +24,13 @@ kotlin.
 ---
 
 ## Convert ResourceNotFoundException
+
 1) Convert the `ResourceNotFoundException` class to Kotlin
-3) When ready, run all tests:
+2) When ready, run all tests:
 ```shell
    (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
 ```
 
-[*peek solutions*](../../../java-to-kotlin-complete/src/main/kotlin/nl/rabobank/kotlinmovement/recipes/service/ResourceNotFoundException.kt)
 
 ---
 
@@ -43,7 +44,10 @@ kotlin.
 ```shell
    (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
 ```
-9) If all tests have passed, continue to the next recipe.
+5) If all tests have passed, continue to the next recipe.
+
+[*peek solutions*](../../../java-to-kotlin-complete/src/main/kotlin/nl/rabobank/kotlinmovement/recipes/service/RecipesMapper.kt)
+
 
 --- 
 ![light-bulb](../../sources/png/light-bulb-xs.png)  
@@ -62,7 +66,5 @@ You can use the operators `!!`, `?:` or functions such as `requiredNotNull` or `
   throws `IllegalStateException`.
 
 ---
-
-[*peek solutions*](../../../java-to-kotlin-complete/src/main/kotlin/nl/rabobank/kotlinmovement/recipes/service/RecipesMapper.kt)
 
 [Go to next section](../7-test/Recipe.md)

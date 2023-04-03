@@ -13,7 +13,7 @@ We have three test classes:
 - CreateUpdateRecipesControllerTest
 - DeleteRecipesControllerTest
 
-All the classes mentioned above extend the `RecipeMockMvcTest` class that contains all `MockMvc` related methods used by
+All the classes mentioned above extend the `RecipeMockMvcTest` class that contains `MockMvc` related methods used by
 the tests.
 
 ### Test util
@@ -30,3 +30,5 @@ you can find the utility classes in [test/util](../../../java-to-kotlin/src/test
 Under [test/util/model](../../../java-to-kotlin/src/test/java/nl/rabobank/kotlinmovement/recipes/test/util/model) you can find the simple
 POJO classes that represent the input/output of the `Recipe service`.
 They are used by `Jackson ObjectMapper` to serialize/deserialize `MockMvc` requests/responses.
+
+back to the [recipes](Recipe.md)

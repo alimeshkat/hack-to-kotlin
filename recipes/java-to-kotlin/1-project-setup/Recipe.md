@@ -24,4 +24,4 @@ But because it's important to understand a little what you have to add/configure
 Note: *You cannot just replace this module's pom with the one from `java-to-kotlin-complete`. Be mindful of the differences. 
 For example: the Java module depends on Lombok, that has been removed from the kotlin module.*
 
-[Go to next section](../2-domain-models/Recipe.md)
+[Go to next section](../2-model/Recipe.md)
