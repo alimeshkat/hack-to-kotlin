@@ -10,9 +10,6 @@ This will make sure Kotlin is available during the compilation.
 ````xml
 <project>
     ...
-    <properties>
-        <kotlin.version>1.7.20</kotlin.version>
-    </properties>
     <!--Add Kotlin standard library-->
     <dependencies>
         <dependency>
@@ -64,7 +61,7 @@ Beneath here you can find a fully configured Kotlin maven plugin that will compi
      <goal>compile</goal>
     </goals>
     <configuration>
-     <jvmTarget>17</jvmTarget>
+     <jvmTarget>${java.version}</jvmTarget>
      <sourceDirs>
       <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
       <sourceDir>${project.basedir}/src/main/java</sourceDir>
@@ -77,7 +74,7 @@ Beneath here you can find a fully configured Kotlin maven plugin that will compi
      <goal>test-compile</goal>
     </goals>
     <configuration>
-     <jvmTarget>17</jvmTarget>
+     <jvmTarget>${java.version}</jvmTarget>
      <sourceDirs>
       <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
       <sourceDir>${project.basedir}/src/test/java</sourceDir>
