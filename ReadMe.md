@@ -43,7 +43,7 @@ Kotlin in no time!
 
 Install the following software:
 
-- Java 11
+- Java 17
 - Maven v3
 - IntelliJ
 - Git
