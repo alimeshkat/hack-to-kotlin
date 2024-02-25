@@ -1,8 +1,8 @@
 package nl.rabobank.kotlinmovement.recipes.model
 
-import javax.validation.Valid
-import javax.validation.constraints.NotBlank
-import javax.validation.constraints.NotEmpty
+import jakarta.validation.Valid
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotEmpty
 
 data class RecipeRequest(
     @field:NotBlank(message = "recipeName")

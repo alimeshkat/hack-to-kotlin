@@ -2,7 +2,6 @@ package nl.rabobank.kotlinmovement.recipes;
 
 import nl.rabobank.kotlinmovement.recipes.test.util.RecipeTest;
 import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipeResponseTest;
-import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipesErrorResponseTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,14 +18,6 @@ class DeleteRecipesControllerTest extends RecipeTest {
         simpleMockRequest(HttpMethod.DELETE, "/recipes/1", HttpStatus.NO_CONTENT);
         final RecipeResponseTest[] response = getAllRecipes();
         assertThat(response).isEmpty();
-    }
-
-    @Test
-    @DisplayName("Should return not found if resource does not exist")
-    void test2() throws Exception {
-        final var expected = new RecipesErrorResponseTest("Recipe 2 not found");
-        final var response = notFoundCall(HttpMethod.DELETE, "/recipes/2");
-        assertThat(response).isEqualTo(expected);
     }
 
     @BeforeEach

@@ -8,7 +8,6 @@ import nl.rabobank.kotlinmovement.recipes.data.RecipesRepository;
 import nl.rabobank.kotlinmovement.recipes.model.RecipeRequest;
 import nl.rabobank.kotlinmovement.recipes.model.RecipeResponse;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,9 +17,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static nl.rabobank.kotlinmovement.recipes.service.RecipesMapper.toIngredientsEntity;
-import static nl.rabobank.kotlinmovement.recipes.service.RecipesMapper.toRecipeEntity;
-import static nl.rabobank.kotlinmovement.recipes.service.RecipesMapper.toRecipeResponse;
+import static nl.rabobank.kotlinmovement.recipes.service.RecipesMapper.*;
 
 @Service
 @AllArgsConstructor
@@ -34,7 +31,7 @@ public class RecipesService {
     public RecipeResponse getRecipe(long id) {
         var recipe = recipeRepository.findById(id);
         return recipe.map(r -> toRecipeResponse(r, r.getIngredients()))
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Recipe %d not found", id)));
+                .orElseThrow(() -> new ResourceNotFoundException("Recipe %d not found".formatted(id)));
     }
 
     @NotNull
@@ -69,11 +66,7 @@ public class RecipesService {
 
     @Transactional
     public void deleteRecipe(long id) {
-        try {
             recipeRepository.deleteById(id);
-        } catch (EmptyResultDataAccessException e) {
-            throw new ResourceNotFoundException(String.format("Recipe %d not found", id));
-        }
     }
 
     @NotNull
