@@ -1,5 +1,6 @@
 package nl.rabobank.kotlinmovement.recipes.controller
 
+import jakarta.validation.Valid
 import nl.rabobank.kotlinmovement.recipes.model.RecipeRequest
 import nl.rabobank.kotlinmovement.recipes.model.RecipeResponse
 import nl.rabobank.kotlinmovement.recipes.service.RecipesService

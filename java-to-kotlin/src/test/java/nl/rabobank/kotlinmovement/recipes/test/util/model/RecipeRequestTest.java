@@ -23,4 +23,12 @@ public class RecipeRequestTest {
     public Set<IngredientRequestTest> getIngredients() {
         return ingredients;
     }
+
+    @Override
+    public String toString() {
+        return "RecipeRequestTest{" +
+                "recipeName='" + recipeName + '\'' +
+                ", ingredients=" + ingredients +
+                '}';
+    }
 }

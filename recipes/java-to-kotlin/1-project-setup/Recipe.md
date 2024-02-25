@@ -1,31 +1,27 @@
 # Maven Setup Recipe
 
-With this recipe we will configure maven. To check if the setup is right, we have added
-a [test Kotlin class](../../../java-to-kotlin/src/main/kotlin/nl/rabobank/kotlinmovement/recipes/KotlinSetupTestDTO.kt) to the kotlin
-source.  
-If the Maven Kotlin configuration has been done correctly, you should be able to find the compiled class in the projects
-target directory.
+Our first recipe is about configuring the maven module [java-to-kotlin](../../../java-to-kotlin).
+Usually IntelliJ can do it for you automatically.
+When adding a Kotlin file (.kt) to the Java project for the first time,
+you will receive a notification to configure Kotlin in one of the modules.
+But because it's important to understand a little what you have to add/configure, we will go through the steps to configure Kotlin in a Java module.
 
-To complete this simple recipe, you just need a couple of things.
+## Configure maven
 
-## Ingredients
-
-- kotlin-stdlib library
-- kotlin-maven-plugin
-
-## Steps
-
-1) Read about the [maven setup](MAVEN_SETUP.md) and configure maven accordingly
+1) Read the [maven setup guide](MAVEN_SETUP_GUIDE.md) and configure the maven module [java-to-kotlin](../../../java-to-kotlin/pom.xml)
+   accordingly
 2) Build project:
 
 ```shell
-   (cd ../.. && ./mvnw package)
-   ```
+   (cd ../../.. && ./mvnw clean package -pl :java-to-kotlin)
+```
 
-4) You should be able to
-   find [KotlinSetupTestDTO](../../../java-to-kotlin/target/classes/nl/rabobank/kotlinmovement/recipes/KotlinSetupTestDTO.class) in the
-   build directory of the project
+3) To check if the setup is correct, see if `KotlinSetupTestDTO` is compiled as well. 
+   The class should be [here](../../../java-to-kotlin/target/classes/nl/rabobank/kotlinmovement/recipes/KotlinSetupTestDTO.class)
 
-6) If the Maven configuration was set up correctly, continue to the next section.
+[*peek solutions*](../../../java-to-kotlin-complete/pom.xml)  
 
-[Go to next section](../2-domain-models/Recipe.md)
+Note: *You cannot just replace this module's pom with the one from `java-to-kotlin-complete`. Be mindful of the differences. 
+For example: the Java module depends on Lombok, that has been removed from the kotlin module.*
+
+[Go to next section](../2-model/Recipe.md)

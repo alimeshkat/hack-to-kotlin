@@ -3,6 +3,7 @@ package nl.rabobank.kotlinmovement.recipes.controller;
 import lombok.extern.slf4j.Slf4j;
 import nl.rabobank.kotlinmovement.recipes.model.RecipesErrorResponse;
 import nl.rabobank.kotlinmovement.recipes.service.ResourceNotFoundException;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -18,6 +19,7 @@ import static nl.rabobank.kotlinmovement.recipes.controller.ErrorMessageMapper.t
 @ControllerAdvice()
 public class RecipesControllerAdvice {
 
+    @NotNull
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<RecipesErrorResponse> validationException(MethodArgumentNotValidException e) {
         log.error("error", e);
@@ -26,6 +28,7 @@ public class RecipesControllerAdvice {
         );
     }
 
+    @NotNull
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<RecipesErrorResponse> resourceNotFoundException(ResourceNotFoundException e) {
         log.error("error", e);
@@ -34,6 +37,7 @@ public class RecipesControllerAdvice {
         );
     }
 
+    @NotNull
     @ExceptionHandler(Exception.class)
     public ResponseEntity<RecipesErrorResponse> defaultExceptionHandler(Exception e) {
         log.error("error", e);

@@ -63,11 +63,6 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
         </dependency>
@@ -109,7 +104,7 @@
                             <goal>compile</goal>
                         </goals>
                         <configuration>
-                            <jvmTarget>11</jvmTarget>
+                            <jvmTarget>17</jvmTarget>
                             <sourceDirs>
                                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
                                 <sourceDir>${project.basedir}/src/main/java</sourceDir>
@@ -122,7 +117,7 @@
                             <goal>test-compile</goal>
                         </goals>
                         <configuration>
-                            <jvmTarget>11</jvmTarget>
+                            <jvmTarget>17</jvmTarget>
                             <sourceDirs>
                                 <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
                                 <sourceDir>${project.basedir}/src/test/java</sourceDir>

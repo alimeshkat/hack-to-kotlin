@@ -1,18 +1,12 @@
 package nl.rabobank.kotlinmovement.recipes.data;
 
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import org.jetbrains.annotations.NotNull;
 
 @Entity
 @AllArgsConstructor
@@ -20,7 +14,7 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Table(name = "ingredients")
-public class IngredientsEntity {
+public final class IngredientsEntity {
     @ManyToOne(optional = false)
     @JoinColumn(name = "recipes_id", nullable = false)
     private RecipesEntity recipes;
@@ -29,8 +23,11 @@ public class IngredientsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     private String name;
+    @NotNull
     private String type;
+    @NotNull
     private Integer weight;
 
     @Override

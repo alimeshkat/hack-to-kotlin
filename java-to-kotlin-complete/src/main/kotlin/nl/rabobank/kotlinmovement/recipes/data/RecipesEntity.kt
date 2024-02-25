@@ -1,6 +1,6 @@
 package nl.rabobank.kotlinmovement.recipes.data
 
-import javax.persistence.*
+import jakarta.persistence.*
 
 @Entity
 @Table(name = "recipes")

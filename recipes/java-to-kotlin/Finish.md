@@ -11,8 +11,8 @@ U| |_  u   |_"_|   <|  \| |>     |_"_|  <\___ \/ /| |_| |\ |  _|" /| | | |
 ``` 
 
 Congrats, you have migrated a Java Spring Boot application to Kotlin!  
-We hope you have enjoyed it and along a way learned a couple of things about Kotlin.
+We hope you have enjoyed it, and along a way learned a couple of things about Kotlin in relation to Java.
 
-Let us know what you liked and disliked by filling out this [form](https://forms.gle/weEuHvuGYYBHwVz2A).
+Let us know what you liked and disliked about this workshop by filling out this [form](https://forms.gle/weEuHvuGYYBHwVz2A).
 
 Cheers!

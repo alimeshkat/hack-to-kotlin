@@ -7,7 +7,7 @@ import nl.rabobank.kotlinmovement.recipes.data.RecipesEntity;
 import nl.rabobank.kotlinmovement.recipes.data.RecipesRepository;
 import nl.rabobank.kotlinmovement.recipes.model.RecipeRequest;
 import nl.rabobank.kotlinmovement.recipes.model.RecipeResponse;
-import org.springframework.dao.EmptyResultDataAccessException;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,23 +17,24 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static nl.rabobank.kotlinmovement.recipes.service.RecipesMapper.toIngredientsEntity;
-import static nl.rabobank.kotlinmovement.recipes.service.RecipesMapper.toRecipeEntity;
-import static nl.rabobank.kotlinmovement.recipes.service.RecipesMapper.toRecipeResponse;
+import static nl.rabobank.kotlinmovement.recipes.service.RecipesMapper.*;
 
 @Service
 @AllArgsConstructor
 public class RecipesService {
+    @NotNull
     private final RecipesRepository recipeRepository;
+    @NotNull
     private final IngredientsRepository ingredientsRepository;
 
     @Transactional
     public RecipeResponse getRecipe(long id) {
         var recipe = recipeRepository.findById(id);
         return recipe.map(r -> toRecipeResponse(r, r.getIngredients()))
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Recipe %d not found", id)));
+                .orElseThrow(() -> new ResourceNotFoundException("Recipe %d not found".formatted(id)));
     }
 
+    @NotNull
     @Transactional
     public List<RecipeResponse> getRecipes() {
         return recipeRepository.findAll()
@@ -42,6 +43,7 @@ public class RecipesService {
                 .collect(Collectors.toList());
     }
 
+    @NotNull
     @Transactional
     public RecipeResponse saveRecipe(RecipeRequest recipeRequest) {
         final RecipesEntity recipe = toRecipeEntity(recipeRequest);
@@ -50,6 +52,7 @@ public class RecipesService {
         return toRecipeResponse(recipes, ingredients);
     }
 
+    @NotNull
     @Transactional
     public RecipeResponse updateOrCreateRecipe(Long id, RecipeRequest recipeRequest) {
         return recipeRepository.findById(id)
@@ -63,13 +66,10 @@ public class RecipesService {
 
     @Transactional
     public void deleteRecipe(long id) {
-        try {
             recipeRepository.deleteById(id);
-        } catch (EmptyResultDataAccessException e) {
-            throw new ResourceNotFoundException(String.format("Recipe %d not found", id));
-        }
     }
 
+    @NotNull
     private Set<IngredientsEntity> saveIngredients(RecipeRequest recipeRequest, RecipesEntity recipe) {
         final Set<IngredientsEntity> ingredients = toIngredientsEntity(recipeRequest, recipe);
         return new HashSet<>(ingredientsRepository.saveAll(ingredients));

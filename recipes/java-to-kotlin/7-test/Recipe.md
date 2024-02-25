@@ -1,4 +1,4 @@
-# Test util Recipe
+# Test
 
 Now you have completed all previous recipes in this project, it is time to convert all the unit test code.
 The test classes are located in the root
@@ -11,11 +11,12 @@ As before, we will first convert the simplest classes and continue from there.
 ## Convert model package
 
 1) Checkout the [test setup](TestSetup.MD)
-2) Convert the domain models
+2) Convert the test domain models
    under [test/util/model](../../../java-to-kotlin/src/test/java/nl/rabobank/kotlinmovement/recipes/test/util/model).
-3) Change the classes to `data classes`. Keep in mind that not all properties have to be nullable.
-4) The `@JvmOverloads` (generation of a default constructor) on the constructor is not necessary anymore after adding
-   the `jackson-module-kotlin`
+3) Change the classes to `data classes`. Keep in mind that not all properties have to be nullable!!
+4) Remove `@JvmField` annotations from the properties, we don't need them as we are calling the getters on the
+   properties
+5) add the `jackson-module-kotlin` dependency to the [pom.xml](../../../java-to-kotlin/pom.xml) file:
 
 ````xml
 
@@ -26,38 +27,48 @@ As before, we will first convert the simplest classes and continue from there.
 </dependency>
 ````
 
-7) Now, initialize the `objectMapper` at `RecipeMockMvcTest` class with `jacksonObjectMapper`
+6) The `@JvmOverloads` (generation of a default constructor needed for serialization/deserialization of objects) on the constructor is not
+   necessary anymore after adding the `jackson-module-kotlin`
+
+7) Now, initialize the `objectMapper` at `RecipeTest` class with `JacksonObjectMapper` i.e `val objectMapper =
+   JacksonObjectMapper()`
 
 ```shell
-   (cd ../.. && ./mvnw clean verify)
-   ```
+   (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
+```
 
 ---
+
+[*peek solution*](../../../java-to-kotlin-complete/src/test/kotlin/nl/rabobank/kotlinmovement/recipes/test/util/model)
 
 ## RecipeTest class
 
 1) convert
    the [RecipeTest](../../../java-to-kotlin/src/test/java/nl/rabobank/kotlinmovement/recipes/test/util/RecipeTest.java)
    class
-2) The properties `mockMvc` is initialed when the test context is loaded, so we have to tell the compiler that this
-   property is later initialised by making it a `lateinit var`
+2) The properties `mockMvc` & `initRecipeRequest` are initialed when the test context is loaded, so we have to tell the compiler that this
+   property is later initialised by making it a `lateinit var` e.g. `lateinit var mockMvc: MockMvc`
 3) Let's refactor the `mockRequest()` function:
-   1) so the class type argument (i.e. `Class<T> responseType`) can be removed and instead the
-      type parameter i.e. `<T>` is used. Use `reified` type parameters (i.e. `<reified T>`). The
-      reified keyword is only allowed in the context of a `inline` function!
-   2) And the nullable parameter `body` becomes optional by providing a default value (i.e. body: String? = null)
-4) Add the parameter type where the private inlined reified `mockMvcPerformRequest()` is called
+    1) so the class type argument (i.e. `Class<T> responseType`) can be removed and instead the
+       type parameter i.e. `<T>` is used. Use `reified` type parameters (i.e. `<reified T>`). The
+       reified keyword is only allowed in the context of a `inline` function! i.e. `inline fun <reified T> mockRequest()`
+    2) And the nullable parameter `body` becomes optional by providing a default value (i.e. `body: String? = null`)
+4) Add the parameter type where the `mockRequest()` is called (e.g. `mockRequest<RecipeResponse>(...)`), and remove the type argument
 5) When ready, run all tests:
 
 ---
 ![light-bulb](../../sources/png/light-bulb-xs.png)  
-Note that the static field `objectMapper` is moved to the `companion object` of the class. And because the `objectMapper` is still called
-from `Java` code, `Intellij` has added the annotation `@JvmField` to it. This annotation can be removed after all the code is converted to Kotlin
+Note that the static field `objectMapper` is moved to the `companion object` of the class. And because
+the `objectMapper` is still called
+from `Java` code, `Intellij` has added the annotation `@JvmField` to it. This annotation can be removed after all the
+code is converted to Kotlin
 ---
 
 ```shell
-   (cd ../.. && ./mvnw clean verify)
-   ```
+   (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
+```
+
+[*peek solution*](../../../java-to-kotlin-complete/src/test/kotlin/nl/rabobank/kotlinmovement/recipes/test/util/RecipeTest.kt)
 
 ---
 
@@ -70,7 +81,10 @@ from `Java` code, `Intellij` has added the annotation `@JvmField` to it. This an
 
 ```shell
    (cd ../.. && ./mvnw clean verify)
-   ```
+```
+
+[*peek
+solution*](../../../java-to-kotlin-complete/src/test/kotlin/nl/rabobank/kotlinmovement/recipes/test/util/RecipeTestData.kt)
 
 --- 
 ![light-bulb](../../sources/png/light-bulb-xs.png)  
@@ -101,8 +115,11 @@ e.g.`IngredientRequestTest(name = "yeast", weight = 100))`.
 7) When ready, run all tests:
 
 ```shell
-   (cd ../.. && ./mvnw clean verify)
-   ```
+   (cd ../.. && ./mvnw clean verify -pl :java-to-kotlin)
+```
+
+[*peek solution*](../../../java-to-kotlin-complete/src/test/kotlin/nl/rabobank/kotlinmovement/recipes/test/util/RecipeAssert.kt)
+
 
 --- 
 ![light-bulb](../../sources/png/light-bulb-xs.png)  
@@ -113,34 +130,32 @@ And like `data` classes you can destruct pairs (e.g. `val (k,v) = Pair("key","va
 ## Covert test classes
 
 1) Last but not least, convert the
-   [test classes](../../../java-to-kotlin/src/test/java/nl/rabobank/kotlinmovement/recipes/CreateUpdateRecipesControllerTest.java)
-2) The protected property `objectMapper` from RecipeMockMvcTest should be moved out of the companion object to the
+   [test classes](../../../java-to-kotlin/src/test/java/nl/rabobank/kotlinmovement/recipes)
+2) The protected property `objectMapper` from `RecipeTest` should be moved out of the companion object to the
    class. Using protected members which are not `@JvmStatic` in the superclass companion is unsupported yet
-3) In `GetRecipesControllerTest` the property `initRecipeRequest` should become a non-nullable `lateinit var` 
-4) In `GetRecipesControllerTest` replace the forEach on the Streams API with Kotlin's forEach 
-5) Now all the code is converted to Kotlin, there is no need for `@JvmField` or other annotation that were used to
-   enable interoperability with `Java`. Go back and remove them all
-6) When ready, run all tests:
+3) In `GetRecipesControllerTest` replace the forEach on the Streams API with Kotlin's forEach
 
 ```shell
-   (cd ../.. && ./mvnw clean verify)
-   ```
+   (cd ../.. && ./mvnw clean verify -pl :java-to-kotlin)
+```
+
+[*peek solution*](../../../java-to-kotlin-complete/src/test/kotlin/nl/rabobank/kotlinmovement/recipes)
+
 ---
 ![light-bulb](../../sources/png/light-bulb-xs.png)
 The `@DisplayName` annotation to describe the tests in a readable is not needed in Kotlin.
-Place the function name between backticks and you can use spaces in the function name.
+Place the function name between backticks, and you can use spaces in the function name.
 
 ```Kotlin
 fun `forever foo bar `() {
 //
 }
 ```
+
 Static function like in a parameterized test,
-you should either declare the function in the companion class of the test class with the annotation `@JvmStatic` on top of it, or
+you should either declare the function in the companion class of the test class with the annotation `@JvmStatic` on top
+of it, or
 put the annotation `@TestInstance(TestInstance.Lifecycle.PER_CLASS)` on top of the test class.
 ---
 
-
-Well done! Now, you can rename test source directory from `java` to `kotlin` and you are done!
-
-[Go to the finish](../Finish.md)
+[Go to next section](../8-clean-up/Recipe.md)

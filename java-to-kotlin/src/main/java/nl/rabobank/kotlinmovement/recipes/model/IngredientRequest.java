@@ -1,12 +1,11 @@
 package nl.rabobank.kotlinmovement.recipes.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 @Data
-public class IngredientRequest {
+public final class IngredientRequest {
     @NotBlank(message = "ingredient.name")
     private final String name;
     @NotNull(message = "ingredient.type")
