@@ -1,6 +1,7 @@
 package nl.rabobank.kotlinmovement.recipes.data
 
 import io.r2dbc.spi.Row
+import io.r2dbc.spi.RowMetadata
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactive.asFlow
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate
@@ -53,7 +54,7 @@ class RecipesAndIngredientsRepositoryImp(private val template: R2dbcEntityTempla
     }
 }
 
-fun mapRowToRecipeToIngredient(r: Row): Pair<RecipesEntity, IngredientsEntity> = RecipesEntity(
+fun mapRowToRecipeToIngredient(r: Row, metadata: RowMetadata): Pair<RecipesEntity, IngredientsEntity> = RecipesEntity(
     recipeId = checkNotNull(r.get("recipe_id", java.lang.Integer::class.java)).toLong(),
     recipeName = checkNotNull(r.get("recipe_name", String::class.java)),
 ) to IngredientsEntity(

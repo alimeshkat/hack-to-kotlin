@@ -1,6 +1,6 @@
 # An introduction to Coroutines
 
-Kotlin coroutines can be viewed as lightweight threads. You can create thousands of them without running out of memory.
+Kotlin's coroutines can be viewed as lightweight threads. You can create thousands of them without running out of memory.
 Coroutines can be used out of the box because they are part of the Kotlin standard library. By adding the `suspend`
 modifier to your function, the Kotlin compiler understands that it won't return directly, but it will suspend for some
 time to complete an I/O operation or some heavy CPU computation. Simply put, marking a function with the suspend
@@ -19,7 +19,7 @@ That's also why a suspend function can only be called within the scope of anothe
 it can suspend a coroutine, not a thread. The implementation of the coroutine is achieved with the `Continuation Passing
 Style` (CPS) transformation transparently by the compiler.
 
-A simple form of CPS is a callback, and so one can view coroutines as callbacks. The compiler transforms a suspended
+A simple form of CPS is a callback, and so on can view coroutines as callbacks. The compiler transforms a suspended
 function into a state machine that stores the current state in a Continuation (callback) object at each suspension
 point. This
 Continuation object is passed down to each suspend function. When the function is done, the Continuation
@@ -175,8 +175,7 @@ The CPS transformation at compile time doesn't generate callbacks, but a more ef
 as a parameter, a state machine.
 
 Let us look at our suspended `sendMailToUser` function and try to describe the generated state machine for it in
-*pseudo*
-code.
+*pseudo*code.
 
 1) A state machine (sm) is created to keep the current execution state
 2) A switch case is created for each action and its following continuation represented by a label. At `case 0`, the

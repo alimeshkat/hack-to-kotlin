@@ -10,9 +10,6 @@ This will make sure Kotlin is available during the compilation.
 ````xml
 <project>
     ...
-    <properties>
-        <kotlin.version>1.7.20</kotlin.version>
-    </properties>
     <!--Add Kotlin standard library-->
     <dependencies>
         <dependency>

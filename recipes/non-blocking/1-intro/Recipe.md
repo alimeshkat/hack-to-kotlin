@@ -1,6 +1,6 @@
 # Intro
 
-It turned out, the `Recipe` service has become populair. But unfortunately under the new
+It turned out, the `Recipe` service has become popular. But unfortunately under the new
 tremendous load (10,000s req/sec), it's not performing that great and sometimes becomes unresponsive. We are now
 thinking about doing things differently by refactoring the code once again. 
 

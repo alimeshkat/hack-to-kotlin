@@ -48,10 +48,7 @@ class RecipesService(
 
     @Transactional
     suspend fun deleteRecipe(id: Long) {
-        recipeRepository.findById(id)?.let {
-            recipeRepository.deleteById(id)
-        } ?: throw ResourceNotFoundException("Recipe $id not found")
-
+        recipeRepository.deleteById(id)
     }
 
     private suspend fun recreateIngredients(id: Long, recipeRequest: RecipeRequest): List<IngredientsEntity> {
