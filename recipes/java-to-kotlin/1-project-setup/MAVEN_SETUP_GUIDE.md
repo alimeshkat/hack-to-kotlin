@@ -64,7 +64,7 @@ Beneath here you can find a fully configured Kotlin maven plugin that will compi
      <goal>compile</goal>
     </goals>
     <configuration>
-     <jvmTarget>11</jvmTarget>
+     <jvmTarget>17</jvmTarget>
      <sourceDirs>
       <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
       <sourceDir>${project.basedir}/src/main/java</sourceDir>
@@ -77,7 +77,7 @@ Beneath here you can find a fully configured Kotlin maven plugin that will compi
      <goal>test-compile</goal>
     </goals>
     <configuration>
-     <jvmTarget>11</jvmTarget>
+     <jvmTarget>17</jvmTarget>
      <sourceDirs>
       <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
       <sourceDir>${project.basedir}/src/test/java</sourceDir>

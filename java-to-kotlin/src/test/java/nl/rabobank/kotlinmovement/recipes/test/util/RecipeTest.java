@@ -8,12 +8,10 @@ import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipesErrorResponseTe
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -43,7 +41,7 @@ public class RecipeTest {
     }
 
     protected RecipeResponseTest getRecipe(long id) throws Exception {
-        final String url = String.format("/recipes/%d", id);
+        final String url = "/recipes/%d".formatted(id);
         return mockRequest(HttpMethod.GET, url, null, RecipeResponseTest.class, HttpStatus.OK);
     }
 
@@ -53,7 +51,7 @@ public class RecipeTest {
 
 
     protected RecipeResponseTest updateRecipe(Long id, RecipeRequestTest recipeRequest) throws Exception {
-        final String url = String.format("/recipes/%d", id);
+        final String url = "/recipes/%d".formatted(id);
         return mockRequest(
                 HttpMethod.PUT,
                 url,

@@ -6,7 +6,6 @@ import nl.rabobank.kotlinmovement.recipes.data.RecipesEntity
 import nl.rabobank.kotlinmovement.recipes.data.RecipesRepository
 import nl.rabobank.kotlinmovement.recipes.model.RecipeRequest
 import nl.rabobank.kotlinmovement.recipes.model.RecipeResponse
-import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -50,11 +49,7 @@ class RecipesService(
 
     @Transactional
     fun deleteRecipe(id: Long) {
-        try {
             recipeRepository.deleteById(id)
-        } catch (e: EmptyResultDataAccessException) {
-            throw ResourceNotFoundException("Recipe $id not found")
-        }
     }
 
     private fun saveIngredients(recipeRequest: RecipeRequest, recipe: RecipesEntity): Set<IngredientsEntity> =
