@@ -12,9 +12,7 @@
     <artifactId>java-to-kotlin-complete</artifactId>
 
     <properties>
-        <kotlin.version>1.7.20</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
-        <jackson-module-kotlin.version>2.13.4</jackson-module-kotlin.version>
     </properties>
 
     <dependencies>
@@ -57,7 +55,6 @@
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-kotlin</artifactId>
-            <version>${jackson-module-kotlin.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -82,7 +79,7 @@
                             <goal>compile</goal>
                         </goals>
                         <configuration>
-                            <jvmTarget>17</jvmTarget>
+                            <jvmTarget>${java.version}</jvmTarget>
                             <sourceDirs>
                                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
                                 <sourceDir>${project.basedir}/src/main/java</sourceDir>
@@ -95,7 +92,7 @@
                             <goal>test-compile</goal>
                         </goals>
                         <configuration>
-                            <jvmTarget>17</jvmTarget>
+                            <jvmTarget>${java.version}</jvmTarget>
                             <sourceDirs>
                                 <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
                                 <sourceDir>${project.basedir}/src/test/java</sourceDir>
