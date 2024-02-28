@@ -1,5 +1,7 @@
 package nl.rabobank.kotlinmovement.recipes.service
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
 import nl.rabobank.kotlinmovement.recipes.data.IngredientsEntity
 import nl.rabobank.kotlinmovement.recipes.data.IngredientsRepository
@@ -17,23 +19,21 @@ class RecipesService(
     val recipesAndIngredientsRepository: RecipesAndIngredientsRepository
 ) {
     @Transactional
-    suspend fun getRecipes(): List<RecipeResponse> = recipesAndIngredientsRepository.findAllRecipesAndIngredients()
-        .map { (recipe, ingredients) ->
-            RecipesMapper.toRecipeResponse(recipe, ingredients)
-        }
+    suspend fun getRecipes(): Flow<RecipeResponse> = recipesAndIngredientsRepository.findAllRecipesAndIngredients()
+        .map { RecipesMapper.toRecipeResponse(it) }
 
     @Transactional
     suspend fun getRecipe(id: Long): RecipeResponse? =
-        recipesAndIngredientsRepository.findRecipesAndIngredientsById(id)?.let { (recipe, ingredients) ->
-            RecipesMapper.toRecipeResponse(recipe, ingredients)
+        recipesAndIngredientsRepository.findRecipesAndIngredientsById(id)?.let {
+            RecipesMapper.toRecipeResponse(it)
         } ?: throw ResourceNotFoundException("Recipe $id not found")
 
     @Transactional
-    suspend fun saveRecipe(recipeRequest: RecipeRequest): RecipeResponse? {
+    suspend fun saveRecipe(recipeRequest: RecipeRequest): RecipeResponse {
         val recipe = RecipesMapper.toRecipeEntity(recipeRequest)
         val recipes = recipeRepository.save(recipe)
         val ingredients = saveIngredients(recipeRequest, recipes.recipeId)
-        return RecipesMapper.toRecipeResponse(recipes, ingredients)
+        return RecipesMapper.toRecipeResponse(recipes.copy(ingredients = ingredients.toList().toMutableList()))
     }
 
     @Transactional
@@ -42,7 +42,7 @@ class RecipesService(
             checkNotNull(recipeRequest.recipeName)
             val ingredients = recreateIngredients(id, recipeRequest)
             val recipes = recipeRepository.save(RecipesMapper.toRecipeEntity(recipeRequest, id))
-            RecipesMapper.toRecipeResponse(recipes, ingredients)
+            RecipesMapper.toRecipeResponse(recipes.copy(ingredients = ingredients.toList().toMutableList()))
         } ?: saveRecipe(recipeRequest)
     }
 
@@ -51,7 +51,7 @@ class RecipesService(
         recipeRepository.deleteById(id)
     }
 
-    private suspend fun recreateIngredients(id: Long, recipeRequest: RecipeRequest): List<IngredientsEntity> {
+    private suspend fun recreateIngredients(id: Long, recipeRequest: RecipeRequest): Flow<IngredientsEntity> {
         ingredientsRepository.deleteByRecipeId(id)
         return saveIngredients(recipeRequest, id)
     }
@@ -59,8 +59,8 @@ class RecipesService(
     private suspend fun saveIngredients(
         recipeRequest: RecipeRequest,
         recipeId: Long?
-    ): List<IngredientsEntity> {
-        return ingredientsRepository.saveAll(RecipesMapper.toIngredientsEntity(recipeRequest, recipeId)).toList()
+    ): Flow<IngredientsEntity> {
+        return ingredientsRepository.saveAll(RecipesMapper.toIngredientsEntity(recipeRequest, recipeId))
     }
 
 }

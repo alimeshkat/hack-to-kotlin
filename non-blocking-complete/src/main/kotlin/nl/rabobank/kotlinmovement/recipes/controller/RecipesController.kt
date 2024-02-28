@@ -1,6 +1,7 @@
 package nl.rabobank.kotlinmovement.recipes.controller
 
 import jakarta.validation.Valid
+import kotlinx.coroutines.flow.Flow
 import nl.rabobank.kotlinmovement.recipes.model.RecipeRequest
 import nl.rabobank.kotlinmovement.recipes.model.RecipeResponse
 import nl.rabobank.kotlinmovement.recipes.service.RecipesService
@@ -22,9 +23,9 @@ class RecipesController(private val recipeService: RecipesService) {
     }
 
     @GetMapping(value = ["recipes"])
-    suspend fun recipes(): ResponseEntity<List<RecipeResponse>> {
+    suspend fun recipes(): Flow<RecipeResponse> {
         log.info("Get All Recipes")
-        return ResponseEntity.ok(recipeService.getRecipes())
+        return recipeService.getRecipes()
     }
 
     @GetMapping(value = ["recipes/{id}"])

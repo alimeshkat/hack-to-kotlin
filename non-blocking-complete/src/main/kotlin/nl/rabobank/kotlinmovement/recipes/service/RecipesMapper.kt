@@ -27,12 +27,11 @@ object RecipesMapper {
 
     fun toRecipeResponse(
         recipes: RecipesEntity,
-        ingredientsEntities: List<IngredientsEntity>
     ): RecipeResponse =
         RecipeResponse(
             checkNotNull(recipes.recipeId),
             recipes.recipeName,
-            ingredientsEntities.map { ingredient ->
+            recipes.ingredients.map { ingredient ->
                 IngredientResponse(
                     checkNotNull(ingredient.ingredientId),
                     ingredient.name,

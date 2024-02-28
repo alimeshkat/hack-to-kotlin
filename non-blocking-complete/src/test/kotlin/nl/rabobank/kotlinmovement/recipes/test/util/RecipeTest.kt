@@ -23,7 +23,6 @@ class RecipeTest {
     protected var objectMapper = jacksonObjectMapper()
     var client: WebClient = WebClient.create("http://localhost:8080")
 
-    @Throws(Exception::class)
     protected fun setInitialState(): RecipeRequestTest {
         val ingredients = RecipeTestData.getDefaultIngredientRequests
         val initRecipe = RecipeRequestTest("Pizza", ingredients)
@@ -31,7 +30,6 @@ class RecipeTest {
         return initRecipe
     }
 
-    @Throws(Exception::class)
     protected fun getRecipe(id: Long): RecipeResponseTest = runBlocking {
         mockRequest(
             HttpMethod.GET,
@@ -40,7 +38,6 @@ class RecipeTest {
         )
     }
 
-    @Throws(Exception::class)
     protected fun allRecipes(): Array<RecipeResponseTest> = runBlocking {
         mockRequest(
             HttpMethod.GET,
@@ -49,7 +46,6 @@ class RecipeTest {
         )
     }
 
-    @Throws(Exception::class)
     protected fun updateRecipe(id: Long?, recipeRequest: RecipeRequestTest): RecipeResponseTest = runBlocking {
         mockRequest(
             HttpMethod.PUT,
@@ -59,7 +55,6 @@ class RecipeTest {
         )
     }
 
-    @Throws(Exception::class)
     protected fun badRequestCall(
         httpMethod: HttpMethod,
         url: String,
@@ -73,7 +68,6 @@ class RecipeTest {
         )
     }
 
-    @Throws(Exception::class)
     protected fun notFoundCall(httpMethod: HttpMethod, uri: String): RecipesErrorResponseTest = runBlocking {
         mockRequest(
             httpMethod,
@@ -82,7 +76,6 @@ class RecipeTest {
         )
     }
 
-    @Throws(Exception::class)
     protected fun mockRequestNoContent(httpMethod: HttpMethod, url: String) = runBlocking {
         client.method(httpMethod).uri(url).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
             .awaitExchange {
@@ -94,7 +87,6 @@ class RecipeTest {
             }
     }
 
-    @Throws(Exception::class)
     private fun createRecipe(recipe: RecipeRequestTest): RecipeResponseTest = runBlocking {
         mockRequest(
             HttpMethod.POST,
@@ -104,7 +96,6 @@ class RecipeTest {
         )
     }
 
-    @Throws(Exception::class)
     private suspend inline fun <reified T : Any> mockRequest(
         method: HttpMethod,
         uri: String,

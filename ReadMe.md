@@ -35,7 +35,7 @@ we can improve it.
 ### Start converting Java-To-Kotlin
 
 The first recipes in this workshop explain step-by-step what needs to be done to migrate the Java code. Follow the
-recipes  [here](recipes/java-to-kotlin/Intro.md) in the correct order, and you will be able to convert the Java code to
+recipes  [here](recipes/1.java-to-kotlin/Intro.md) in the correct order, and you will be able to convert the Java code to
 Kotlin in no time!
 
 ---
