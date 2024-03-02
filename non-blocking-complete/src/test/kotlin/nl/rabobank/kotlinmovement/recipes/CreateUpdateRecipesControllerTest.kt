@@ -1,5 +1,6 @@
 package nl.rabobank.kotlinmovement.recipes
 
+import kotlinx.coroutines.runBlocking
 import nl.rabobank.kotlinmovement.recipes.test.util.RecipeAssert.assertRecipeResponse
 import nl.rabobank.kotlinmovement.recipes.test.util.RecipeTest
 import nl.rabobank.kotlinmovement.recipes.test.util.RecipeTestData.emptyRequest
@@ -31,8 +32,7 @@ import java.util.stream.Stream
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class CreateUpdateRecipesControllerTest : RecipeTest() {
     @Test
-    @Throws(Exception::class)
-    fun `Should be able to update a recipe`() {
+      fun `Should be able to update a recipe`() {
         val updateRequest: RecipeRequestTest = peperoniPizzaRecipeRequest
         val response = updateRecipe(1L, updateRequest)
         assertRecipeResponse(updateRequest, response)
@@ -65,8 +65,7 @@ internal class CreateUpdateRecipesControllerTest : RecipeTest() {
     }
 
     @BeforeEach
-    @Throws(Exception::class)
-    fun setup() {
+    fun setup() = runBlocking<Unit> {
         setInitialState()
     }
 

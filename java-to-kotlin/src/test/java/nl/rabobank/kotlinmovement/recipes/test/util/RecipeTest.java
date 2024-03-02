@@ -68,11 +68,8 @@ public class RecipeTest {
         return mockRequest(httpMethod, url, null, RecipesErrorResponseTest.class, HttpStatus.NOT_FOUND);
     }
 
-    protected void simpleMockRequest(HttpMethod httpMethod, String url, HttpStatus status) throws Exception {
-        mockMvc
-                .perform(request(httpMethod, url))
-                .andDo(print())
-                .andExpect(MockMvcResultMatchers.status().is(status.value()));
+    protected void assertVoidMockRequest(HttpMethod httpMethod, String url, HttpStatus status) throws Exception {
+        mockRequest(httpMethod, url, null, null, status);
     }
 
     private void createRecipe(RecipeRequestTest recipe) throws Exception {
@@ -97,6 +94,9 @@ public class RecipeTest {
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
+        if(responseType == null){
+            return null;
+        }
         return objectMapper.readValue(responseArrayString, responseType);
     }
 

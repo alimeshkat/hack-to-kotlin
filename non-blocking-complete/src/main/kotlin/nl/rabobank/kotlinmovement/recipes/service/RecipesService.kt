@@ -3,10 +3,8 @@ package nl.rabobank.kotlinmovement.recipes.service
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
-import nl.rabobank.kotlinmovement.recipes.data.IngredientsEntity
-import nl.rabobank.kotlinmovement.recipes.data.IngredientsRepository
-import nl.rabobank.kotlinmovement.recipes.data.RecipesAndIngredientsRepository
-import nl.rabobank.kotlinmovement.recipes.data.RecipesRepository
+import kotlinx.coroutines.flow.toSet
+import nl.rabobank.kotlinmovement.recipes.data.*
 import nl.rabobank.kotlinmovement.recipes.model.RecipeRequest
 import nl.rabobank.kotlinmovement.recipes.model.RecipeResponse
 import org.springframework.stereotype.Service
@@ -33,7 +31,7 @@ class RecipesService(
         val recipe = RecipesMapper.toRecipeEntity(recipeRequest)
         val recipes = recipeRepository.save(recipe)
         val ingredients = saveIngredients(recipeRequest, recipes.recipeId)
-        return RecipesMapper.toRecipeResponse(recipes.copy(ingredients = ingredients.toList().toMutableList()))
+        return RecipesMapper.toRecipeResponse(recipes.copy(ingredients = ingredients.toSet()))
     }
 
     @Transactional
@@ -42,7 +40,7 @@ class RecipesService(
             checkNotNull(recipeRequest.recipeName)
             val ingredients = recreateIngredients(id, recipeRequest)
             val recipes = recipeRepository.save(RecipesMapper.toRecipeEntity(recipeRequest, id))
-            RecipesMapper.toRecipeResponse(recipes.copy(ingredients = ingredients.toList().toMutableList()))
+            RecipesMapper.toRecipeResponse(recipes.copy(ingredients = ingredients.toSet()))
         } ?: saveRecipe(recipeRequest)
     }
 

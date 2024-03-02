@@ -4,10 +4,10 @@ This guide will describe step-by-step how to set up maven, so it will compile Ko
 
 ## Dependencies
 
-Add the Kotlin standaard library dependencies to the [pom](../../../java-to-kotlin/pom.xml).  
+Add the Kotlin standard library dependencies to the [pom](../../../java-to-kotlin/pom.xml).  
 This will make sure Kotlin is available during the compilation.
 
-````xml
+```xml
 <project>
     ...
     <!--Add Kotlin standard library-->
@@ -25,7 +25,7 @@ This will make sure Kotlin is available during the compilation.
     </dependencies>
     ...
 </project>
-````
+```
 
 ---
 
@@ -135,14 +135,6 @@ Beneath here you can find a fully configured Kotlin maven plugin that will compi
  ...
 </project>
 
-````
-
-This is *Optional*, but, to speed up the build, enable the compiler plugin incremental compilation by adding this property:
-
-````xml
-<properties>
-    <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
-</properties>
 ````
 
 Reference: 

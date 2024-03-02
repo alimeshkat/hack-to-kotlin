@@ -1,41 +1,43 @@
 package nl.rabobank.kotlinmovement.recipes
 
+import kotlinx.coroutines.runBlocking
 import nl.rabobank.kotlinmovement.recipes.test.util.RecipeAssert.assertRecipeResponse
+import nl.rabobank.kotlinmovement.recipes.test.util.RecipeAssert.assertRecipeResponses
 import nl.rabobank.kotlinmovement.recipes.test.util.RecipeTest
-import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipeRequestTest
 import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipeResponseTest
 import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipesErrorResponseTest
+import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.AssertionsForClassTypes
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import org.springframework.http.HttpMethod
 
-internal class GetRecipesControllerTest : RecipeTest() {
-    private lateinit var initRecipeRequest: RecipeRequestTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 
+internal class GetRecipesControllerTest : RecipeTest() {
+
+    private lateinit var initRecipes: List<RecipeResponseTest>
+    @BeforeEach
+    fun setup(): Unit = runBlocking {
+        initRecipes = setInitialState(100)
+    }
     @Test
     fun `Should be able to get all recipes`() {
-        allRecipes().forEach { recipeResponse: RecipeResponseTest ->
-            assertRecipeResponse(
-                initRecipeRequest, recipeResponse
-            )
-        }
+        val actual = allRecipes()
+        assertRecipeResponses(actual, initRecipes)
     }
 
     @Test
-    fun `Should be able to get a recipe`() {
-        val recipeResponse = getRecipe(1L)
-        assertRecipeResponse(initRecipeRequest, recipeResponse)
+    fun `Should be able to get a recipe`(){
+        assertThat(initRecipes).contains( getRecipe(1L))
     }
 
     @Test
     fun `Should return not found if resource does not exist`()  {
-        val actual = notFoundCall(HttpMethod.GET, "/recipes/2")
-        AssertionsForClassTypes.assertThat(actual).isEqualTo(RecipesErrorResponseTest("Recipe 2 not found"))
+        val actual = notFoundCall(HttpMethod.GET, "/recipes/102")
+        AssertionsForClassTypes.assertThat(actual).isEqualTo(RecipesErrorResponseTest("Recipe 102 not found"))
     }
 
-    @BeforeEach
-    fun setup(){
-        initRecipeRequest = setInitialState()
-    }
 }

@@ -14,6 +14,7 @@ import org.springframework.test.annotation.DirtiesContext
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.awaitBody
 import org.springframework.web.reactive.function.client.awaitExchange
+import java.util.UUID
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @AutoConfigureMockMvc
@@ -23,11 +24,12 @@ class RecipeTest {
     protected var objectMapper = jacksonObjectMapper()
     var client: WebClient = WebClient.create("http://localhost:8080")
 
-    protected fun setInitialState(): RecipeRequestTest {
-        val ingredients = RecipeTestData.getDefaultIngredientRequests
-        val initRecipe = RecipeRequestTest("Pizza", ingredients)
-        createRecipe(initRecipe)
-        return initRecipe
+    protected suspend fun setInitialState(number: Number=1): List<RecipeResponseTest> {
+        return (1..number.toInt()).map {
+            val ingredients = RecipeTestData.getDefaultIngredientRequests
+            val initRecipe = RecipeRequestTest(UUID.randomUUID().toString(), ingredients)
+            createRecipe(initRecipe)
+        }
     }
 
     protected fun getRecipe(id: Long): RecipeResponseTest = runBlocking {
@@ -38,7 +40,7 @@ class RecipeTest {
         )
     }
 
-    protected fun allRecipes(): Array<RecipeResponseTest> = runBlocking {
+    protected fun allRecipes(): List<RecipeResponseTest> = runBlocking {
         mockRequest(
             HttpMethod.GET,
             "/recipes",
@@ -97,13 +99,15 @@ class RecipeTest {
     }
 
     private suspend inline fun <reified T : Any> mockRequest(
-        method: HttpMethod,
-        uri: String,
+        httpMethod: HttpMethod,
+        url: String,
         status: HttpStatus,
         body: String? = null
     ): T {
-        val i =
-            client.method(method).uri(uri).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
+        val i = client.method(httpMethod)
+            .uri(url)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
         body?.let {
             i.bodyValue(it)
         }

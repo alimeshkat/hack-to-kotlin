@@ -5,12 +5,12 @@ import org.springframework.data.relational.core.mapping.Table
 
 @Table(name = "ingredients")
 data class IngredientsEntity(
+    val recipeId: Long?,
     @Id
     val ingredientId: Long? = null,
     val name: String,
-    val type: String,
     val weight: Int,
-    val recipeId: Long
+    val type: String
 )
 
 @Table(name = "recipes")
@@ -19,5 +19,5 @@ data class RecipesEntity(
     val recipeId: Long? = null,
     val recipeName: String,
     @ReadOnlyProperty
-    val ingredients: List<IngredientsEntity>  = emptyList()
+    val ingredients: Set<IngredientsEntity>  = emptySet()
 )

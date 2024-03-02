@@ -57,7 +57,7 @@ public class RecipesService {
     public RecipeResponse updateOrCreateRecipe(Long id, RecipeRequest recipeRequest) {
         return recipeRepository.findById(id)
                 .map(it -> {
-                    var recipe = recipeRepository.save(new RecipesEntity(it.getId(), recipeRequest.getRecipeName(), Collections.emptySet()));
+                    var recipe = recipeRepository.save(new RecipesEntity(it.getRecipeId(), recipeRequest.getRecipeName(), Collections.emptySet()));
                     var ingredients = saveIngredients(recipeRequest, recipe);
                     return toRecipeResponse(recipe, ingredients);
                 }).

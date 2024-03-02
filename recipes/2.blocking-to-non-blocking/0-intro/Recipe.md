@@ -36,4 +36,4 @@ In short why we want to use Spring WebFlux:
 
 More about Spring Boot reactor and Coroutines in the next sections where we will explore how to make the Recipe service non-blocking!
 
-[NEXT](../2-project-setup/Recipe.md)
+[NEXT](../1-project-setup/Recipe.md)

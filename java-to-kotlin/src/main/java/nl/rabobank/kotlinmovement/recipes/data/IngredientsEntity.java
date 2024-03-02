@@ -21,7 +21,7 @@ public final class IngredientsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long ingredientId;
 
     @NotNull
     private String name;
@@ -37,17 +37,17 @@ public final class IngredientsEntity {
 
         IngredientsEntity that = (IngredientsEntity) o;
 
-        if (getId() == null || that.getId() == null) return false;
+        if (getIngredientId() == null || that.getIngredientId() == null) return false;
 
-        return getId().equals(that.getId());
+        return getIngredientId().equals(that.getIngredientId());
     }
 
     @Override
     public int hashCode() {
-        if (getId() == null) {
+        if (getIngredientId() == null) {
             return super.hashCode();
         } else {
-            return getId().hashCode();
+            return getIngredientId().hashCode();
         }
     }
 }
