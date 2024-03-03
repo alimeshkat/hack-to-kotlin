@@ -7,7 +7,6 @@ the repository.
 
 1. Spring WebMVC (blocking) -> Spring Reactor (non-blocking)
 2. JDBC  (blocking) -> R2DBC (non-blocking)
-3. 
 
 ## Recipe
 
@@ -15,9 +14,8 @@ the repository.
    module [java-to-kotlin](../../../java-to-kotlin-complete/pom.xml) accordingly, and if you had started from the
    java-to-kotlin
    module continue from there (i.e. [java-to-kotlin](../../../java-to-kotlin/pom.xml)).
-2) You can now **delete** the [db migration folder](../../../java-to-kotlin-complete/src/main/resources/db/migration)
-3) Adjust the [application configuration](../../../java-to-kotlin-complete/src/main/resources/application.yaml) 
-4) Build project:
+2) Reade the [configuration guide](APPLICATION_SETUP_GUIDE.md), and adjust the [application configuration](../../../java-to-kotlin-complete/src/main/resources/application.yaml) 
+3) Build project:
 
 ```shell
    (cd ../../.. && ./mvnw clean package -pl :java-to-kotlin-complete)
