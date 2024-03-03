@@ -15,7 +15,7 @@ Kotlin code.
     1) Don't use `data` classes for JPA `entities`, because `entities` are not just regular DTO's!
     2) Add the `entity` properties to the default constructor
     3) Make all properties immutable (`val`)
-    4) Make `id` and `ingridients` nullable
+    4) Make `ingredientId` and `ingridients` nullable
 3) There is not much to change in the `Repositories` class, just make the `generic-types` of the
    `JpaRepository` not nullable.
 4) For example, after the conversion and refactoring the signature of `IngredientsEntity` class should look like this:
@@ -29,7 +29,7 @@ class IngredientsEntity(
     val recipes: RecipesEntity? = null,
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    val ingredientId: Long? = null,
     val name: String,
     val type: String,
     val weight: Int,

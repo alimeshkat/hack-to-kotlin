@@ -101,8 +101,8 @@ especially when it comes to the Object Relational Mapping (ORM) part.
        the `RecipesIngredientsRepository.kt` :
           ```Kotlin
            interface RecipesAndIngredientsRepository {
-           fun findAllRecipesAndIngredients(): Flow<RecipesEntity> 
-           suspend fun findRecipesAndIngredientsById(id: Long): RecipesEntity?
+           fun findAll(): Flow<RecipesEntity> 
+           suspend fun findByIdOrNull(id: Long): RecipesEntity?
            }
          ```
        *Notice* that the return type of  `findAllRecipesAndIngredients` is of type `Flow` which emits the Recipes and
