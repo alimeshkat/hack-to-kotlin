@@ -6,6 +6,7 @@
     <modules>
         <module>java-to-kotlin</module>
         <module>java-to-kotlin-complete</module>
+        <module>non-blocking-complete</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -22,12 +23,15 @@
     <properties>
         <kotlin.version>1.9.20</kotlin.version>
         <java.version>21</java.version>
+        <kotlinx.coroutines.version>1.8.0</kotlinx.coroutines.version>
+        <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib</artifactId>
+            <version>${kotlin.version}</version>
         </dependency>
     </dependencies>
 

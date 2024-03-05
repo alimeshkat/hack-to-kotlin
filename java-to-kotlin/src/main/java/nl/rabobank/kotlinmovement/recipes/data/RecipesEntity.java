@@ -16,7 +16,7 @@ import java.util.Set;
 public final class RecipesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long recipeId;
     @NonNull
     private String recipeName;
     @OneToMany(mappedBy = "recipes", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)

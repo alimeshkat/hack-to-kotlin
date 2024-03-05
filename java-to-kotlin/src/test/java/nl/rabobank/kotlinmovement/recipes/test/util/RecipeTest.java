@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import static nl.rabobank.kotlinmovement.recipes.test.util.RecipeTestData.getDefaultIngredientRequests;
@@ -32,12 +33,16 @@ public class RecipeTest {
 
     protected RecipeRequestTest initRecipeRequest;
 
-    protected RecipeRequestTest setInitialState() throws Exception {
-        final Set<IngredientRequestTest> ingredients = getDefaultIngredientRequests;
-        RecipeRequestTest initRecipe = new RecipeRequestTest("Pizza", ingredients);
-        initRecipeRequest = initRecipe;
-        createRecipe(initRecipe);
-        return initRecipe;
+    protected RecipeResponseTest[] setInitialState(Integer number) throws Exception {
+        var recipeResponseTests = new ArrayList<RecipeResponseTest>();
+
+        for (int i = 0; i < number; i++) {
+            final Set<IngredientRequestTest> ingredients = getDefaultIngredientRequests;
+            RecipeRequestTest initRecipe = new RecipeRequestTest("Pizza", ingredients);
+            initRecipeRequest = initRecipe;
+            recipeResponseTests.add(createRecipe(initRecipe));
+        }
+        return recipeResponseTests.toArray(new RecipeResponseTest[0]);
     }
 
     protected RecipeResponseTest getRecipe(long id) throws Exception {
@@ -68,15 +73,12 @@ public class RecipeTest {
         return mockRequest(httpMethod, url, null, RecipesErrorResponseTest.class, HttpStatus.NOT_FOUND);
     }
 
-    protected void simpleMockRequest(HttpMethod httpMethod, String url, HttpStatus status) throws Exception {
-        mockMvc
-                .perform(request(httpMethod, url))
-                .andDo(print())
-                .andExpect(MockMvcResultMatchers.status().is(status.value()));
+    protected void assertVoidMockRequest(HttpMethod httpMethod, String url, HttpStatus status) throws Exception {
+        mockRequest(httpMethod, url, null, Void.class, status);
     }
 
-    private void createRecipe(RecipeRequestTest recipe) throws Exception {
-        mockRequest(
+    private RecipeResponseTest createRecipe(RecipeRequestTest recipe) throws Exception {
+        return mockRequest(
                 HttpMethod.POST,
                 "/recipes",
                 objectMapper.writeValueAsString(recipe),
@@ -97,6 +99,9 @@ public class RecipeTest {
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
+        if(responseType == null || responseType == Void.class){
+            return null;
+        }
         return objectMapper.readValue(responseArrayString, responseType);
     }
 

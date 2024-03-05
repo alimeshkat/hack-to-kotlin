@@ -41,7 +41,7 @@ class RecipesService(
     fun updateOrCreateRecipe(id: Long, recipeRequest: RecipeRequest): RecipeResponse? {
         return recipeRepository.findByIdOrNull(id)?.let {
             requireNotNull(recipeRequest.recipeName)
-            val recipe = recipeRepository.save(RecipesEntity(it.id, recipeRequest.recipeName))
+            val recipe = recipeRepository.save(RecipesEntity(it.recipeId, recipeRequest.recipeName))
             val ingredients = saveIngredients(recipeRequest, recipe)
             return RecipesMapper.toRecipeResponse(recipe, ingredients)
         } ?: saveRecipe(recipeRequest)

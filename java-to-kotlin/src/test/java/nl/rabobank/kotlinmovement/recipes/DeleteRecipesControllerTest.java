@@ -15,14 +15,14 @@ class DeleteRecipesControllerTest extends RecipeTest {
     @Test
     @DisplayName("Should be able to delete a recipe")
     void test1() throws Exception {
-        simpleMockRequest(HttpMethod.DELETE, "/recipes/1", HttpStatus.NO_CONTENT);
+        assertVoidMockRequest(HttpMethod.DELETE, "/recipes/1", HttpStatus.NO_CONTENT);
         final RecipeResponseTest[] response = getAllRecipes();
         assertThat(response).isEmpty();
     }
 
     @BeforeEach
     void setup() throws Exception {
-        setInitialState();
+        setInitialState(1);
     }
 
 }

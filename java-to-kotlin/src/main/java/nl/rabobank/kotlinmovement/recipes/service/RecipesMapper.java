@@ -25,9 +25,9 @@ public final class RecipesMapper {
     }
 
     public static RecipeResponse toRecipeResponse(RecipesEntity recipes, Set<IngredientsEntity> ingredientsEntities) {
-        return new RecipeResponse(recipes.getId(), recipes.getRecipeName(),
+        return new RecipeResponse(recipes.getRecipeId(), recipes.getRecipeName(),
                 ingredientsEntities.stream()
-                        .map(it -> new IngredientResponse(it.getId(), it.getName(), IngredientType.valueOf(it.getType()), it.getWeight()))
+                        .map(it -> new IngredientResponse(it.getIngredientId(), it.getName(), IngredientType.valueOf(it.getType()), it.getWeight()))
                         .collect(Collectors.toSet()));
     }
 

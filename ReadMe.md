@@ -26,7 +26,8 @@ In these recipes, we will cover:
 Please keep in mind that the goal of this workshop is not to explain Java, Spring Boot modules, or any other tool or
 library, but rather to expand on certain aspects that come into play when gradually migrating a Java Spring Boot project
 to Kotlin. Also, please note that this workshop does not cover what Spring offers. We want to give you a taste of what
-is possible and later extend it based on requests from the community. This workshop is not perfect, but with your help,
+ispossible and later extend it based on requests from the community.
+This workshop is not perfect, but with your help,
 we can improve it.
 
 ## The Recipes
@@ -34,7 +35,7 @@ we can improve it.
 ### Start converting Java-To-Kotlin
 
 The first recipes in this workshop explain step-by-step what needs to be done to migrate the Java code. Follow the
-recipes  [here](recipes/java-to-kotlin/Intro.md) in the correct order, and you will be able to convert the Java code to
+recipes  [here](recipes/1.java-to-kotlin/Intro.md) in the correct order, and you will be able to convert the Java code to
 Kotlin in no time!
 
 ---
@@ -55,6 +56,11 @@ Run `maven verify` command to test the installation:
 ```shell 
 ./mvnw clean verify
 ```
+
+---
+
+In some recipes we have added a section with supplement information about a specific topic.
+These section you can recognize by the bulb icon ![](recipes/sources/png/light-bulb-xs.png).
 
 ---
 

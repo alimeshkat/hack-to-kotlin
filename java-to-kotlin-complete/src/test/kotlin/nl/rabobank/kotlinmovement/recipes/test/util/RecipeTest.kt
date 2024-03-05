@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import java.util.*
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -24,31 +25,26 @@ class RecipeTest {
     protected lateinit var mockMvc: MockMvc
     protected var objectMapper = jacksonObjectMapper()
 
-    @Throws(Exception::class)
-    protected fun setInitialState(): RecipeRequestTest {
-        val ingredients = RecipeTestData.getDefaultIngredientRequests
-        val initRecipe = RecipeRequestTest("Pizza", ingredients)
-        createRecipe(initRecipe)
-        return initRecipe
+    protected fun setInitialState(number: Number = 1): Array<RecipeResponseTest> {
+        return (1..number.toInt()).map {
+            val ingredients = RecipeTestData.getDefaultIngredientRequests
+            val initRecipe = RecipeRequestTest(UUID.randomUUID().toString(), ingredients)
+            createRecipe(initRecipe)
+        }.toTypedArray()
     }
 
-    @Throws(Exception::class)
     protected fun getRecipe(id: Long): RecipeResponseTest = mockRequest(
         HttpMethod.GET,
         "/recipes/$id",
         HttpStatus.OK
     )
 
+    protected fun allRecipes(): Array<RecipeResponseTest> = mockRequest(
+        HttpMethod.GET,
+        "/recipes",
+        HttpStatus.OK
+    )
 
-    @get:Throws(Exception::class)
-    protected val allRecipes: Array<RecipeResponseTest>
-        get() = mockRequest(
-            HttpMethod.GET,
-            "/recipes",
-            HttpStatus.OK
-        )
-
-    @Throws(Exception::class)
     protected fun updateRecipe(id: Long?, recipeRequest: RecipeRequestTest): RecipeResponseTest = mockRequest(
         HttpMethod.PUT,
         "/recipes/$id",
@@ -56,7 +52,6 @@ class RecipeTest {
         objectMapper.writeValueAsString(recipeRequest)
     )
 
-    @Throws(Exception::class)
     protected fun badRequestCall(
         httpMethod: HttpMethod,
         url: String,
@@ -68,7 +63,6 @@ class RecipeTest {
         body
     )
 
-    @Throws(Exception::class)
     protected fun notFoundCall(
         httpMethod: HttpMethod,
         url: String
@@ -78,24 +72,21 @@ class RecipeTest {
         HttpStatus.NOT_FOUND,
     )
 
-    @Throws(Exception::class)
-    protected fun assertSimpleMockRequest(httpMethod: HttpMethod, url: String, status: HttpStatus) {
-        mockMvc
-            .perform(request(httpMethod, url))
-            .andDo(MockMvcResultHandlers.print())
-            .andExpect(MockMvcResultMatchers.status().`is`(status.value()))
-    }
+    protected fun voidMockRequest(httpMethod: HttpMethod, url: String, status: HttpStatus): Unit =
+        mockRequest(
+            httpMethod,
+            url,
+            status
+        )
 
-    @Throws(Exception::class)
-    private fun createRecipe(recipe: RecipeRequestTest) {
-        mockRequest<RecipeResponseTest>(
+    private fun createRecipe(recipe: RecipeRequestTest): RecipeResponseTest {
+        return mockRequest<RecipeResponseTest>(
             HttpMethod.POST, "/recipes",
             HttpStatus.CREATED,
             objectMapper.writeValueAsString(recipe)
         )
     }
 
-    @Throws(Exception::class)
     private inline fun <reified T> mockRequest(
         httpMethod: HttpMethod, url: String, status: HttpStatus, body: String? = null
     ): T {
@@ -108,15 +99,24 @@ class RecipeTest {
                 httpMethod,
                 url
             )
-        return mockMvc
-            .perform(requestBuilder)
-            .andDo(MockMvcResultHandlers.print())
-            .andExpect(MockMvcResultMatchers.status().`is`(status.value()))
-            .andReturn()
-            .response
-            .contentAsString.let {
-                objectMapper.readValue(it, T::class.java)
-            }
+
+        return if (T::class == Unit::class) {
+            mockMvc
+                .perform(requestBuilder)
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().`is`(status.value()))
+            Unit as T
+        } else {
+            mockMvc
+                .perform(requestBuilder)
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().`is`(status.value()))
+                .andReturn()
+                .response
+                .contentAsString.let {
+                    objectMapper.readValue(it, T::class.java)
+                }
+        }
     }
 
 }

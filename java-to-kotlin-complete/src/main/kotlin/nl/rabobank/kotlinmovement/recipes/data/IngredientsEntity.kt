@@ -10,7 +10,7 @@ class IngredientsEntity(
     val recipes: RecipesEntity? = null,
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    val ingredientId: Long? = null,
     val name: String,
     val type: String,
     val weight: Int,
@@ -20,12 +20,12 @@ class IngredientsEntity(
         return when {
             other !is IngredientsEntity -> false
             this === other -> true
-            id == null || other.id == null -> false
-            else -> id == other.id
+            ingredientId == null || other.ingredientId == null -> false
+            else -> ingredientId == other.ingredientId
         }
     }
 
     override fun hashCode(): Int {
-        return id?.hashCode() ?: super.hashCode()
+        return ingredientId?.hashCode() ?: super.hashCode()
     }
 }

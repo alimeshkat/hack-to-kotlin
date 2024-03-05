@@ -9,18 +9,16 @@ import org.springframework.http.HttpStatus
 
 internal class DeleteRecipesControllerTest : RecipeTest() {
     @Test
-    @Throws(Exception::class)
     fun `Should be able to delete a recipe `() {
-        assertSimpleMockRequest(
-            HttpMethod.DELETE,"/recipes/1",
+        voidMockRequest(
+            HttpMethod.DELETE, "/recipes/1",
             HttpStatus.NO_CONTENT
         )
-        val response = allRecipes
+        val response = allRecipes()
         AssertionsForClassTypes.assertThat(response).isEmpty()
     }
 
     @BeforeEach
-    @Throws(Exception::class)
     fun setup() {
         setInitialState()
     }
