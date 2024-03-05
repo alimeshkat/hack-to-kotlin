@@ -1,10 +1,12 @@
-# Service Recipe
+# Service
 
 In this recipe we will help you to convert the classes in
 the [service](../../../java-to-kotlin/src/main/java/nl/rabobank/kotlinmovement/recipes/service) package to
 kotlin.
 
-## Convert RecipeService
+## Recipe
+
+### RecipesService
 
 1) Convert the `RecipesService` class to Kotlin.
 2) Declare the `recipeRepository` and `ingredientsRepository` as non-nullable properties in the primary constructor 
@@ -23,7 +25,7 @@ kotlin.
 
 ---
 
-## Convert ResourceNotFoundException
+### ResourceNotFoundException
 
 1) Convert the `ResourceNotFoundException` class to Kotlin
 2) When ready, run all tests:
@@ -34,7 +36,7 @@ kotlin.
 
 ---
 
-## Convert RecipeMapper
+### RecipeMapper
 
 1) Convert the `RecipesMapper` class to Kotlin.
 2) Replace Java `Stream` API by Kotlin Collection extensions

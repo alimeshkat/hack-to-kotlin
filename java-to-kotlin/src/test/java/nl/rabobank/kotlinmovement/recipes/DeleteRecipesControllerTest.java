@@ -22,7 +22,7 @@ class DeleteRecipesControllerTest extends RecipeTest {
 
     @BeforeEach
     void setup() throws Exception {
-        setInitialState();
+        setInitialState(1);
     }
 
 }

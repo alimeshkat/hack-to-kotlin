@@ -3,10 +3,9 @@
 In this recipe, we will create an entirely new repository where we will use `Spring Data` and  `R2DBC` instead of `JDBC`.
 We will create the new repositories and put next to the existing ones, and use them in the service layer later.
 
-## Goal:
 The foremost import goal of this recipe is to show you how you can fetch entities from a relational database in a non-blocking way.
-We will also use `coroutines` instead of `Mono` and `Flux`  in the repository where we can to make the code more
-readable and maintainable. There are Kotlin extension available for the `Spring Reactor` and `R2DBC` API to make that easy.
+We will use `coroutines` instead of `Mono` and `Flux`  in the repository where we can to make the code more
+readable and maintainable; there are Kotlin extension available for on Reactive specification, which `Spring Reactor` and `R2DBC` implement, to make that effortless.
 
 ## R2DBC
 

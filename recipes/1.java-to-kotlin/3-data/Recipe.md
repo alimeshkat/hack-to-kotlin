@@ -1,4 +1,4 @@
-# Data Recipe
+# Data
 
 The [data](../../../java-to-kotlin/src/main/java/nl/rabobank/kotlinmovement/recipes/data) package has two JPA `entities`
 and
@@ -8,7 +8,7 @@ some
 small adjustments to the
 Kotlin code.
 
-## Convert Entities & Repositories
+## Recipe
 
 1) Convert the `data` package to Kotlin
 2) Refactor the `Entity` classes the following way:

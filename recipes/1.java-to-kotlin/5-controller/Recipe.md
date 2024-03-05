@@ -1,4 +1,4 @@
-# Controller Recipes
+# Controller 
 
 In this recipe we will convert
 the classes in the [controller](../../../java-to-kotlin/src/main/java/nl/rabobank/kotlinmovement/recipes/controller)
@@ -8,7 +8,9 @@ to Kotlin.
 The `RecipesController` contains the REST methods of our `Recipes` API, and the `RecipesControllerAdvice` catches
 exceptions and returns the proper error code and response.
 
-## Convert RecipesController & RecipesControllerAdvice
+## Recipe
+
+##  RecipesController & RecipesControllerAdvice
 
 1) Convert the `RecipesController` Java files to Kotlin
 2) As the log property was created based on Lombok annotation `@Slf4`, we will have to replace it.
@@ -30,7 +32,7 @@ exceptions and returns the proper error code and response.
 
 [*peek solutions*](../../../java-to-kotlin-complete/src/main/kotlin/nl/rabobank/kotlinmovement/recipes/controller)
 
-## Convert ErrorMessageMapper
+##  ErrorMessageMapper
 
 The `ErrorMessageMapper` is used by the `RecipesControllerAdvice` to transforms the error messages from the exceptions
 thrown by the application to `RecipesErrorResponse`.

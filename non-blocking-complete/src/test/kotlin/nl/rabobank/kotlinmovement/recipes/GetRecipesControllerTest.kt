@@ -1,27 +1,24 @@
 package nl.rabobank.kotlinmovement.recipes
 
 import kotlinx.coroutines.runBlocking
-import nl.rabobank.kotlinmovement.recipes.test.util.RecipeAssert.assertRecipeResponse
 import nl.rabobank.kotlinmovement.recipes.test.util.RecipeAssert.assertRecipeResponses
 import nl.rabobank.kotlinmovement.recipes.test.util.RecipeTest
 import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipeResponseTest
 import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipesErrorResponseTest
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.AssertionsForClassTypes
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.springframework.http.HttpMethod
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-
 internal class GetRecipesControllerTest : RecipeTest() {
 
-    private lateinit var initRecipes: List<RecipeResponseTest>
+    private lateinit var initRecipes: Array<RecipeResponseTest>
     @BeforeEach
     fun setup(): Unit = runBlocking {
-        initRecipes = setInitialState(100)
+        initRecipes = setInitialState(10)
     }
     @Test
     fun `Should be able to get all recipes`() {

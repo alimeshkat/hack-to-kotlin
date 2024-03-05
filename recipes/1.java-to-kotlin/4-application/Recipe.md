@@ -5,7 +5,7 @@ Kotlin, you will notice some small changes. For example, the `main()` function c
 with `@application`
 annotated class (functions are first class citizens). So, let's get into it.
 
-## Convert RecipesApplication
+## Recipe
 
 1) Convert
    the [RecipesApplication class](../../../java-to-kotlin/src/main/java/nl/rabobank/kotlinmovement/recipes/RecipesApplication.java)

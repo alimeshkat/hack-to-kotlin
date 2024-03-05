@@ -1,4 +1,4 @@
-# Maven Setup Recipe
+# Maven Setup
 
 Our first recipe is about configuring the maven module [java-to-kotlin](../../../java-to-kotlin).
 Usually IntelliJ can do it for you automatically.
@@ -6,7 +6,7 @@ When adding a Kotlin file (.kt) to the Java project for the first time,
 you will receive a notification to configure Kotlin in one of the modules.
 But because it's important to understand a little what you have to add/configure, we will go through the steps to configure Kotlin in a Java module.
 
-## Configure maven
+## Recipe
 
 1) Read the [maven setup guide](MAVEN_SETUP_GUIDE.md) and configure the maven module [java-to-kotlin](../../../java-to-kotlin/pom.xml)
    accordingly

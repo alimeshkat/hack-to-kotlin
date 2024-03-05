@@ -4,11 +4,11 @@ Now you have completed all previous recipes in this project, it is time to conve
 The test classes are located in the root
 of [test resources](../../../java-to-kotlin/src/test/java/nl/rabobank/kotlinmovement/recipes).
 
+## Recipe
+
 As before, we will first convert the simplest classes and continue from there.
 
----
-
-## Convert model package
+### Model
 
 1) Checkout the [test setup](TestSetup.MD)
 2) Convert the test domain models
@@ -41,7 +41,7 @@ As before, we will first convert the simplest classes and continue from there.
 
 [*peek solution*](../../../java-to-kotlin-complete/src/test/kotlin/nl/rabobank/kotlinmovement/recipes/test/util/model)
 
-## RecipeTest class
+## RecipeTest
 
 1) convert
    the [RecipeTest](../../../java-to-kotlin/src/test/java/nl/rabobank/kotlinmovement/recipes/test/util/RecipeTest.java)
@@ -72,7 +72,7 @@ code is converted to Kotlin
 
 ---
 
-## Convert RecipeTestData
+## RecipeTestData
 
 1) Convert [RecipeTestData](../../../java-to-kotlin/src/test/java/nl/rabobank/kotlinmovement/recipes/test/util/RecipeTestData.java)
 2) Replace `java.util.Set.of()` with `setOf()`
@@ -99,7 +99,7 @@ number `100` is provided as the value for the `type`! It works when explicitly a
 e.g.`IngredientRequestTest(name = "yeast", weight = 100))`.
 ---
 
-## Convert RecipeAssert
+## RecipeAssert
 
 1) Convert [RecipeAssert](../../../java-to-kotlin/src/test/java/nl/rabobank/kotlinmovement/recipes/test/util/RecipeAssert.java)
 2) Replace the `Streams Api` with Kotlin Collection extension functions (e.g. map, filter, firstOrNull etc.)
@@ -127,7 +127,7 @@ To create a `Pair` in Kotlin you can use the infix operator `to` e.g. `val pair 
 And like `data` classes you can destruct pairs (e.g. `val (k,v) = Pair("key","value")`).
 ---
 
-## Covert test classes
+## Test classes
 
 1) Last but not least, convert the
    [test classes](../../../java-to-kotlin/src/test/java/nl/rabobank/kotlinmovement/recipes)

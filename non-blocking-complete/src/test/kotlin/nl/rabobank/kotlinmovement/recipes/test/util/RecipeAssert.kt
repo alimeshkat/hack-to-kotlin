@@ -14,7 +14,7 @@ object RecipeAssert {
         assertThat(recipeResponse.recipeName).isEqualTo(recipeRequest.recipeName)
         assertIngredients(recipeRequest, recipeResponse)
     }
-    fun assertRecipeResponses(actual: List<RecipeResponseTest>, expected: List<RecipeResponseTest>) {
+    fun assertRecipeResponses(actual: Array<RecipeResponseTest>, expected: Array<RecipeResponseTest>) {
         assertThat(actual).isEqualTo(expected)
     }
 

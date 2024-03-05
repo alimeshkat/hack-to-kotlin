@@ -20,6 +20,10 @@ public class RecipeAssert {
         assertIngredients(recipeRequest, recipeResponse);
     }
 
+    public static void  assertRecipeResponses(RecipeResponseTest[] actual, RecipeResponseTest[] expected) {
+        assertThat(actual).isEqualTo(expected);
+    }
+
     private static void assertIngredients(RecipeRequestTest updateRequest, RecipeResponseTest updatedRecipeResponse) {
         matchIngredientAndAssert(updateRequest.getIngredients(), updatedRecipeResponse.getIngredients(), (AbstractMap.SimpleEntry<IngredientRequestTest, IngredientResponseTest> matchedIngredientEntry) -> {
             assertThat(matchedIngredientEntry.getKey().getName()).isEqualTo(matchedIngredientEntry.getValue().getName());

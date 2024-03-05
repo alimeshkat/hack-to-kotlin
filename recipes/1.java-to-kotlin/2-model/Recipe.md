@@ -1,4 +1,4 @@
-# Domain Model Recipe
+# Model
 
 In this recipe we will help you convert
 the [recipe models](../../../java-to-kotlin/src/main/java/nl/rabobank/kotlinmovement/recipes/model) to
@@ -6,7 +6,7 @@ kotlin. To keep the Java files concise, we have used `Lombok` library annotation
 , `contructor`, `equals` and `hashcode`. At the end you, when all `Java` has been converted, we can simply remove
 dependency on Lombok.
 
-## Convert domain models
+## Recipe
 
 1) Read the document about [converting Java file to Kotlin](CONVERT_JAVA_FILE_TO_KOTLIN.md)
 2) Convert the classes in `model` package to Kotlin.

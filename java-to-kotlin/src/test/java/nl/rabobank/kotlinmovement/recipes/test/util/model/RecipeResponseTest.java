@@ -1,5 +1,6 @@
 package nl.rabobank.kotlinmovement.recipes.test.util.model;
 
+import java.util.Objects;
 import java.util.Set;
 
 public class RecipeResponseTest {
@@ -26,6 +27,19 @@ public class RecipeResponseTest {
 
     public Set<IngredientResponseTest> getIngredients() {
         return ingredients;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RecipeResponseTest that = (RecipeResponseTest) o;
+        return Objects.equals(id, that.id) && Objects.equals(recipeName, that.recipeName) && Objects.equals(ingredients, that.ingredients);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, recipeName, ingredients);
     }
 
     @Override

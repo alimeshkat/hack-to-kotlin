@@ -31,17 +31,13 @@ import java.util.stream.Stream
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class CreateUpdateRecipesControllerTest : RecipeTest() {
     @Test
-    @Throws(Exception::class)
-    fun `Should be able to update a recipe`() {
+      fun `Should be able to update a recipe`()  {
         val updateRequest: RecipeRequestTest = peperoniPizzaRecipeRequest
         val response = updateRecipe(1L, updateRequest)
         assertRecipeResponse(updateRequest, response)
     }
 
     @Test
-    @Throws(
-        Exception::class
-    )
     fun `Should be to able create new recipe when recipe id doesn't not exist`() {
         val updateRequest: RecipeRequestTest = peperoniPizzaRecipeRequest
         val response = updateRecipe(2L, updateRequest)
@@ -50,13 +46,10 @@ internal class CreateUpdateRecipesControllerTest : RecipeTest() {
 
     @ParameterizedTest
     @MethodSource("errorDataParams")
-    @Throws(
-        Exception::class
-    )
     fun `Should not be able to create or update if request object is invalid`(
         recipeRequest: RecipeRequestTest?,
         errorResponse: RecipesErrorResponseTest?
-    ) {
+    )  {
         val body = objectMapper.writeValueAsString(recipeRequest)
         val invalidCreateResponse = badRequestCall(HttpMethod.POST, "/recipes", body)
         val invalidUpdateResponse = badRequestCall(HttpMethod.PUT, "/recipes/1", body)
@@ -65,8 +58,7 @@ internal class CreateUpdateRecipesControllerTest : RecipeTest() {
     }
 
     @BeforeEach
-    @Throws(Exception::class)
-    fun setup() {
+      fun setup()  {
         setInitialState()
     }
 

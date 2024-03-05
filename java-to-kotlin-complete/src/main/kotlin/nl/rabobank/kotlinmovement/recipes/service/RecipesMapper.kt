@@ -15,12 +15,12 @@ object RecipesMapper {
 
     fun toIngredientsEntity(recipeRequest: RecipeRequest, recipe: RecipesEntity?): Set<IngredientsEntity> {
         return checkNotNull(recipeRequest.ingredients).map { (name, type, weight): IngredientRequest ->
-            IngredientsEntity(
-                recipe,
-                null,
-                checkNotNull(name),
-                checkNotNull(type).name,
-                checkNotNull(weight)
+          IngredientsEntity(
+                recipes = recipe,
+                ingredientId = null ,
+                name = checkNotNull(name),
+                type = checkNotNull(type).name,
+                weight = checkNotNull(weight),
             )
         }.toSet()
     }
@@ -30,11 +30,11 @@ object RecipesMapper {
         ingredientsEntities: Set<IngredientsEntity>
     ): RecipeResponse =
         RecipeResponse(
-            checkNotNull(recipes.id),
+            checkNotNull(recipes.recipeId),
             recipes.recipeName,
             ingredientsEntities.map { ingredient ->
                 IngredientResponse(
-                    ingredient.id,
+                    ingredient.ingredientId,
                     ingredient.name,
                     IngredientType.valueOf(ingredient.type),
                     ingredient.weight

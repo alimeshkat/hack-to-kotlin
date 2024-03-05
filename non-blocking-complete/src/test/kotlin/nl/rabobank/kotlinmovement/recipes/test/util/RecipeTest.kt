@@ -5,15 +5,14 @@ import kotlinx.coroutines.runBlocking
 import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipeRequestTest
 import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipeResponseTest
 import nl.rabobank.kotlinmovement.recipes.test.util.model.RecipesErrorResponseTest
+import org.opentest4j.AssertionFailedError
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.test.annotation.DirtiesContext
-import org.springframework.web.reactive.function.client.WebClient
-import org.springframework.web.reactive.function.client.awaitBody
-import org.springframework.web.reactive.function.client.awaitExchange
+import org.springframework.test.web.reactive.server.WebTestClient
 import java.util.UUID
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -22,26 +21,29 @@ import java.util.UUID
 class RecipeTest {
 
     protected var objectMapper = jacksonObjectMapper()
-    var client: WebClient = WebClient.create("http://localhost:8080")
+    var client: WebTestClient = WebTestClient
+        .bindToServer()
+        .baseUrl("http://localhost:8080")
+        .build()
 
-    protected suspend fun setInitialState(number: Number=1): List<RecipeResponseTest> {
+    protected fun setInitialState(number: Number = 1): Array<RecipeResponseTest> {
         return (1..number.toInt()).map {
             val ingredients = RecipeTestData.getDefaultIngredientRequests
             val initRecipe = RecipeRequestTest(UUID.randomUUID().toString(), ingredients)
             createRecipe(initRecipe)
-        }
+        }.toTypedArray()
     }
 
-    protected fun getRecipe(id: Long): RecipeResponseTest = runBlocking {
-        mockRequest(
+    protected fun getRecipe(id: Long): RecipeResponseTest {
+        return mockRequest(
             HttpMethod.GET,
             "/recipes/$id",
             HttpStatus.OK
         )
     }
 
-    protected fun allRecipes(): List<RecipeResponseTest> = runBlocking {
-        mockRequest(
+    protected fun allRecipes(): Array<RecipeResponseTest> {
+        return mockRequest(
             HttpMethod.GET,
             "/recipes",
             HttpStatus.OK
@@ -61,8 +63,8 @@ class RecipeTest {
         httpMethod: HttpMethod,
         url: String,
         body: String?
-    ): RecipesErrorResponseTest = runBlocking {
-        mockRequest(
+    ): RecipesErrorResponseTest {
+        return mockRequest(
             httpMethod,
             url,
             HttpStatus.BAD_REQUEST,
@@ -70,27 +72,23 @@ class RecipeTest {
         )
     }
 
-    protected fun notFoundCall(httpMethod: HttpMethod, uri: String): RecipesErrorResponseTest = runBlocking {
-        mockRequest(
+    protected fun notFoundCall(httpMethod: HttpMethod, uri: String): RecipesErrorResponseTest {
+        return mockRequest(
             httpMethod,
             uri,
             HttpStatus.NOT_FOUND
         )
     }
 
-    protected fun mockRequestNoContent(httpMethod: HttpMethod, url: String) = runBlocking {
-        client.method(httpMethod).uri(url).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
-            .awaitExchange {
-                if (it.statusCode() == HttpStatus.NO_CONTENT) {
-                    return@awaitExchange
-                } else {
-                    throw AssertionError("Unexpected status ${it.statusCode()}")
-                }
-            }
-    }
-
-    private fun createRecipe(recipe: RecipeRequestTest): RecipeResponseTest = runBlocking {
+    protected fun voidMockRequest(httpMethod: HttpMethod, url: String, status: HttpStatus): Unit =
         mockRequest(
+            httpMethod,
+            url,
+            status
+        )
+
+    private fun createRecipe(recipe: RecipeRequestTest): RecipeResponseTest {
+        return mockRequest(
             HttpMethod.POST,
             "/recipes",
             HttpStatus.CREATED,
@@ -98,29 +96,29 @@ class RecipeTest {
         )
     }
 
-    private suspend inline fun <reified T : Any> mockRequest(
-        httpMethod: HttpMethod,
-        url: String,
-        status: HttpStatus,
-        body: String? = null
+    private inline fun <reified T : Any> mockRequest(
+        httpMethod: HttpMethod, url: String,
+        status: HttpStatus, body: String? = null
     ): T {
-        val i = client.method(httpMethod)
-            .uri(url)
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON)
-        body?.let {
-            i.bodyValue(it)
+        val requestBuilder =
+            body?.let {
+                client.method(httpMethod).uri(url)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .bodyValue(it)
+            } ?: client.method(httpMethod).uri(url)
+
+        if (T::class == Unit::class) {
+            requestBuilder.exchange()
+                .expectStatus()
+                .isEqualTo(status)
+            return Unit as T
         }
-
-        return i.awaitExchange {
-            if (it.statusCode() == status) {
-
-                it.awaitBody<T>().also { b -> println(b) }
-
-            } else {
-                throw AssertionError("Unexpected status ${it.statusCode()}")
-            }
-        }
+        return requestBuilder.exchange()
+            .expectStatus()
+            .isEqualTo(status)
+            .expectBody(T::class.java).returnResult().responseBody
+            ?: throw AssertionFailedError("Unexpected response body returned from $url")
     }
 }
 

@@ -61,7 +61,7 @@ class RecipesAndIngredientsRepositoryImp(private val template: R2dbcEntityTempla
      *   Maps each fetched row from the database into a `RecipesEntity` and wraps it into  a `Mono` to be emitted further down the pipeline.
      *
      *   @param `recipes` a `MutableList<MutableMap<String, Any>>`
-     *   @return `Publisher<RecipesEntity>`
+     *   @return `Publisher<RecipesEntity> or `Mono.empty()` if the list is empty
      */
     fun mapRowToRecipeToIngredient(recipes: MutableList<MutableMap<String, Any>>): Publisher<RecipesEntity> {
         return recipes.groupBy { it["recipe_id"] }
