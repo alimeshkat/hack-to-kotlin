@@ -19,7 +19,7 @@ the tests.
 ### Test util
 
 The re-usable code are contained in utility classes to keep the test classes clean as possible.  
-you can find the utility classes in [test/util](../../../java-to-kotlin/src/test/java/nl/rabobank/kotlinmovement/recipes/test/util) package:
+you can find the utility classes in [test/util](../../../java-to-kotlin/src/test/java/nl/alimeshkat/recipes/test/util) package:
 
 - `RecipeAssert`: Contains all the assertion logic
 - `RecipeMockMvcTest`: Is the parent class of all the test classes
@@ -27,7 +27,7 @@ you can find the utility classes in [test/util](../../../java-to-kotlin/src/test
 
 ### Test util model
 
-Under [test/util/model](../../../java-to-kotlin/src/test/java/nl/rabobank/kotlinmovement/recipes/test/util/model) you can find the simple
+Under [test/util/model](../../../java-to-kotlin/src/test/java/nl/alimeshkat/recipes/test/util/model) you can find the simple
 POJO classes that represent the input/output of the `Recipe service`.
 They are used by `Jackson ObjectMapper` to serialize/deserialize `MockMvc` requests/responses.
 

@@ -1,6 +1,6 @@
 # Data
 
-The [data](../../../java-to-kotlin/src/main/java/nl/rabobank/kotlinmovement/recipes/data) package has two JPA `entities`
+The [data](../../../java-to-kotlin/src/main/java/nl/alimeshkat/recipes/data) package has two JPA `entities`
 and
 two `repositories`.
 As we have configured `JPA` in the `kotlin-maven-plugin`, only thing we have to do is converting the classes and make
@@ -42,7 +42,7 @@ class IngredientsEntity(
    (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
 ```
 
-[*peek solutions*](../../../java-to-kotlin-complete/src/main/kotlin/nl/rabobank/kotlinmovement/recipes/data)
+[*peek solutions*](../../../java-to-kotlin-complete/src/main/kotlin/nl/alimeshkat/recipes/data)
 
 ---
 ![light-bulb](../../sources/png/light-bulb-xs.png)

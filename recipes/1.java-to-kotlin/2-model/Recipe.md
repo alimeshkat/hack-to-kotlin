@@ -1,7 +1,7 @@
 # Model
 
 In this recipe we will help you convert
-the [recipe models](../../../java-to-kotlin/src/main/java/nl/rabobank/kotlinmovement/recipes/model) to
+the [recipe models](../../../java-to-kotlin/src/main/java/nl/alimeshkat/recipes/model) to
 kotlin. To keep the Java files concise, we have used `Lombok` library annotations to generate the `getters`, `setters`
 , `contructor`, `equals` and `hashcode`. At the end you, when all `Java` has been converted, we can simply remove
 dependency on Lombok.
@@ -36,7 +36,7 @@ dependency on Lombok.
    (cd ../../.. && ./mvnw clean package -pl :java-to-kotlin)
  ```
 
-[*peek solutions*](../../../java-to-kotlin-complete/src/main/kotlin/nl/rabobank/kotlinmovement/recipes/model)
+[*peek solutions*](../../../java-to-kotlin-complete/src/main/kotlin/nl/alimeshkat/recipes/model)
 
 --- 
 ![light-bulb](../../sources/png/light-bulb-xs.png)  

@@ -22,7 +22,7 @@ the repository.
 ```
 
 5) The build will fail because of an issue with interoperability of R2DBC with JDBC. We will disable the R2DBC for now 
-   1) To disable R2DBC, add an exclusion to the `@RecipeApplication` annotation in the [Application](../../../java-to-kotlin-complete/src/main/kotlin/nl/rabobank/kotlinmovement/recipes/RecipesApplication.kt) class:
+   1) To disable R2DBC, add an exclusion to the `@RecipeApplication` annotation in the [Application](../../../java-to-kotlin-complete/src/main/kotlin/nl/alimeshkat/recipes/RecipesApplication.kt) class:
     ```kotlin
       @SpringBootApplication(exclude = [R2dbcAutoConfiguration::class])
       @EnableJpaRepositories

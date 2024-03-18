@@ -35,9 +35,9 @@ especially when it comes to the Object Relational Mapping (ORM) part.
 ### Entities
 
 2) CREATE a  `r2dbc` package
-   under [data](../../../java-to-kotlin-complete/src/main/kotlin/nl/rabobank/kotlinmovement/recipes/data/r2dbc).
+   under [data](../../../java-to-kotlin-complete/src/main/kotlin/nl/alimeshkat/recipes/data).
 3) CREATE a Kotlin file named `RecipesIngredientsEntities.kt` under
-   the [r2dbc](../../../java-to-kotlin-complete/src/main/kotlin/nl/rabobank/kotlinmovement/recipes/data/r2dbc) package.
+   the [r2dbc](../../../java-to-kotlin-complete/src/main/kotlin/nl/alimeshkat/recipes/data/r2dbc) package.
     1) We will declare both of the entities here. Notice that the object to table mapping is still done for us without
        the need of JPA annotations, so that is pretty nice. Add the following code to
        the `RecipesIngredientsEntities.kt` file:
@@ -69,7 +69,7 @@ especially when it comes to the Object Relational Mapping (ORM) part.
 ### Repositories
 
 4) CREATE a Kotlin file named  `RecipesIngredientsRepositories.kt` under
-   the [r2dbc](../../../java-to-kotlin-complete/src/main/kotlin/nl/rabobank/kotlinmovement/recipes/data/r2dbc) package.
+   the [r2dbc](../../../java-to-kotlin-complete/src/main/kotlin/nl/alimeshkat/recipes/data/r2dbc) package.
    This file will contain all of our repository code.
 5) We will start adding the `RecipeRepository`, which will be a `CoroutineCrudRepository`. This an easy way to leverage
    the`Spring Data`

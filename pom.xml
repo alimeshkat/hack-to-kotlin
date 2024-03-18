@@ -14,7 +14,7 @@
         <version>3.2.3</version>
         <relativePath/>
     </parent>
-    <groupId>nl.rabobank.kotlinmovement</groupId>
+    <groupId>nl.alimeshkat</groupId>
     <artifactId>recipes</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <name>recipes</name>

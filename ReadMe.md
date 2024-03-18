@@ -2,41 +2,40 @@
 
 ![](recipes/sources/png/HackToKotlinLogo.png)
 
+## About this project
+
+This project is created to help Java developers to learn how to use Kotlin with Spring Boot. 
+It contains a set of `recipes` that will guide you through the process of converting a Java application to Kotlin and making it non-blocking.
+
 **We assume that you already have some basic knowledge of Kotlin, but want to go beyond that and learn how to use it
-with
-the Spring Boot framework. This workshop is here to help you with that.**
+with the Spring Boot framework. This project is here to help you with that. The goal of this project was not to explain the various Spring Boot modules.**
 
-Note: *This project was created as part of the hands-on part of the hack-to-kotlin workshop. You may use it outside the
-context of the workshop.*
+## The Recipes
 
-## About this workshop
+### Java to Kotlin
 
-In this workshop, you will start by migrating a Java Spring Boot Rest service to Kotlin by following recipes.
-In these recipes, we will cover:
+The first set of recipes explain step-by-step what needs to be done to migrate a Java Spring Boot project to Kotlin. Follow the
+recipes  [here](recipes/1.java-to-kotlin/0-intro) in the correct order, and you will be able to convert the Java code to
+Kotlin in no time!
+
+#### Goals:
 
 - Best practices of using Kotlin
-- Kotlin utilities available out-of-the-box
+- Kotlin's utilities available out-of-the-box
 - Pitfalls of converting Java code directly to Kotlin
 - Kotlin's interoperability with Java
 - Neat Kotlin features
 - And more!
 
-## What this workshop is not
+### Blocking to non-blocking
 
-Please keep in mind that the goal of this workshop is not to explain Java, Spring Boot modules, or any other tool or
-library, but rather to expand on certain aspects that come into play when gradually migrating a Java Spring Boot project
-to Kotlin. Also, please note that this workshop does not cover what Spring offers. We want to give you a taste of what
-ispossible and later extend it based on requests from the community.
-This workshop is not perfect, but with your help,
-we can improve it.
+In the second set of recipes we will refactor our blocking application to a non-blocking one. We will use `Kotlin Coroutines` and `Spring Reactor` to achieve this.
+Follow the recipes [here](recipes/2.blocking-to-non-blocking/0-intro) in the correct order, and learn how to convert a blocking application to a non-blocking one!
 
-## The Recipes
+#### Goals:
 
-### Start converting Java-To-Kotlin
-
-The first recipes in this workshop explain step-by-step what needs to be done to migrate the Java code. Follow the
-recipes  [here](recipes/1.java-to-kotlin/Intro.md) in the correct order, and you will be able to convert the Java code to
-Kotlin in no time!
+- Using Kotlin Coroutines with Spring Boot
+- Bridging the gap between imperative and reactive programming models
 
 ---
 
@@ -51,7 +50,7 @@ Install the following software:
 
 Fork this project and clone it. You can also directly clone this project and keep your changes locally.
 
-Run `maven verify` command to test the installation:
+Run mvn verify command to test the installation:
 
 ```shell 
 ./mvnw clean verify
