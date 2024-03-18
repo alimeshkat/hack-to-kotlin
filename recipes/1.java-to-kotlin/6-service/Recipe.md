@@ -1,7 +1,7 @@
 # Service
 
 In this recipe we will help you to convert the classes in
-the [service](../../../java-to-kotlin/src/main/java/nl/rabobank/kotlinmovement/recipes/service) package to
+the [service](../../../java-to-kotlin/src/main/java/nl/alimeshkat/recipes/service) package to
 kotlin.
 
 ## Recipe
@@ -21,7 +21,7 @@ kotlin.
    (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
 ```
 
-[*peek solutions*](../../../java-to-kotlin-complete/src/main/kotlin/nl/rabobank/kotlinmovement/recipes/service/RecipesService.kt)
+[*peek solutions*](../../../java-to-kotlin-complete/src/main/kotlin/nl/alimeshkat/recipes/service/RecipesService.kt)
 
 ---
 
@@ -48,7 +48,7 @@ kotlin.
 ```
 5) If all tests have passed, continue to the next recipe.
 
-[*peek solutions*](../../../java-to-kotlin-complete/src/main/kotlin/nl/rabobank/kotlinmovement/recipes/service/RecipesMapper.kt)
+[*peek solutions*](../../../java-to-kotlin-complete/src/main/kotlin/nl/alimeshkat/recipes/service/RecipesMapper.kt)
 
 
 --- 

@@ -8,7 +8,7 @@ controllers.
 ## Recipe
 
 1) Let's replace the `MockMVC` with the `WebTestClient` in
-   the [RecipeTest](../../../java-to-kotlin-complete/src/test/kotlin/nl/rabobank/kotlinmovement/recipes/test/util/RecipeTest.kt)
+   the [RecipeTest](../../../java-to-kotlin-complete/src/test/kotlin/nl/alimeshkat/recipes/test/util/RecipeTest.kt)
    class.
     ```kotlin
        var client: WebTestClient = WebTestClient
@@ -49,4 +49,4 @@ controllers.
        (cd ../../.. && ./mvnw clean test -pl :java-to-kotlin-complete)
     ```
 
-[*peek solutions*](../../../java-to-kotlin-complete/src/test/kotlin/nl/rabobank/kotlinmovement/recipes/test/util/RecipeTest.kt)
+[*peek solutions*](../../../java-to-kotlin-complete/src/test/kotlin/nl/alimeshkat/recipes/test/util/RecipeTest.kt)

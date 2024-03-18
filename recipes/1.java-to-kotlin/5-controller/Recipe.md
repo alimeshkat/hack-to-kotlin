@@ -1,7 +1,7 @@
 # Controller 
 
 In this recipe we will convert
-the classes in the [controller](../../../java-to-kotlin/src/main/java/nl/rabobank/kotlinmovement/recipes/controller)
+the classes in the [controller](../../../java-to-kotlin/src/main/java/nl/alimeshkat/recipes/controller)
 package
 to Kotlin.
 
@@ -30,7 +30,7 @@ exceptions and returns the proper error code and response.
    (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
 ```
 
-[*peek solutions*](../../../java-to-kotlin-complete/src/main/kotlin/nl/rabobank/kotlinmovement/recipes/controller)
+[*peek solutions*](../../../java-to-kotlin-complete/src/main/kotlin/nl/alimeshkat/recipes/controller)
 
 ##  ErrorMessageMapper
 
@@ -59,7 +59,7 @@ Which gets serialised to `JSON` and returned to the client.
    (cd ../../.. && ./mvnw package -pl :java-to-kotlin)
 ```
 
-[*peek solutions*](../../../java-to-kotlin-complete/src/main/kotlin/nl/rabobank/kotlinmovement/recipes/controller/ErrorMessageMapper.kt)
+[*peek solutions*](../../../java-to-kotlin-complete/src/main/kotlin/nl/alimeshkat/recipes/controller/ErrorMessageMapper.kt)
 
 --- 
 

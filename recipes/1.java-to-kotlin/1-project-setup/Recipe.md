@@ -17,7 +17,7 @@ But because it's important to understand a little what you have to add/configure
 ```
 
 3) To check if the setup is correct, see if `KotlinSetupTestDTO` is compiled as well. 
-   The class should be [here](../../../java-to-kotlin/target/classes/nl/rabobank/kotlinmovement/recipes/KotlinSetupTestDTO.class)
+   The class should be [here](../../../java-to-kotlin/target/classes/nl/alimeshkat/recipes/KotlinSetupTestDTO.class)
 
 [*peek solutions*](../../../java-to-kotlin-complete/pom.xml)  
 

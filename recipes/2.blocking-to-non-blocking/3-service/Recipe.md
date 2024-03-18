@@ -22,8 +22,8 @@ Because we use Coroutines the changes that we need to make are minimal.
    
           //This is the mapper function was declared previously in the RecipeMapper.kt file, but for the sake of this exercise we will declare it here.
           private fun toRecipeResponse(
-            recipes: nl.rabobank.kotlinmovement.recipes.data.r2dbc.RecipesEntity,
-            ingredientsEntities: Set<nl.rabobank.kotlinmovement.recipes.data.r2dbc.IngredientsEntity>
+            recipes: nl.alimeshkat.recipes.data.r2dbc.RecipesEntity,
+            ingredientsEntities: Set<nl.alimeshkat.recipes.data.r2dbc.IngredientsEntity>
             ): RecipeResponse =
                RecipeResponse(
                  checkNotNull(recipes.recipeId),
@@ -42,7 +42,7 @@ Because we use Coroutines the changes that we need to make are minimal.
    1) In the `RecipesService` class, add the following function:
       ```kotlin
           @Transactional
-          suspend fun getRecipe(id: Long): RecipeResponse? = recipesAndIngredientsRepository.findByIdOrNull(id)
+          suspend fun getRecipe(id: Long): RecipeResponse = recipesAndIngredientsRepository.findByIdOrNull(id)
              ?.let { recipesEntity ->
                checkNotNull(recipesEntity.ingredients)
                toRecipeResponse(recipesEntity, recipesEntity.ingredients)
